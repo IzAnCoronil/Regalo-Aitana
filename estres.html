@@ -11,11 +11,12 @@
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #ffe9e9, #ffffff);
+            background: linear-gradient(135deg, #eaf2ef, #ffffff); /* Fondo verde menta muy suave y relajante */
             color: #3a3a3a;
+            min-height: 100vh;
         }
 
-        /* NAV */
+        /* NAV - Menú unificado */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
@@ -27,6 +28,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box;
         }
 
         nav a {
@@ -45,37 +47,39 @@
         /* HEADER */
         header {
             text-align: center;
-            padding: 120px 20px 40px;
+            padding: 140px 20px 20px;
         }
 
         header h1 {
             font-size: 2.6em;
-            color: #7a2e2e;
+            color: #3d5a4c; /* Tono verde oscuro armónico */
             margin-bottom: 10px;
         }
 
         header p {
-            color: #945353;
+            color: #52796f;
             font-size: 1.1em;
+            margin-top: 0;
         }
 
         /* CONTENEDOR PRINCIPAL */
         .contenedor {
             background: white;
             padding: 40px;
-            margin: 30px auto 60px;
+            margin: 20px auto 60px;
             border-radius: 20px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 750px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
             text-align: center;
+            box-sizing: border-box;
         }
 
         .frase {
-            font-size: 1.5em;
-            color: #3a3a3a;
+            font-size: 1.4em;
+            color: #2c2c2c;
             margin-bottom: 15px;
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .autor {
@@ -88,40 +92,39 @@
         /* BOTONES GRANDES */
         button {
             display: inline-block;
-            padding: 18px 28px;
+            padding: 14px 28px;
             background: #6b9080;
             color: white;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
-            margin: 12px;
-            font-size: 1.2em;
+            font-size: 1.1em;
             min-width: 180px;
         }
 
         button:hover {
             background: #4f6d60;
-            transform: scale(1.08);
+            transform: scale(1.04);
         }
 
         /* BOTÓN FLOTANTE GUARDAR */
         .boton-guardar {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             background: #6b9080;
             color: white;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 1.1em;
+            padding: 14px 22px;
+            border-radius: 50px;
+            font-size: 1.05em;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(107, 144, 128, 0.3);
             transition: 0.2s;
             z-index: 99;
         }
@@ -129,6 +132,7 @@
         .boton-guardar:hover {
             background: #4f6d60;
             transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(107, 144, 128, 0.4);
         }
     </style>
 </head>
@@ -282,6 +286,7 @@
     function mostrarPrimeraFrase() {
         if (frasesEstres.length === 0) {
             document.getElementById("fraseEstres").textContent = "Añade frases para comenzar.";
+            document.getElementById("autorEstres").textContent = "";
             return;
         }
 
@@ -341,7 +346,7 @@
         const yaExiste = favoritos.some(f => f.frase === frase);
 
         if (!yaExiste) {
-            favorites = favoritos.push({ frase, autor });
+            favoritos.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
