@@ -420,6 +420,45 @@
     window.onload = function() {
         mostrarPrimeraFrase();
     };
+        function nuevaFraseUniversal(idFrase, idAutor, mazoFrases) {
+    if (!primeraMostrada) {
+        // Si tienes una función inicial para la primera frase, la llamas aquí
+        mostrarPrimeraFrase(); 
+        return;
+    }
+
+    const fraseElemento = document.getElementById(idFrase);
+    const autorElemento = document.getElementById(idAutor);
+
+    // Si ya no quedan frases en el mazo, muestra el mensaje de cierre
+    if (mazoFrases.length === 0) {
+        fraseElemento.textContent = "Ya no hay más frases si quieres más sólo tienes que pedirlas";
+        autorElemento.textContent = "";
+        aplicarAnimacion(); // Quita esta línea si no usas animación en esa pantalla
+        return;
+    }
+
+    let indice;
+    let intentos = 0;
+
+    // Selecciona un índice aleatorio evitando repetir autor consecutivamente si es posible
+    do {
+        indice = Math.floor(Math.random() * mazoFrases.length);
+        intentos++;
+    } while (mazoFrases[indice].autor === ultimoAutor && intentos < 10 && mazoFrases.length > 1);
+
+    const frase = mazoFrases[indice];
+
+    // Renderiza la frase y el autor en el HTML
+    fraseElemento.textContent = frase.texto;
+    autorElemento.textContent = "— " + frase.autor;
+
+    // Actualiza el último autor mostrado y elimina la frase del mazo para que no se repita
+    ultimoAutor = frase.autor;
+    mazoFrases.splice(indice, 1);
+    
+    aplicarAnimacion(); // Quita esta línea si no usas animación en esa pantalla
+}
     </script>
 
 </body>
