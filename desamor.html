@@ -336,4 +336,135 @@
         { texto: "El desamor entra despacio, como la niebla sobre los campos.", autor: "Pablo Neruda" },
         { texto: "Te busco en el mar y las olas solo me traen tu ausencia.", autor: "Pablo Neruda" },
         { texto: "Fuiste mi ola más alta y mi naufragio más triste.", autor: "Pablo Neruda" },
-        {
+        { texto: "Se apagan las luces de nuestro horizonte común.", autor: "Pablo Neruda" },
+        { texto: "La distancia es un hilo amargo que nos amarra al pasado.", autor: "Pablo Neruda" },
+        { texto: "Mi corazón se quedó varado en una playa donde tú ya no caminas.", autor: "Pablo Neruda" },
+        { texto: "Eramos lluvia y sol, pero la tormenta nos deshizo.", autor: "Pablo Neruda" },
+        { texto: "Te nombraba en secreto para no romper el encanto del dolor.", autor: "Pablo Neruda" },
+        { texto: "Me duele el aire cuando tú no lo respiras conmigo.", autor: "Pablo Neruda" },
+        { texto: "Fuiste la primavera más breve que ha cruzado mi vida.", autor: "Pablo Neruda" },
+        { texto: "El olvido es un mar espeso donde tus ojos se borran despacio.", autor: "Pablo Neruda" },
+        { texto: "Guardo tus silencios como si fueran tesoros rotos.", autor: "Pablo Neruda" },
+        { texto: "Me queda de ti el perfume que la noche no pudo borrar.", autor: "Pablo Neruda" },
+        { texto: "No hay herida más honda que la de un 'te amo' dicho a medias.", autor: "Pablo Neruda" },
+        { texto: "Mi alma es un desierto desde que tus pasos cambiaron de rumbo.", autor: "Pablo Neruda" },
+        { texto: "Adiós, si es que el adiós existe para los que se han querido.", autor: "Pablo Neruda" },
+
+        // 8. JOAQUÍN SABINA
+        { texto: "Y la vida siguió como siguen las cosas que no tienen sentido.", autor: "Joaquín Sabina" },
+        { texto: "No hay nostalgia peor que añorar lo que nunca jamás sucedió.", autor: "Joaquín Sabina" },
+        { texto: "Amor se llama el juego en que un par de ciegos juegan a hacerse daño.", autor: "Joaquín Sabina" },
+        { texto: "Lo bueno de los años es que curan heridas, lo malo de los besos es que crean adicción.", autor: "Joaquín Sabina" },
+        { texto: "Peleas de gallos, noches de vino, besos de usar y tirar.", autor: "Joaquín Sabina" },
+        { texto: "Esta sala de espera es un purgatorio lleno de colillas rotas.", autor: "Joaquín Sabina" },
+        { texto: "Donde fuiste feliz no debieras tratar de volver.", autor: "Joaquín Sabina" },
+        { texto: "Me dejaste un colchón de reproches y un vaso de olvido a medias.", autor: "Joaquín Sabina" },
+        { texto: "El agua apaga el fuego y al ardor los años, pero tu recuerdo quema más que el alcohol.", autor: "Joaquín Sabina" },
+        { texto: "Y morirme contigo si me matas, y matarme contigo si te mueres.", autor: "Joaquín Sabina" },
+        { texto: "Tanto espacio vacío en la cama me recuerda que el invierno llegó temprano.", autor: "Joaquín Sabina" },
+        { texto: "Fuimos un atraco perfecto que terminó a tiros en la frontera.", autor: "Joaquín Sabina" },
+        { texto: "No pido que vuelvas, pido que me dejes dormir sin tu fantasma dando vueltas.", autor: "Joaquín Sabina" },
+        { texto: "El amor es una epidemia que se cura con pastillas de indiferencia.", autor: "Joaquín Sabina" },
+        { texto: "Nos sobraban los motivos pero nos faltaron las ganas de resistir.", autor: "Joaquín Sabina" },
+        { texto: "Tengo un catálogo de excusas que ya nadie quiere escuchar.", autor: "Joaquín Sabina" },
+        { texto: "Tú eras una reina de bar y yo un pirata de pacotilla.", autor: "Joaquín Sabina" },
+        { texto: "Las despedidas son cartas boca abajo que nadie se atreve a levantar.", autor: "Joaquín Sabina" },
+        { texto: "Se nos rompió el amor de tanto usarlo o de tanto guardarlo en cajones cerrados.", autor: "Joaquín Sabina" },
+        { texto: "Me dejas un frío de bar de carretera a las cuatro de la mañana.", autor: "Joaquín Sabina" },
+        { texto: "Fuiste un veneno dulce que me bebí de un solo trago.", autor: "Joaquín Sabina" },
+        { texto: "Ojalá que el olvido no sea una mentira piadosa del tiempo.", autor: "Joaquín Sabina" },
+        { texto: "Cambiaste mis noches de gloria por mañanas de resaca emocional.", autor: "Joaquín Sabina" },
+        { texto: "Nos dejamos llevar tanto que terminamos en acantilados distintos.", autor: "Joaquín Sabina" },
+        { texto: "Tu dirección ya no figura en mi mapa de emergencias.", autor: "Joaquín Sabina" },
+        { texto: "Fueron diez meses hermosos y cien años de arrepentimiento lento.", autor: "Joaquín Sabina" },
+        { texto: "El corazón tiene razones que las copas de vino no logran borrar.", autor: "Joaquín Sabina" },
+        { texto: "Te di las llaves de mi jaula y te marchaste con el cerrojo puesto.", autor: "Joaquín Sabina" },
+        { texto: "No me fío de los adioses que se dicen cantando bajo la lluvia.", autor: "Joaquín Sabina" },
+        { texto: "Se acabó la función, apaguen las luces y recojan los cristales.", autor: "Joaquín Sabina" }
+    ];
+
+    // Cargar frases añadidas por el usuario desde anadir.html
+    let frasesUsuario = JSON.parse(localStorage.getItem("desamor")) || [];
+    let frasesDesamor = frasesDesamorOriginal.concat(frasesUsuario);
+
+    let ultimoAutor = null;
+    let primeraMostrada = false;
+
+    function mostrarPrimeraFrase() {
+        if (frasesDesamor.length === 0) {
+            document.getElementById("fraseDesamor").textContent = "Añade frases para comenzar.";
+            document.getElementById("autorDesamor").textContent = "";
+            return;
+        }
+
+        let indiceInicial = frasesDesamor.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Fuimos un cuento breve"));
+        if (indiceInicial === -1) indiceInicial = 0;
+
+        const primera = frasesDesamor[indiceInicial];
+        document.getElementById("fraseDesamor").textContent = primera.texto;
+        document.getElementById("autorDesamor").textContent = "— " + primera.autor;
+        
+        ultimoAutor = primera.autor;
+        frasesDesamor.splice(indiceInicial, 1);
+        primeraMostrada = true;
+    }
+
+    function nuevaFraseDesamor() {
+        if (!primeraMostrada) {
+            mostrarPrimeraFrase();
+            return;
+        }
+
+        if (frasesDesamor.length === 0) {
+            document.getElementById("fraseDesamor").textContent =
+                "Hoy ya no hay más frases, pero tu corazón sigue aprendiendo a sanar.";
+            document.getElementById("autorDesamor").textContent = "";
+            return;
+        }
+
+        let indice;
+        let intentos = 0;
+
+        do {
+            indice = Math.floor(Math.random() * frasesDesamor.length);
+            intentes++;
+        } while (frasesDesamor[indice].autor === ultimoAutor && intentos < 10 && frasesDesamor.length > 1);
+
+        const frase = frasesDesamor[indice];
+
+        document.getElementById("fraseDesamor").textContent = frase.texto;
+        document.getElementById("autorDesamor").textContent = "— " + frase.autor;
+
+        ultimoAutor = frase.autor;
+        frasesDesamor.splice(indice, 1);
+    }
+
+    function guardarFavorito(idFrase, idAutor) {
+        const frase = document.getElementById(idFrase).textContent;
+        let autor = document.getElementById(idAutor).textContent;
+
+        if (!frase || frase.includes("Hoy ya no hay más frases") || frase === "Añade frases para comenzar.") {
+            return;
+        }
+
+        autor = autor.replace("— ", "");
+
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        const yaExiste = favoritos.some(f => f.frase === frase);
+
+        if (!yaExiste) {
+            favoritos.push({ frase, autor });
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            alert("¡Frase guardada en tus favoritos! ❤️");
+        } else {
+            alert("Esta frase ya está en tus favoritos.");
+        }
+    }
+
+    window.onload = function() {
+        mostrarPrimeraFrase();
+    };
+    </script>
+
+</body>
+</html>
