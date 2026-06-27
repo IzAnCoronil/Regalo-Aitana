@@ -4,110 +4,143 @@
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    background: #ffe6f2; /* Rosa claro */
-    color: #4a4a4a;
+    background: linear-gradient(135deg, #f3e8ff, #ffffff); /* Unificado con el fondo degradado */
+    color: #3a3a3a;
+    min-height: 100vh;
 }
 
-/* Barra superior */
+/* NAV - Estructura unificada y protegida contra desbordamientos */
 nav {
-    background: #ffb3d9;
+    background: #4da3ff; /* Color azul unificado para la barra de navegación */
     padding: 12px 20px;
     position: fixed;
     top: 0;
     width: 100%;
     display: flex;
-    gap: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    justify-content: center; /* Centra los enlaces del menú */
+    gap: 35px; /* Espaciado idéntico al resto de las páginas */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     z-index: 100;
+    box-sizing: border-box; /* Evita roturas de layout en móviles */
 }
 
 nav a {
-    color: #4a0033;
+    color: white;
     text-decoration: none;
     font-weight: 600;
+    font-size: 1.05em;
+    transition: 0.2s;
 }
 
+nav a:hover {
+    color: #e8f4ff;
+    transform: scale(1.08);
+}
+
+/* HEADER */
 header {
     text-align: center;
-    padding: 80px 20px 30px;
-    background: transparent;
-    color: #4a0033;
+    padding: 120px 20px 40px; /* Ajustado el padding superior para no tapar el contenido con el nav */
+    color: #4a2d7f;
+}
+
+header h1 {
+    font-size: 2.6em;
+    color: #4a2d7f;
+    margin-bottom: 10px;
 }
 
 .intro {
-    font-size: 1.2em;
-    opacity: 0.8;
+    color: #6a538f;
+    font-size: 1.1em;
 }
 
-/* Frase del día */
+/* Frase del día / Contenedores comunes */
 .frase-dia {
     background: white;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 40px;
+    margin: 0 auto 30px;
+    border-radius: 20px;
+    max-width: 650px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    text-align: center;
 }
 
 /* Tarjetas de emociones */
 .emociones .grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adaptativo: se ajusta según la pantalla */
+    gap: 20px;
     padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .card {
-    padding: 25px;
+    padding: 30px 20px;
     text-align: center;
-    border-radius: 12px;
+    border-radius: 16px;
     color: white;
-    font-size: 1.3em;
+    font-size: 1.2em;
     text-decoration: none;
     font-weight: 600;
-    transition: transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
     transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-.tristeza { background: #6a8caf; }
-.ansiedad { background: #b06aa6; }
+/* Colores de las tarjetas de emociones según la paleta del proyecto */
+.alegria { background: #ffbe0b; }
 .motivacion { background: #ff8c42; }
-.calma { background: #6ed3a0; }
+.melancolia { background: #6a8caf; }
+.ansiedad { background: #b06aa6; }
+.estres { background: #2ec4b6; }
+.desamor { background: #e63946; }
 
-/* Frases */
+/* Lista de Frases */
 .lista-frases {
     padding: 20px;
-    margin-top: 60px;
+    max-width: 900px;
+    margin: 20px auto 60px;
 }
 
 .frase {
     background: white;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
+/* Botones de acción */
 button {
-    margin-top: 10px;
-    padding: 8px 12px;
+    margin-top: 15px;
+    padding: 12px 20px;
     border: none;
-    background: #ff66a3;
+    background: #2ec4b6; /* Unificado con el tono turquesa del proyecto */
     color: white;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 1em;
+    transition: 0.2s;
 }
 
 button:hover {
-    background: #ff3385;
+    background: #20a498;
+    transform: scale(1.03);
 }
 
 /* Footer */
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 30px 20px;
     margin-top: 40px;
+    color: #6a538f;
+    font-size: 0.95em;
 }
