@@ -16,7 +16,7 @@
             min-height: 100vh;
         }
 
-        /* NAV - Estructura unificada */
+        /* NAV - Estructura unificada y protegida contra desbordamientos */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
@@ -28,6 +28,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box; /* Evita que rompa el layout en móviles */
         }
 
         nav a {
@@ -155,7 +156,7 @@
 <body>
 
     <nav>
-        <a href="Index.html">Inicio</a>
+        <a href="index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
