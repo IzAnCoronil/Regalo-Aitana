@@ -337,8 +337,9 @@
         // NUEVA FRASE
         // ==========================
         function nuevaFraseMotivacion() {
+            // Si ya no quedan frases en el mazo, muestra el mensaje personalizado pedido
             if (frasesMotivacion.length === 0) {
-                document.getElementById("fraseMotivacion").textContent = "Bueno, ya se han acabado y si quieres más estaré encantado de seguir ayudándote.";
+                document.getElementById("fraseMotivacion").textContent = "Ya no hay más frases si quieres más sólo tienes que pedirlas";
                 document.getElementById("autorMotivacion").textContent = "";
                 return;
             }
@@ -371,7 +372,8 @@
             const frase = document.getElementById(idFrase).textContent;
             let autor = document.getElementById(idAutor).textContent;
 
-            if (!frase || frase.includes("ya se han acabado") || frase === "Añade frases para comenzar.") {
+            // Filtro actualizado para que no guarde el aviso final en favoritos
+            if (!frase || frase === "Ya no hay más frases si quieres más sólo tienes que pedirlas" || frase === "Añade frases para comenzar.") {
                 return; 
             }
 
@@ -381,7 +383,7 @@
             
             const yaExiste = favoritos.some(f => f.frase === frase);
             if (!yaExiste) {
-                favoritos.push({ frase, autor });
+                favorites.push({ frase, autor });
                 localStorage.setItem("favoritos", JSON.stringify(favoritos));
                 alert("¡Frase guardada en tus favoritos! ❤️");
             } else {
