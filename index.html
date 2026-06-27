@@ -25,6 +25,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box;
         }
         nav a {
             color: white;
@@ -134,7 +135,7 @@
             border-radius: 8px;
             font-size: 1em;
             font-weight: 600;
-            cursor:pointer;
+            cursor: pointer;
             transition: 0.2s;
         }
         .btn-interactivo:hover {
@@ -196,24 +197,22 @@
     </div>
 
     <script>
-        // Comprobación inmediata antes de que carguen las imágenes o estilos pesados
-        if (localStorage.getItem("webVisitada") !== "true") {
-            // Es la primera vez: ocultamos la web y mostramos la bienvenida
-            document.getElementById("contenido-web").style.display = "none";
-            document.getElementById("bienvenida").style.display = "flex";
-        }
+        // Envolvemos la comprobación en un evento para asegurar que todo el HTML ya cargó
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem("webVisitada") !== "true") {
+                document.getElementById("contenido-web").style.display = "none";
+                document.getElementById("bienvenida").style.display = "flex";
+            }
+        });
 
-        // Pasar de Bienvenida a Instrucciones de Uso
         function cerrarBienvenida() {
             document.getElementById("bienvenida").style.display = "none";
             document.getElementById("uso").style.display = "flex";
         }
 
-        // Finalizar introducción y guardar el estado para siempre
         function cerrarUso() {
             document.getElementById("uso").style.display = "none";
             document.getElementById("contenido-web").style.display = "block";
-            // Guardamos el token en el dispositivo
             localStorage.setItem("webVisitada", "true");
         }
     </script>
