@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Álbum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -14,7 +15,7 @@
             color: #2c3e50;
         }
 
-        /* NAV */
+        /* NAV - Unificado y corregido */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
@@ -26,6 +27,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box; /* Evita que el menú se desborde a los lados */
         }
 
         nav a {
@@ -67,11 +69,13 @@
             max-width: 900px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             text-align: center;
+            box-sizing: border-box;
         }
 
         .portada {
             width: 100%;
             max-width: 850px;
+            height: auto; /* Mantiene la proporción correcta de la imagen */
             border-radius: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
@@ -99,7 +103,7 @@
 <body>
 
     <nav>
-        <a href="Index.html">Inicio</a>
+        <a href="index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
@@ -110,15 +114,13 @@
 
     <header>
         <h1>Álbum</h1>
-        <p>No podía faltar un buen album de fotos</p>
+        <p>No podía faltar un buen álbum de fotos</p>
     </header>
 
     <div class="contenedor">
 
-        <!-- PORTADA DEL ÁLBUM -->
         <img class="portada" src="https://myalbum.com/album/HmB7E3Mc4agK7t/cover?size=1000" alt="Portada del álbum">
 
-        <!-- BOTÓN PARA ABRIR EL ÁLBUM -->
         <a class="boton-album" target="_blank" href="https://myalbum.com/album/HmB7E3Mc4agK7t/">
             Abrir álbum completo
         </a>
