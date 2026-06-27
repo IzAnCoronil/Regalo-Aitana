@@ -27,6 +27,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             z-index: 100;
+            box-sizing: border-box; /* Evita desbordamiento horizontal */
         }
 
         nav a {
@@ -110,7 +111,7 @@
         }
 
         #respirar::after {
-            content: 'Inhala';
+            content: "Inhala";
             animation: cambiarTexto 8s infinite step-end;
         }
 
@@ -120,9 +121,9 @@
         }
 
         @keyframes cambiarTexto {
-            0%, 100% { content: 'Inhala'; }
-            40% { content: 'Mantén'; }
-            60% { content: 'Exhala'; }
+            0%, 100% { content: "Inhala"; }
+            40% { content: "Mantén"; }
+            60% { content: "Exhala"; }
         }
     </style>
 </head>
@@ -130,7 +131,7 @@
 <body>
 
     <nav>
-        <a href="Index.html">Inicio</a>
+        <a href="index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
