@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Álbum</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #dfe9f7, #ffffff);
+            color: #2c3e50;
+        }
+
+        /* NAV */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #4b5c6b;
+            font-size: 1.1em;
+        }
+
+        /* CONTENEDOR */
+        .contenedor {
+            background: white;
+            padding: 30px;
+            margin: 20px auto 60px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .portada {
+            width: 100%;
+            max-width: 850px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .boton-album {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 16px 26px;
+            background: #ff8c42;
+            color: white;
+            border-radius: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: 0.2s;
+        }
+
+        .boton-album:hover {
+            background: #ff7a1f;
+            transform: scale(1.07);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>Álbum</h1>
+        <p>No podía faltar un buen album de fotos</p>
+    </header>
+
+    <div class="contenedor">
+
+        <!-- PORTADA DEL ÁLBUM -->
+        <img class="portada" src="https://myalbum.com/album/HmB7E3Mc4agK7t/cover?size=1000" alt="Portada del álbum">
+
+        <!-- BOTÓN PARA ABRIR EL ÁLBUM -->
+        <a class="boton-album" target="_blank" href="https://myalbum.com/album/HmB7E3Mc4agK7t/">
+            Abrir álbum completo
+        </a>
+
+    </div>
+
+</body>
+</html>

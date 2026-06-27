@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Alegría</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #fffbe0, #ffffff);
+            color: #3a3a3a;
+        }
+
+        /* NAV */
+        nav {
+            background: #ffe08a;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        nav a {
+            color: #5a3e00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #8a6200;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+            color: #5a3e00;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #5a3e00;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #7a622d;
+            font-size: 1.1em;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            background: white;
+            padding: 40px;
+            margin: 30px auto 60px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .frase {
+            font-size: 1.5em;
+            color: #3a3a3a;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .autor {
+            font-size: 1.05em;
+            color: #7a7a7a;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* BOTONES GRANDES */
+        button {
+            display: inline-block;
+            padding: 18px 28px;
+            background: #ff8c42;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 12px;
+            font-size: 1.2em;
+            min-width: 180px;
+        }
+
+        button:hover {
+            background: #ff7a1f;
+            transform: scale(1.08);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR */
+        .boton-guardar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff8c42;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: 0.2s;
+            z-index: 99;
+        }
+
+        .boton-guardar:hover {
+            transform: scale(1.05);
+            background: #ff7a1f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>Alegría</h1>
+        <p>Frases que le recuerdan que su sonrisa también sabe dar guerra.</p>
+    </header>
+
+    <div class="contenedor">
+        <p id="fraseAlegria" class="frase"></p>
+        <p id="autorAlegria" class="autor"></p>
+
+        <button onclick="nuevaFraseAlegria()">Otra frase</button>
+    </div>
+
+    <div class="boton-guardar" onclick="guardarFavorito('fraseAlegria','autorAlegria')">
+        ❤️ Guardar
+    </div>
+
+    <script>
+    // -----------------------------
+    // 1. FRASES ORIGINALES (200)
+    // -----------------------------
+    const frasesAlegriaOriginal = [
+        // FRASE FIJA (TUYA)
+        { texto: "Sigue dando guerra con su sonrisa, que al final acabará derrotando a la tristeza.", autor: "IzAn" },
+        // TUS FRASES
+        { texto: "Cuando sonríes, hasta el mal humor pide vacaciones.", autor: "IzAn" },
+        { texto: "Tienes una alegría tan contagiosa que debería venir con mascarilla obligatoria.", autor: "IzAn" },
+        { texto: "Iluminas tanto que el sol se pone celoso.", autor: "IzAn" },
+        { texto: "Tu risa es tan fuerte que hasta los problemas se hacen los dormidos.", autor: "IzAn" },
+        { texto: "Cuando caminas feliz, la vida se aparta para no estorbarte.", autor: "IzAn" },
+        { texto: "Tiene una forma de alegrarse que ni los lunes pueden arruinarle.", autor: "IzAn" },
+        { texto: "Tu buen humor es tan potente que debería considerarse energía renovable.", autor: "IzAn" },
+        { texto: "Cuando estás contenta, hasta el espejo sonríe primero.", autor: "IzAn" },
+        { texto: "Tu alegría es tan grande que la tristeza se esconde detrás de la puerta.", autor: "IzAn" },
+        { texto: "A veces ríes tan fuerte que hasta tus pensamientos aplauden.", autor: "IzAn" },
+        { texto: "Tienes una luz tan tuya que ni las nubes se atreven a taparla.", autor: "IzAn" },
+        { texto: "Cuando te alegras, hasta el destino se anima a portarse bien.", autor: "IzAn" },
+        { texto: "Tu sonrisa es tan peligrosa que debería venir con advertencia de alto impacto emotional.", autor: "IzAn" },
+        { texto: "A veces estás tan feliz que hasta la gravedad te deja flotar un poco.", autor: "IzAn" },
+        { texto: "Tienes un brillo tan suyo que ni la tristeza sabe cómo apagarlo.", autor: "IzAn" },
+        { texto: "Cuando te ríes, el mundo se toma un descanso para escucharla.", autor: "IzAn" },
+        { texto: "Tu alegría es tan fuerte que convierte cualquier día normal en un capítulo bonito.", autor: "IzAn" },
+        { texto: "A veces sonríes tan sincero que hasta el silencio se siente acompañado.", autor: "IzAn" },
+        { texto: "Tienes una forma de alegrarse que hace que la vida quiera imitarla.", autor: "IzAn" },
+
+        // HUMOR ELEGANTE
+        { texto: "Piensa que la mejor forma de empezar el día es con una sonrisa, aunque sea pequeña.", autor: "Oscar Wilde" },
+        { texto: "Cree que la risa es el paraguas perfecto para los días nublados.", autor: "Mark Twain" },
+        { texto: "Siente que la alegría es un acto de rebeldía contra la rutina.", autor: "Charles Chaplin" },
+        { texto: "Piensa que quien sabe reírse de sí mismo nunca se queda sin tema.", autor: "Groucho Marx" },
+        { texto: "Cree que una sonrisa a tiempo desarma más discusiones que mil argumentos.", autor: "Dorothy Parker" },
+        { texto: "Siente que la vida se vuelve más ligera cuando decides no tomártela tan en serio.", autor: "Woody Allen" },
+        { texto: "Piensa que la felicidad no hace ruido, pero se nota en los detalles.", autor: "Mafalda" },
+        { texto: "Cree que la alegría es un idioma que todos entienden, incluso en silencio.", autor: "Quino" },
+        { texto: "Siente que reír con alguien es la forma más sencilla de hacerle sitio en tu vida.", autor: "Terry Pratchett" },
+
+        // ALEGRÍA TIERNA
+        { texto: "Siente que hay días que se salvan solo porque alguien sonrió a tiempo.", autor: "Mario Benedetti" },
+        { texto: "Piensa que la felicidad no siempre es grande, a veces cabe en un gesto pequeño.", autor: "Pablo Neruda" },
+        { texto: "Cree que la alegría verdadera no grita, simplemente se queda.", autor: "Julio Cortázar" },
+        { texto: "Siente que un abrazo sincero puede cambiar el clima de un corazón entero.", autor: "Gabriel García Márquez" },
+        { texto: "Piensa que la luz más bonita es la que se enciende en los ojos cuando algo nos hace bien.", autor: "Rupi Kaur" },
+        { texto: "Cree que la paz se parece mucho a esos momentos en los que todo encaja sin esfuerzo.", autor: "Haruki Murakami" },
+        { texto: "Siente que la alegría es saber que, aunque todo cambie, aún hay cosas que te hacen sonreír.", autor: "Joan Didion" },
+        { texto: "Piensa que la felicidad no es un destino, es la forma en la que decides caminar.", autor: "Albert Camus" },
+        { texto: "Cree que hay personas que son hogar solo con mirarte y decirte 'qué bueno que estás aquí'.", autor: "Frida Kahlo" },
+        { texto: "Aunque el mundo esté lleno de sufrimiento, también está lleno de superación.", autor: "Helen Keller" },
+        { texto: "La mejor preparación para mañana es hacer bien el trabajo de hoy.", autor: "Elbert Hubbard" },
+        { texto: "No puedes detener las olas, pero puedes aprender a surfear.", autor: "Jon Kabat-Zinn" },
+        { texto: "El éxito es la suma de pequeños esfuerzos repetidos día tras día.", autor: "Robert Collier" },
+        { texto: "La oscuridad no puede expulsar a la oscuridad; solo la luz puede hacerlo.", autor: "Martin Luther King Jr." },
+        { texto: "Cada problema es una oportunidad disfrazada.", autor: "John Adams" },
+        { texto: "Cuando una puerta se cierra, otra se abre.", autor: "Alexander Graham Bell" },
+        { texto: "La perseverancia es caer diecinueve veces y levantarse veinte.", autor: "Julie Andrews" },
+        { texto: "La vida no es esperar a que pase la tormenta, sino aprender a bailar bajo la lluvia.", autor: "Vivian Greene" },
+        { texto: "Nunca confundas una derrota con una derrota definitiva.", autor: "F. Scott Fitzgerald" },
+        { texto: "Lo que está detrás de nosotros y lo que está delante son pequeñeces comparado con lo que está dentro de nosotros.", autor: "Ralph Waldo Emerson" },
+        { texto: "No cuentes los días, haz que los días cuenten.", autor: "Muhammad Ali" },
+        { texto: "Siempre parece temprano hasta que es demasiado tarde.", autor: "Martin Luther King Jr." },
+        { texto: "La esperanza sonríe desde el umbral del año que viene.", autor: "Alfred Tennyson" },
+        { texto: "Cada logro comienza con la decisión de intentarlo.", autor: "John F. Kennedy" },
+        { texto: "El camino más largo comienza con un solo paso.", autor: "Lao Tsé" },
+        { texto: "No hay nada imposible para quien se atreve.", autor: "Alejandro Magno" },
+        { texto: "La energía y la persistencia conquistan todas las cosas.", autor: "Benjamin Franklin" },
+        { texto: "La calma es un superpoder.", autor: "Eckhart Tolle" },
+        { texto: "Tu presente no tiene que definir tu futuro.", autor: "Tony Robbins" },
+        { texto: "Las dificultades preparan a menudo a personas comunes para destinos extraordinarios.", autor: "C. S. Lewis" },
+        { texto: "Todo gran sueño comienza con un soñador.", autor: "Harriet Tubman" },
+        { texto: "La fuerza crece en los momentos en que piensas que no puedes continuar.", autor: "Karen Salmansohn" },
+        { texto: "No importa lo lento que avances, siempre que no te detengas.", autor: "Confucio" },
+        { texto: "La paciencia es el arte de conservar la esperanza.", autor: "Luc de Clapiers" },
+        { texto: "La vida cambia muy rápido, de forma muy positiva, si la dejas.", autor: "Lindsey Vonn" },
+        { texto: "La confianza llega cuando dejas de buscar la perfección.", autor: "Brené Brown" },
+        { texto: "La tormenta hace que los árboles tengan raíces más profundas.", autor: "Dolly Parton" },
+        { texto: "Nada grande se ha conseguido jamás sin entusiasmo.", autor: "Ralph Waldo Emerson" },
+        { texto: "Las dificultades son cosas destinadas a despertar, no a desanimar.", autor: "William Ellery Channing" },
+        { texto: "Cada día es una nueva oportunidad para cambiar tu vida.", autor: "Anónimo" },
+        { texto: "La esperanza es poder ver que hay luz a pesar de toda la oscuridad.", autor: "Desmond Tutu" },
+        { texto: "No dejes que lo que no puedes hacer interfiera con lo que sí puedes hacer.", autor: "John Wooden" },
+        { texto: "El futuro depende de lo que hagas hoy.", autor: "Mahatma Gandhi" },
+        { texto: "La mente es todo; te conviertes en aquello que piensas.", autor: "Buda" },
+        { texto: "La felicidad es una dirección, no un lugar.", autor: "Sydney J. Harris" },
+        { texto: "Cuando ya no podemos cambiar una situación, tenemos el desafío de cambiarnos a nosotros mismos.", autor: "Viktor Frankl" },
+        { texto: "Lo mejor está por llegar.", autor: "Frank Sinatra" },
+        { texto: "El fracaso es simplemente la oportunidad de comenzar de nuevo con más inteligencia.", autor: "Henry Ford" },
+        { texto: "Nunca pierdas la fe en ti mismo.", autor: "William James" },
+        { texto: "Los obstáculos son esas cosas que ves cuando apartas la vista de tu meta.", autor: "Henry Ford" },
+        { texto: "Todo lo que necesitas ya está dentro de ti.", autor: "Rumi" },
+        { texto: "La paz comienza con una sonrisa.", autor: "Madre Teresa" },
+        { texto: "La verdadera fortaleza es mantenerte amable en tiempos difíciles.", autor: "Anónimo" },
+        { texto: "El éxito es no definitivo; el fracaso no es fatal.", autor: "Winston Churchill" },
+        { texto: "Las estrellas brillan más cuando la noche es más oscura.", autor: "Proverbio persa" },
+        { texto: "La vida siempre ofrece una segunda oportunidad llamada mañana.", autor: "Nicholas Sparks" },
+        { texto: "Respira. Es solo un mal día, no una mala vida.", autor: "Mary Engelbreit" },
+        { texto: "La valentía no siempre ruge; a veces es una voz tranquila que dice: mañana lo intentaré otra vez.", autor: "Mary Anne Radmacher" },
+        { texto: "Nunca subestimes el poder de un pequeño paso hacia adelante.", autor: "Anónimo" },
+        { texto: "Lo que hoy parece una montaña, mañana será parte del paisaje.", autor: "Anónimo" },
+        { texto: "Tu fuerza es mayor de lo que imaginas.", autor: "Harper Lee" },
+        { texto: "Incluso las grietas dejan pasar la luz.", autor: "Leonard Cohen" },
+        { texto: "No importa cuántas veces caigas, sino cuántas veces te levantes.", autor: "Nelson Mandela" },
+        { texto: "La serenidad llega cuando aceptas lo que no puedes controlar.", autor: "Reinhold Niebuhr" },
+        { texto: "Los momentos difíciles también pasan.", autor: "Robert H. Schuller" },
+        { texto: "Cada amanecer trae una nueva posibilidad.", autor: "Maya Angelou" },
+        { texto: "Tu historia aún se está escribiendo.", autor: "J. K. Rowling" },
+        { texto: "Las nubes pasan, el cielo permanece.", autor: "Ramana Maharshi" },
+        { texto: "La esperanza nunca abandona a quien decide seguir adelante.", autor: "Paulo Coelho" },
+        { texto: "Siempre hay flores para quien desea verlas.", autor: "Henri Matisse" },
+        { texto: "La vida encoge o se expande en proporción a tu valentía.", autor: "Anaïs Nin" },
+        { texto: "Nada puede apagar la luz que brilla desde dentro.", autor: "Maya Angelou" },
+        { texto: "La esperanza es el único bien común a todos los hombres.", autor: "Tales de Mileto" },
+        { texto: "Cada día es una pequeña vida.", autor: "Arthur Schopenhauer" },
+        { texto: "El alma fuerte ilumina incluso los días grises.", autor: "Emily Brontë" },
+        { texto: "No hay camino para la paz, la paz es el camino.", autor: "Mahatma Gandhi" },
+        { texto: "La perseverancia es la madre de la buena suerte.", autor: "Miguel de Cervantes" },
+        { texto: "Quien conserva la capacidad de ver la belleza nunca envejece.", autor: "Franz Kafka" },
+        { texto: "Las cosas mejores y más bellas no pueden verse ni tocarse, pero se sienten.", autor: "Helen Keller" },
+        { texto: "La libertad está en ser dueños de nuestra propia vida.", autor: "Platón" },
+        { texto: "El sufrimiento deja de ser sufrimiento cuando encuentra un sentido.", autor: "Viktor Frankl" },
+        { texto: "La fe da el primer paso aunque no veas toda la escalera.", autor: "Martin Luther King Jr." },
+        { texto: "La alegría es la forma más sencilla de gratitud.", autor: "Karl Barth" },
+        { texto: "Lo que eres habla tan fuerte que no puedo oír lo que dices.", autor: "Ralph Waldo Emerson" },
+        { texto: "La paciencia todo lo alcanza.", autor: "Santa Teresa de Jesús" },
+        { texto: "El optimismo es la fe que conduce al logro.", autor: "Helen Keller" },
+        { texto: "No permitas que el ruido de las opiniones ajenas silencie tu voz interior.", autor: "Steve Jobs" },
+        { texto: "Cada nuevo día es una página en blanco.", autor: "Edith Lovejoy Pierce" },
+        { texto: "La mayor gloria no es no caer nunca, sino levantarse siempre.", autor: "Confucio" },
+        { texto: "El coraje comienza cuando decides intentarlo.", autor: "Brené Brown" },
+        { texto: "Nunca sabes lo fuerte que eres hasta que ser fuerte es tu única opción.", autor: "Bob Marley" },
+        { texto: "Los obstáculos son oportunidades para crecer.", autor: "Oprah Winfrey" },
+        { texto: "La esperanza es un riesgo que hay que correr.", autor: "Georges Bernanos" },
+        { texto: "Todo aquello que enfrentas te transforma.", autor: "Carl Jung" },
+        { texto: "La felicidad no disminuye al compartirla.", autor: "Buda" },
+        { texto: "Haz de tu vida un sueño y de tu sueño una realidad.", autor: "Antoine de Saint-Exupéry" },
+        { texto: "No existe noche tan larga que impida salir al sol.", autor: "Proverbio oriental" },
+        { texto: "La bondad es una fuerza silenciosa.", autor: "León Tolstói" },
+        { texto: "Cada paso cuenta, incluso los más pequeños.", autor: "Aesopo" },
+        { texto: "Lo importante es no dejar de hacerse preguntas.", autor: "Albert Einstein" },
+        { texto: "La esperanza renace cuando menos la esperas.", autor: "Jules Verne" },
+        { texto: "Nada es más poderoso que una mente decidida.", autor: "Mary Shelley" },
+        { texto: "Las grandes dificultades preparan grandes destinos.", autor: "Alexandre Dumas" },
+        { texto: "La vida encuentra siempre una manera.", autor: "Michael Crichton" },
+        { texto: "No temas a los cambios; suelen traer nuevas oportunidades.", autor: "Virginia Woolf" },
+        { texto: "La calma es la virtud de los fuertes.", autor: "Honoré de Balzac" },
+        { texto: "Incluso el viaje más difícil tiene un final.", autor: "Homero" },
+        { texto: "La esperanza es la última en rendirse.", autor: "José Saramago" },
+        { texto: "Siempre puedes empezar de nuevo.", autor: "Ernest Hemingway" },
+        { texto: "El tiempo pone cada cosa en su lugar.", autor: "Voltaire" },
+        { texto: "La vida recompensa a quienes perseveran.", autor: "Johann Wolfgang von Goethe" },
+        { texto: "Toda dificultad contiene una enseñanza.", autor: "Rabindranath Tagore" },
+        { texto: "La verdadera fuerza nace de la adversidad.", autor: "Fiódor Dostoyevski" },
+        { texto: "El corazón tiene razones que la razón no entiende.", autor: "Blaise Pascal" },
+        { texto: "Ninguna situación dura para siempre.", autor: "Haruki Murakami" },
+        { texto: "Cada instante es una oportunidad para renacer.", autor: "Jorge Luis Borges" },
+        { texto: "La esperanza es más fuerte que el miedo.", autor: "Ernest Shackleton" },
+        { texto: "Las pequeñas victorias también merecen celebrarse.", autor: "Louisa May Alcott" },
+        { texto: "La luz siempre encuentra una grieta por donde entrar.", autor: "Leonard Cohen" },
+        { texto: "Tu valor no depende de tus días difíciles.", autor: "Maya Angelou" },
+        { texto: "A veces descansar también es avanzar.", autor: "Hermann Hesse" },
+        { texto: "Lo que hoy pesa, mañana enseñará.", autor: "Paulo Coelho" },
+        { texto: "La tranquilidad llega cuando aceptas el presente.", autor: "Eckhart Tolle" },
+        { texto: "Nadie puede volver atrás y empezar de nuevo, pero cualquiera puede empezar hoy y crear un nuevo final.", autor: "Maria Robinson" },
+        { texto: "La esperanza es el latido silencioso de los sueños.", autor: "Khalil Gibran" },
+        { texto: "Todo pasa; también esto pasará.", autor: "León Tolstói" },
+        { texto: "Confía en el proceso aunque no entiendas el camino.", autor: "Rumi" },
+        { texto: "Los días difíciles no definen quién eres.", autor: "Viktor Frankl" },
+        { texto: "Mañana puede ser mejor de lo que imaginas.", autor: "Emily Dickinson" }
+    ];
+
+    // -----------------------------
+    // 2. CARGAR FRASES AÑADIDAS POR EL USUARIO
+    // -----------------------------
+    let frasesUsuario = JSON.parse(localStorage.getItem("alegria")) || [];
+
+    // Mezclar originales + añadidas
+    let frasesAlegria = frasesAlegriaOriginal.concat(frasesUsuario);
+
+    let ultimoAutorAlegria = null;
+    let primeraMostrada = false;
+
+    // -----------------------------
+    // 3. MOSTRAR PRIMERA FRASE FIJA
+    // -----------------------------
+    function mostrarPrimeraFrase() {
+        const primera = frasesAlegriaOriginal[0];
+        document.getElementById("fraseAlegria").textContent = primera.texto;
+        document.getElementById("autorAlegria").textContent = "— " + primera.autor;
+
+        frasesAlegria = frasesAlegria.slice(1);
+        ultimoAutorAlegria = primera.autor;
+        primeraMostrada = true;
+    }
+
+    // -----------------------------
+    // 4. NUEVA FRASE ALEATORIA
+    // -----------------------------
+    function nuevaFraseAlegria() {
+        if (!primeraMostrada) {
+            mostrarPrimeraFrase();
+            return;
+        }
+
+        if (frasesAlegria.length === 0) {
+            document.getElementById("fraseAlegria").textContent =
+                "Hoy ya no hay más frases, pero tu sonrisa puede inventar las suyas propias.";
+            document.getElementById("autorAlegria").textContent = "";
+            return;
+        }
+
+        let indice;
+        let intentos = 0;
+
+        do {
+            indice = Math.floor(Math.random() * frasesAlegria.length);
+            intentos++;
+        } while (frasesAlegria[indice].autor === ultimoAutorAlegria && intentos < 10 && frasesAlegria.length > 1);
+
+        const frase = frasesAlegria[indice];
+
+        document.getElementById("fraseAlegria").textContent = frase.texto;
+        document.getElementById("autorAlegria").textContent = "— " + frase.autor;
+
+        ultimoAutorAlegria = frase.autor;
+        frasesAlegria.splice(indice, 1);
+    }
+
+    // -----------------------------
+    // 5. GUARDAR FAVORITOS
+    // -----------------------------
+    function guardarFavorito(idFrase, idAutor) {
+        const frase = document.getElementById(idFrase).textContent;
+        let autor = document.getElementById(idAutor).textContent;
+
+        if (!frase || frase.includes("Hoy ya no hay más frases")) return;
+
+        autor = autor.replace("— ", "");
+
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        const yaExiste = favoritos.some(f => f.frase === frase);
+        
+        if (!yaExiste) {
+            favoritos.push({ frase, autor });
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            alert("¡Frase guardada en tus favoritos! ❤️");
+        } else {
+            alert("Esta frase ya está en tus favoritos.");
+        }
+    }
+
+    window.onload = function() {
+        mostrarPrimeraFrase();
+    };
+    </script>
+
+</body>
+</html>

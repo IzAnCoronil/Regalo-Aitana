@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #fff9d9, #ffffff);
+            color: #4a4a4a;
+        }
+
+        /* NAV - Estructura unificada */
+        nav {
+            background: #ffe08a;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        nav a {
+            color: #5a3e00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #8a6500;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+            color: #5a3e00;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #7c5c16;
+            font-size: 1.1em;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenido {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto 60px;
+        }
+
+        .bloque {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .frase-unica {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #b06200;
+            text-align: center;
+            margin: 30px 0;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+
+        .mensaje {
+            font-size: 1.15em;
+            line-height: 1.6;
+            text-align: center;
+            color: #4a4a4a;
+        }
+
+        /* ANIMACIÓN DE RESPIRACIÓN MEJORADA */
+        #respirar {
+            width: 180px;
+            height: 180px;
+            margin: 40px auto;
+            background: radial-gradient(circle, #ffb37e, #ff8c42);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(243, 140, 66, 0.4);
+            animation: respirar 8s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+
+        #respirar::after {
+            content: 'Inhala';
+            animation: cambiarTexto 8s infinite step-end;
+        }
+
+        @keyframes respirar {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(243, 140, 66, 0.3); }
+            40%, 60% { transform: scale(1.35); box-shadow: 0 0 35px rgba(243, 140, 66, 0.6); }
+        }
+
+        @keyframes cambiarTexto {
+            0%, 100% { content: 'Inhala'; }
+            40% { content: 'Mantén'; }
+            60% { content: 'Exhala'; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>SOS</h1>
+        <p>Para cuando el mundo pese demasiado.</p>
+    </header>
+
+    <section class="contenido">
+
+        <div class="bloque">
+            <p class="mensaje">
+                Si has llegado aquí es porque algo te duele, te pesa o te asusta.<br>
+                Y aunque no pueda estar a tu lado físicamente en este instante, quiero que recuerdes algo:
+            </p>
+
+            <p class="frase-unica">
+                “Has podido con tormentas más grandes, y esta no va a ser la excepción. Tómate tu tiempo, que yo te espero aquí.”
+            </p>
+
+            <p class="mensaje">
+                No estás sola. No estás solo.<br>
+                Respira con calma. Estoy contigo en esto, acompañándote paso a paso.
+            </p>
+        </div>
+
+        <div class="bloque">
+            <h2 style="color:#5a3e00; font-weight: 600; margin-bottom: 10px;">Respira conmigo</h2>
+            <p class="mensaje" style="color: #7a7a7a; font-size: 1em;">Sigue el ritmo del círculo para estabilizar el pulso.</p>
+            
+            <div id="respirar"></div>
+            
+            <p class="mensaje" style="font-weight: 500;">Inhala cuando crezca. Sostén un momento. Exhala cuando baje.</p>
+        </div>
+
+    </section>
+
+</body>
+</html>

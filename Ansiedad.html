@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ansiedad</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f3e8ff, #ffffff);
+            color: #3a3a3a;
+        }
+
+        /* NAV */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #4a2d7f;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #6a538f;
+            font-size: 1.1em;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            background: white;
+            padding: 40px;
+            margin: 30px auto 60px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .frase {
+            font-size: 1.5em;
+            color: #3a3a3a;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .autor {
+            font-size: 1.05em;
+            color: #7a7a7a;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* BOTONES GRANDES */
+        button {
+            display: inline-block;
+            padding: 18px 28px;
+            background: #2ec4b6;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 12px;
+            font-size: 1.2em;
+            min-width: 180px;
+        }
+
+        button:hover {
+            background: #20a498;
+            transform: scale(1.08);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR */
+        .boton-guardar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2ec4b6;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            transition: 0.2s;
+            z-index: 99;
+        }
+
+        .boton-guardar:hover {
+            background: #20a498;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>Ansiedad</h1>
+        <p>Frases que te acompañan cuando tu mente corre demasiado.</p>
+    </header>
+
+    <div class="contenedor">
+        <p id="fraseAnsiedad" class="frase"></p>
+        <p id="autorAnsiedad" class="autor"></p>
+
+        <button onclick="nuevaFraseAnsiedad()">Otra frase</button>
+    </div>
+
+    <div class="boton-guardar" onclick="guardarFavorito('fraseAnsiedad','autorAnsiedad')">
+        ❤️ Guardar
+    </div>
+
+    <script>
+    const frasesAnsiedadOriginal = [
+        // PRIMERA FRASE FIJA
+        { texto: "Mi niña, has podido superar muchas cosas y aunque te parezca que no vas a salir de esta, recuerda que tú puedes con todo, y si algún día no puedes, aquí estamos para ayudarte y quererte.", autor: "IzAn" },
+
+        // TUS FRASES (IzAn)
+        { texto: "A veces tu mente corre demasiado, pero tu corazón siempre sabe dónde frenar.", autor: "IzAn" },
+        { texto: "No estás rota, solo cansada de ser fuerte incluso cuando nadie lo nota.", autor: "IzAn" },
+        { texto: "Aunque tiemble tu interior, sigues avanzando, y eso ya es valentía.", autor: "IzAn" },
+        { texto: "Tu ansiedad no define quién eres, solo muestra cuánto has aguantado sola.", autor: "IzAn" },
+        { texto: "Mereces descanso, no exigencias; mereces calma, no presión.", autor: "IzAn" },
+        { texto: "A veces te derrumbas, pero siempre encuentras la forma de levantarte más suave.", autor: "IzAn" },
+        { texto: "No fallas por sentir demasiado, solo demuestras que sigues viva.", autor: "IzAn" },
+        { texto: "Tu cabeza hace ruido, pero tu alma sigue pidiendo paz, y la merece.", autor: "IzAn" },
+        { texto: "Aunque dudes de ti, siempre terminas demostrando que puedes con más de lo que crees.", autor: "IzAn" },
+        { texto: "No necesitas ser perfecta, solo necesitas respirar sin culparte.", autor: "IzAn" },
+        { texto: "A veces te pierdes en tus pensamientos, pero siempre vuelves con más claridad.", autor: "IzAn" },
+        { texto: "Tu ansiedad no es debilidad, es señal de cuánto intentas seguir adelante.", autor: "IzAn" },
+        { texto: "No estás sola, aunque tu mente te diga lo contrario.", autor: "IzAn" },
+        { texto: "A veces tu mundo pesa, pero aun así lo sostienes con una fuerza que ni tú ves.", autor: "IzAn" },
+        { texto: "Mereces que te abracen incluso cuando no sabes pedirlo.", autor: "IzAn" },
+        { texto: "Aunque tu mente grite, tu corazón sigue buscando calma.", autor: "IzAn" },
+        { texto: "No eres un caos, solo alguien intentando entenderse.", autor: "IzAn" },
+        { texto: "A veces sientes que no puedes más, pero siempre puedes un poquito más.", autor: "IzAn" },
+        { texto: "No estás fallando, solo estás cansada de ser fuerte todos los días.", autor: "IzAn" },
+        { texto: "Cuando a ti no te pasan cosas buenas es porque tú eres lo bueno que le pasa a otros.", autor: "IzAn" },
+        { texto: "La paz viene de dentro. No la busques fuera.", autor: "Buda" },
+        { texto: "No son las cosas las que nos perturban, sino nuestra opinión sobre ellas.", autor: "Epicteto" },
+        { texto: "Tienes poder sobre tu mente, no sobre los acontecimientos externos.", autor: "Marco Aurelio" },
+        { texto: "La felicidad depende de nosotros mismos.", autor: "Aristóteles" },
+        { texto: "Nada te turbe, nada te espante.", autor: "Santa Teresa de Jesús" },
+        { texto: "La paciencia todo lo alcanza.", autor: "Santa Teresa de Jesús" },
+        { texto: "La calma es la cuna del poder.", autor: "Josiah Gilbert Holland" },
+        { texto: "La serenidad no es estar libre de la tormenta, sino encontrar paz en ella.", autor: "Thomas Merton" },
+        { texto: "No puedes detener las olas, pero puedes aprender a surfear.", autor: "Jon Kabat-Zinn" },
+        { texto: "Cuando ya no podemos cambiar una situación, tenemos el desafío de cambiarnos a nosotros mismos.", autor: "Viktor Frankl" },
+        { texto: "El sufrimiento deja de ser sufrimiento cuando encuentra un significado.", autor: "Viktor Frankl" },
+        { texto: "La esperanza es esa cosa con plumas que se posa en el alma.", autor: "Emily Dickinson" },
+        { texto: "Mientras haya vida, hay esperanza.", autor: "Cicerón" },
+        { texto: "Las heridas son el lugar por donde entra la luz.", autor: "Rumi" },
+        { texto: "La fuerza no proviene de la capacidad física, sino de una voluntad indomable.", autor: "Mahatma Gandhi" },
+        { texto: "No hay camino para la paz; la paz es el camino.", autor: "Mahatma Gandhi" },
+        { texto: "En medio de la dificultad reside la oportunidad.", autor: "Albert Einstein" },
+        { texto: "La imaginación es más importante que el conocimiento.", autor: "Albert Einstein" },
+        { texto: "Todo parece imposible hasta que se hace.", autor: "Nelson Mandela" },
+        { texto: "Siempre parece imposible hasta que se hace.", autor: "Nelson Mandela" },
+        { texto: "Lo importante no es lo que te sucede, sino cómo reaccionas.", autor: "Epicteto" },
+        { texto: "El alma se tiñe del color de sus pensamientos.", autor: "Marco Aurelio" },
+        { texto: "La esperanza es el sueño del hombre despierto.", autor: "Aristóteles" },
+        { texto: "Cada momento es un nuevo comienzo.", autor: "T. S. Eliot" },
+        { texto: "La mayor gloria no es no caer nunca, sino levantarse siempre.", autor: "Confucio" },
+        { texto: "No importa lo lento que vayas, siempre que no te detengas.", autor: "Confucio" },
+        { texto: "Todo lo que somos es el resultado de lo que hemos pensado.", autor: "Buda" },
+        { texto: "Tres cosas no pueden ocultarse mucho tiempo: el sol, la luna y la verdad.", autor: "Buda" },
+        { texto: "La esperanza ve lo invisible, siente lo intangible y logra lo imposible.", autor: "Helen Keller" },
+        { texto: "Mantén tu rostro hacia el sol y no podrás ver las sombras.", autor: "Helen Keller" },
+        { texto: "La mejor manera de cuidar el futuro es cuidar bien el presente.", autor: "Thich Nhat Hanh" },
+        { texto: "Sonríe, respira y ve despacio.", autor: "Thich Nhat Hanh" },
+        { texto: "Los sentimientos van y vienen como nubes en un cielo ventoso.", autor: "Thich Nhat Hanh" },
+        { texto: "La paz está presente aquí y ahora.", autor: "Thich Nhat Hanh" },
+        { texto: "Respirar conscientemente es mi ancla.", autor: "Thich Nhat Hanh" },
+        { texto: "Nadie puede hacerte daño sin tu consentimiento.", autor: "Eleanor Roosevelt" },
+        { texto: "Haz cada día una cosa que te dé miedo.", autor: "Eleanor Roosevelt" },
+        { texto: "El futuro pertenece a quienes creen en la belleza de sus sueños.", autor: "Eleanor Roosevelt" },
+        { texto: "Ganas fuerza, coraje y confianza con cada experiencia.", autor: "Eleanor Roosevelt" },
+        { texto: "Debes hacer aquello que crees que no puedes hacer.", autor: "Eleanor Roosevelt" },
+        { texto: "La vida se encoge o se expande en proporción a tu valentía.", autor: "Anaïs Nin" },
+        { texto: "Los sueños son necesarios para la vida.", autor: "Anaïs Nin" },
+        { texto: "No vemos las cosas como son, las vemos como somos.", autor: "Anaïs Nin" },
+        { texto: "Cada amigo representa un mundo en nosotros.", autor: "Anaïs Nin" },
+        { texto: "La ansiedad es el mayor asesino del amor.", autor: "Anaïs Nin" },
+        { texto: "Lo que está detrás de nosotros y lo que está delante son pequeñas cosas comparadas con lo que está dentro de nosotros.", autor: "Ralph Waldo Emerson" },
+        { texto: "La confianza en uno mismo es el primer secreto del éxito.", autor: "Ralph Waldo Emerson" },
+        { texto: "Adopta el ritmo de la naturaleza: su secreto es la paciencia.", autor: "Ralph Waldo Emerson" },
+        { texto: "La única persona que estás destinada a ser es la que decidas ser.", autor: "Ralph Waldo Emerson" },
+        { texto: "La vida es un viaje, no un destino.", autor: "Ralph Waldo Emerson" },
+        { texto: "La felicidad de tu vida depende de la calidad de tus pensamientos.", autor: "Marco Aurelio" },
+        { texto: "La tranquilidad perfecta consiste en el buen orden de la mente.", autor: "Marco Aurelio" },
+        { texto: "Acepta lo que venga tejido en el patrón de tu destino.", autor: "Marco Aurelio" },
+        { texto: "No pierdas más tiempo discutiendo cómo debe ser una buena persona. Sé una.", autor: "Marco Aurelio" },
+        { texto: "La mejor venganza es no parecerse al ofensor.", autor: "Marco Aurelio" },
+        { texto: "La riqueza consiste mucho más en el disfrute que en la posesión.", autor: "Aristóteles" },
+        { texto: "La excelencia nunca es un accidente.", autor: "Aristóteles" },
+        { texto: "Conocerse a sí mismo es el principio de toda sabiduría.", autor: "Aristóteles" },
+        { texto: "La energía de la mente es la esencia de la vida.", autor: "Aristóteles" },
+        { texto: "El placer en el trabajo pone perfección en la obra.", autor: "Aristóteles" },
+        { texto: "Lo que hoy es una prueba, mañana será un recuerdo.", autor: "Séneca" },
+        { texto: "Sufrimos más en la imaginación que en la realidad.", autor: "Séneca" },
+        { texto: "Mientras vivas, sigue aprendiendo a vivir.", autor: "Séneca" },
+        { texto: "La suerte es lo que sucede cuando la preparación encuentra la oportunidad.", autor: "Séneca" },
+        { texto: "Ningún viento es favorable para quien no sabe adónde va.", autor: "Séneca" },
+        { texto: "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.", autor: "Friedrich Nietzsche" },
+        { texto: "Debes tener caos dentro de ti para dar a luz una estrella danzante.", autor: "Friedrich Nietzsche" },
+        { texto: "Conviértete en quien eres.", autor: "Friedrich Nietzsche" },
+        { texto: "Lo que no me destruye me hace más fuerte.", autor: "Friedrich Nietzsche" },
+        { texto: "La esperanza es el peor de los males porque prolonga el tormento.", autor: "Friedrich Nietzsche" },
+        { texto: "La oscuridad no puede expulsar a la oscuridad; solo la luz puede hacerlo.", autor: "Martin Luther King Jr." },
+        { texto: "La fe es dar el primer paso aunque no veas toda la escalera.", autor: "Martin Luther King Jr." },
+        { texto: "Siempre es el momento adecuado para hacer lo correcto.", autor: "Martin Luther King Jr." },
+        { texto: "Debemos aceptar una decepción finita, pero nunca perder una esperanza infinita.", autor: "Martin Luther King Jr." },
+        { texto: "El amor es la única fuerza capaz de transformar un enemigo en amigo.", autor: "Martin Luther King Jr." },
+        { texto: "No juzgues cada día por la cosecha, sino por las semillas que plantas.", autor: "Robert Louis Stevenson" },
+        { texto: "Mantén tus temores para ti, pero comparte tu valor con los demás.", autor: "Robert Louis Stevenson" },
+        { texto: "Todos vivimos con el objetivo de ser felices.", autor: "Anne Frank" },
+        { texto: "Piensa en toda la belleza que aún queda a tu alrededor.", autor: "Anne Frank" },
+        { texto: "Donde hay esperanza, hay vida.", autor: "Anne Frank" },
+        { texto: "La educación es el arma más poderosa para cambiar el mundo.", autor: "Nelson Mandela" },
+        { texto: "No hay pasión en jugar pequeño.", autor: "Nelson Mandela" },
+        { texto: "Siempre parece imposible hasta que se hace.", autor: "Nelson Mandela" },
+        { texto: "Después de escalar una gran colina, uno encuentra muchas más.", autor: "Nelson Mandela" },
+        { texto: "La valentía no es la ausencia de miedo, sino el triunfo sobre él.", autor: "Nelson Mandela" },
+        { texto: "Nada puede apagar la luz que brilla desde dentro.", autor: "Maya Angelou" },
+        { texto: "Puedes encontrar muchas derrotas, pero no debes ser derrotada.", autor: "Maya Angelou" },
+        { texto: "Haz lo mejor que puedas hasta que sepas más.", autor: "Maya Angelou" },
+        { texto: "La vida ama a quien se atreve a vivirla.", autor: "Maya Angelou" },
+        { texto: "Mi misión es prosperar, no solo sobrevivir.", autor: "Maya Angelou" },
+        { texto: "La verdadera felicidad consiste en hacer el bien.", autor: "Aristóteles" },
+        { texto: "El sabio busca la ausencia de dolor, no la abundancia de placer.", autor: "Aristóteles" },
+        { texto: "Somos lo que hacemos repetidamente.", autor: "Aristóteles" },
+        { texto: "La virtud está en el término medio.", autor: "Aristóteles" },
+        { texto: "La amistad es un alma que habita en dos cuerpos.", autor: "Aristóteles" },
+        { texto: "Nada es permanente excepto el cambio.", autor: "Heráclito" },
+        { texto: "El carácter es el destino.", autor: "Heráclito" },
+        { texto: "Nadie se baña dos veces en el mismo río.", autor: "Heráclito" },
+        { texto: "La armonía invisible es más fuerte que la visible.", autor: "Heráclito" },
+        { texto: "Los ojos son testigos más precisos que los oídos.", autor: "Heráclito" },
+        { texto: "Conócete a ti mismo.", autor: "Sócrates" },
+        { texto: "La vida no examinada no merece ser vivida.", autor: "Sócrates" },
+        { texto: "Solo sé que no sé nada.", autor: "Sócrates" },
+        { texto: "La verdadera sabiduría está en reconocer la propia ignorancia.", autor: "Sócrates" },
+        { texto: "Sé amable, porque cada persona libra una dura batalla.", autor: "Sócrates" },
+        { texto: "La libertad consiste en ser dueños de nuestra propia vida.", autor: "Platón" },
+        { texto: "La primera victoria es conquistarse a uno mismo.", autor: "Platón" },
+        { texto: "La música da alma al universo.", autor: "Platón" },
+        { texto: "El comienzo es la parte más importante del trabajo.", autor: "Platón" },
+        { texto: "La necesidad es la madre de la invención.", autor: "Platón" },
+        { texto: "Quien se domina a sí mismo es invencible.", autor: "Lao Tsé" },
+        { texto: "La naturaleza no se apresura y aun así todo se cumple.", autor: "Lao Tsé" },
+        { texto: "El silencio es una fuente de gran fortaleza.", autor: "Lao Tsé" },
+        { texto: "Un viaje de mil millas comienza con un solo paso.", autor: "Lao Tsé" },
+        { texto: "Cuando dejo ir lo que soy, me convierto en lo que puedo ser.", autor: "Lao Tsé" },
+        { texto: "La simplicidad es la máxima sofisticación.", autor: "Leonardo da Vinci" },
+        { texto: "Aprender nunca agota la mente.", autor: "Leonardo da Vinci" },
+        { texto: "La sabiduría es hija de la experiencia.", autor: "Leonardo da Vinci" },
+        { texto: "Todo nuestro conocimiento tiene su origen en las percepciones.", autor: "Leonardo da Vinci" },
+        { texto: "Quien de verdad sabe de qué habla, no encuentra razones para levantar la voz.", autor: "Leonardo da Vinci" },
+        { texto: "La paciencia es la compañera de la sabiduría.", autor: "San Agustín" },
+        { texto: "La esperanza tiene dos hermosas hijas: la indignación y el coraje.", autor: "San Agustín" },
+        { texto: "Ama y haz lo que quieras.", autor: "San Agustín" },
+        { texto: "La medida del amor es amar sin medida.", autor: "San Agustín" },
+        { texto: "La fe es creer lo que no vemos.", autor: "San Agustín" },
+        { texto: "La paz comienza con una sonrisa.", autor: "Madre Teresa" },
+        { texto: "Si juzgas a las personas, no tendrás tiempo para amarlas.", autor: "Madre Teresa" },
+        { texto: "No todos podemos hacer grandes cosas, pero sí pequeñas cosas con gran amor.", autor: "Madre Teresa" },
+        { texto: "La alegría es una red of amor.", autor: "Madre Teresa" },
+        { texto: "Las palabras amables pueden ser cortas y fáciles de decir, pero sus ecos son infinitos.", autor: "Madre Teresa" },
+        { texto: "Haz lo que puedas, con lo que tengas, donde estés.", autor: "Theodore Roosevelt" },
+        { texto: "Cree que puedes y ya estarás a medio camino.", autor: "Theodore Roosevelt" },
+        { texto: "Mantén los ojos en las estrellas y los pies en la tierra.", autor: "Theodore Roosevelt" },
+        { texto: "Nadie se preocupa por cuánto sabes hasta que sabe cuánto te importa.", autor: "Theodore Roosevelt" },
+        { texto: "La mejor recompensa de la vida es trabajar en algo que vale la pena.", autor: "Theodore Roosevelt" },
+        { texto: "La energía y la persistencia conquistan todas las cosas.", autor: "Benjamin Franklin" },
+        { texto: "Bien hecho es mejor que bien dicho.", autor: "Benjamin Franklin" },
+        { texto: "La diligencia es la madre de la buena suerte.", autor: "Benjamin Franklin" },
+        { texto: "Una inversión en conocimiento paga el mejor interés.", autor: "Benjamin Franklin" },
+        { texto: "La puerta de la sabiduría nunca está cerrada.", autor: "Benjamin Franklin" },
+        { texto: "La imaginación gobierna el mundo.", autor: "Napoleón Bonaparte" },
+        { texto: "La victoria pertenece al más perseverante.", autor: "Napoleón Bonaparte" },
+        { texto: "La fortaleza de una persona está en su voluntad.", autor: "Napoleón Bonaparte" },
+        { texto: "La habilidad no significa nada sin oportunidad.", autor: "Napoleón Bonaparte" },
+        { texto: "El coraje no es tener fuerza para seguir, es seguir cuando no tienes fuerza.", autor: "Napoleón Bonaparte" },
+        { texto: "Lo único que debemos temer es al miedo mismo.", autor: "Franklin D. Roosevelt" },
+        { texto: "La felicidad no reside en la posesión, sino en la alegría del logro.", autor: "Franklin D. Roosevelt" },
+        { texto: "La prueba de nuestro progreso no es si añadimos más a los que tienen mucho.", autor: "Franklin D. Roosevelt" },
+        { texto: "Los hombres no son prisioneros del destino, sino de sus propias mentes.", autor: "Franklin D. Roosevelt" },
+        { texto: "La confianza florece con la honestidad.", autor: "Franklin D. Roosevelt" }
+    ];
+
+    // Cargar frases añadidas por el usuario y unirlas correctamente
+    let frasesUsuario = JSON.parse(localStorage.getItem("Ansiedad")) || [];
+    let frasesAnsiedad = frasesAnsiedadOriginal.concat(frasesUsuario);
+
+    let ultimaAutora = null;
+    let primeraMostrada = false;
+
+    function mostrarPrimeraFrase() {
+        if (frasesAnsiedad.length === 0) {
+            document.getElementById("fraseAnsiedad").textContent = "Añade frases para comenzar.";
+            return;
+        }
+        // Buscar la primera frase de IzAn para que sea la inicial fija
+        let indiceInicial = frasesAnsiedad.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Mi niña, has podido superar"));
+        if (indiceInicial === -1) indiceInicial = 0;
+
+        const primera = frasesAnsiedad[indiceInicial];
+        document.getElementById("fraseAnsiedad").textContent = primera.texto;
+        document.getElementById("autorAnsiedad").textContent = "— " + primera.autor;
+        
+        ultimaAutora = primera.autor;
+        frasesAnsiedad.splice(indiceInicial, 1);
+        primeraMostrada = true;
+    }
+
+    function nuevaFraseAnsiedad() {
+        if (!primeraMostrada) {
+            mostrarPrimeraFrase();
+            return;
+        }
+
+        if (frasesAnsiedad.length === 0) {
+            document.getElementById("fraseAnsiedad").textContent =
+                "Hoy ya no hay más frases, pero tú sigues teniendo la fuerza para continuar.";
+            document.getElementById("autorAnsiedad").textContent = "";
+            return;
+        }
+
+        let indice;
+        let intentos = 0;
+
+        do {
+            indice = Math.floor(Math.random() * frasesAnsiedad.length);
+            intentos++;
+        } while (frasesAnsiedad[indice].autor === ultimaAutora && intentos < 10 && frasesAnsiedad.length > 1);
+
+        const frase = frasesAnsiedad[indice];
+
+        document.getElementById("fraseAnsiedad").textContent = frase.texto;
+        document.getElementById("autorAnsiedad").textContent = "— " + frase.autor;
+
+        ultimaAutora = frase.autor;
+        frasesAnsiedad.splice(indice, 1);
+    }
+
+    function guardarFavorito(idFrase, idAutor) {
+        const frase = document.getElementById(idFrase).textContent;
+        let autor = document.getElementById(idAutor).textContent;
+
+        if (!frase || frase.includes("Hoy ya no hay más frases") || frase === "Añade frases para comenzar.") {
+            return;
+        }
+
+        autor = autor.replace("— ", "");
+
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        const yaExiste = favoritos.some(f => f.frase === frase);
+
+        if (!yaExiste) {
+            favoritos.push({ frase, autor });
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            alert("¡Frase guardada en tus favoritos! ❤️");
+        } else {
+            alert("Esta frase ya está en tus favoritos.");
+        }
+    }
+
+    window.onload = function() {
+        mostrarPrimeraFrase();
+    };
+    </script>
+
+</body>
+</html>

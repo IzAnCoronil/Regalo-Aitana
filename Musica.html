@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendario Musical Anual</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f3e8ff, #ffffff);
+            color: #3a3a3a;
+            min-height: 100vh;
+        }
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+        header {
+            text-align: center;
+            padding: 140px 20px 20px;
+        }
+        header h1 {
+            font-size: 2.6em;
+            color: #4a2d7f;
+            margin-bottom: 10px;
+        }
+        header p {
+            color: #6a538f;
+            font-size: 1.1em;
+        }
+        .seccion-premium {
+            background: #1DB954;
+            color: white;
+            max-width: 840px;
+            margin: 20px auto 0;
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(29, 185, 84, 0.25);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .premium-txt h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.3em;
+        }
+        .premium-txt p {
+            margin: 0;
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+        .premium-inputs {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        /* Etiqueta bloqueada contra escritura y teclado virtual */
+        .codigo-texto {
+            background: rgba(0, 0, 0, 0.18);
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.15em;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            border: 2px dashed rgba(255, 255, 255, 0.6);
+            display: inline-block;
+            cursor: pointer;
+            
+            /* Permite selección rápida al tocar, pero bloquea interacciones de edición */
+            user-select: all; 
+            -webkit-user-select: all;
+            -moz-user-select: all;
+            -ms-user-select: all;
+        }
+        .btn-usado {
+            background: #ffffff;
+            color: #1DB954;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-usado:hover {
+            background: #e6f7ec;
+            transform: scale(1.02);
+        }
+        .navegacion-mes {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .btn-flecha {
+            background: #4da3ff;
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(77, 163, 255, 0.3);
+            transition: 0.2s;
+        }
+        .btn-flecha:hover {
+            background: #338be6;
+            transform: scale(1.1);
+        }
+        .mes-titulo {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #4a2d7f;
+            min-width: 180px;
+            text-align: center;
+            text-transform: capitalize;
+        }
+        .contenido {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto 60px;
+        }
+        .info-reto-hoy {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            margin-bottom: 30px;
+            border-left: 6px solid #2ec4b6;
+            text-align: left;
+        }
+        .info-reto-hoy h2 {
+            margin: 0 0 8px 0;
+            color: #4a2d7f;
+            font-size: 1.4em;
+        }
+        .info-reto-hoy p {
+            margin: 0 0 15px 0;
+            font-size: 1.1em;
+            color: #555;
+            line-height: 1.5;
+        }
+        .botones-accion {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        .btn-completar {
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: 1px solid #2ec4b6;
+            background: transparent;
+            color: #2ec4b6;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-spotify {
+            padding: 9px 16px;
+            border-radius: 8px;
+            border: none;
+            background: #1DB954;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .btn-spotify:hover {
+            background: #1ed760;
+            transform: scale(1.02);
+        }
+        .calendario-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .dias-semana-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: #6a538f;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        .dia-box {
+            background: white;
+            padding: 15px 5px;
+            border-radius: 14px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 70px;
+        }
+        .dia-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(77, 163, 255, 0.2);
+            border-color: #4da3ff;
+        }
+        .dia-box .numero-dia {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #4a2d7f;
+        }
+        .dia-box.activo-ver {
+            border-color: #2ec4b6;
+            background: #f0fdfa;
+        }
+        .dia-box.completado {
+            background: #e6f7f4;
+            border-color: #2ec4b6;
+        }
+        .dia-box.completado .numero-dia {
+            color: #20a498;
+        }
+        @media (max-width: 600px) {
+            .seccion-premium { flex-direction: column; text-align: center; }
+            .premium-inputs { width: 100%; justify-content: center; }
+            .calendario-grid, .dias-semana-header { gap: 6px; }
+            .dia-box { min-height: 50px; padding: 10px 2px; }
+            .dia-box .numero-dia { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <div id="contenedorPremium" class="seccion-premium">
+        <div class="premium-txt">
+            <h3>¡Código Spotify Premium! 🎵</h3>
+            <p>Toca el código para seleccionarlo, cópialo y pulsa usado.</p>
+        </div>
+        <div class="premium-inputs">
+            <span id="textoCodigoPremium" class="codigo-texto" inputmode="none">INCPFWWJNJT8V</span>
+            <button class="btn-usado" onclick="quemarCodigoPremium()">Usado</button>
+        </div>
+    </div>
+
+    <header>
+        <h1>Calendario Musical Anual</h1>
+        <p>Cumple tu misión diaria de menos de 10 minutos y registra tu constancia.</p>
+    </header>
+
+    <section class="contenido">
+        <div class="navegacion-mes">
+            <button class="btn-flecha" onclick="cambiarMes(-1)">◀</button>
+            <div class="mes-titulo" id="nombreMes">Junio</div>
+            <button class="btn-flecha" onclick="cambiarMes(1)">▶</button>
+        </div>
+
+        <div class="info-reto-hoy" id="bloqueDetalle">
+            <h2 id="detalleDia">Junio - Día 28 (Reto 1)</h2>
+            <p id="detalleAccion">Cargando misión diaria...</p>
+            <div class="botones-accion">
+                <button id="btnCompletarReto" class="btn-completar" onclick="marcarDiaActual()">Marcar como Completado ✓</button>
+                <button class="btn-spotify" onclick="abrirEnSpotify()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.893-.982-.336.075-.668-.135-.744-.47-.075-.336.135-.668.47-.743 3.856-.88 7.15-.51 9.82 1.127.296.18.387.563.207.86zm1.225-2.72c-.227.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.08-1.182-.413.125-.847-.107-.972-.52-.125-.413.108-.847.52-.972 3.67-1.114 8.238-.575 11.348 1.337.367.226.488.707.258 1.076zm.105-2.81c-.273.447-.857.593-1.304.32-3.184-1.89-8.423-2.063-11.45-1.144-.503.153-1.033-.133-1.186-.636-.153-.503.133-1.033.636-1.186 3.606-1.094 9.387-.9 13.04 1.272.448.266.593.85.32 1.304z"/></svg>
+                    Buscar en Spotify
+                </button>
+            </div>
+        </div>
+
+        <div class="dias-semana-header">
+            <div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div>
+        </div>
+
+        <div class="calendario-grid" id="gridCalendario"></div>
+    </section>
+
+    <script>
+        const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        const diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+        const misionesLista = [
+            "Escucha una canción que te encantaba cuando eras más peque.",
+            "Busca una canción nueva del género que menos escuchas.",
+            "Escucha una canción con un beat raro o diferente.",
+            "Pon una canción que te dé paz instantánea.",
+            "Escucha una canción que te motive a tope.",
+            "Busca una canción de un país que nunca escuchas.",
+            "Escucha una canción que te recuerde a alguien importante.",
+            "Pon una canción que te suba el ánimo sí o sí.",
+            "Escucha una canción con un inicio potente.",
+            "Busca una canción que te gustaría que sonara en tu vida como película.",
+            "Escucha una canción que te dé nostalgia sin saber por qué.",
+            "Pon una canción con una letra que te haga pensar.",
+            "Escucha una canción que te gustaría escuchar en un viaje largo.",
+            "Busca una canción que tenga un ritmo que te sorprenda.",
+            "Escucha una canción que te haga imagine una escena de anime.",
+            "Pon una canción que te gustaría que sonara en tu cumpleaños.",
+            "Escucha una canción que te dé energía para estudiar.",
+            "Busca una canción que te gustaría dedicarle a alguien.",
+            "Escucha una canción que te haga sentir poderosa.",
+            "Pon una canción que te relaje antes de dormir.",
+            "Escucha una canción con un estribillo que te encante.",
+            "Busca una canción que te haga bailar aunque no quieras.",
+            "Escucha una canción que te recuerde al verano.",
+            "Pon una canción que te gustaría escuchar en un concierto.",
+            "Escucha una canción con un mensaje bonito.",
+            "Busca una canción que te haga sentir que todo va a ir bien.",
+            "Escucha una canción que te dé ganas de entrenar.",
+            "Pon una canción que te haga reír o sonreír.",
+            "Escucha una canción con un sonido que nunca habías oído.",
+            "Busca una canción que te gustaría que fuera tu “tema personal”.",
+            "Escucha una canción que te recuerde a tu infancia.",
+            "Pon una canción que te haga sentir adulta aunque no lo seas.",
+            "Escucha una canción que te haga imaginar un videojuego.",
+            "Busca una canción que te dé ganas de salir a caminar.",
+            "Escucha una canción que te haga sentir libre.",
+            "Pon una canción que te gustaría que sonara en una fiesta.",
+            "Escucha una canción que te haga pensar en el futuro.",
+            "Busca una canción que te haga sentir que estás en una película romántica.",
+            "Escucha una canción que te haga sentir misterio.",
+            "Pon una canción que te haga sentir que puedes con todo.",
+            "Escucha una canción que tenga un drop que te guste.",
+            "Busca una canción que te haga sentir nostalgia de algo que no viviste.",
+            "Escucha una canción que te haga imaginar un atardecer.",
+            "Pon una canción que te haga sentir que estás viajando en coche.",
+            "Escucha una canción que te haga sentir calma profunda.",
+            "Busca una canción que te haga sentir que estás en un festival.",
+            "Escucha una canción que te haga sentir valentía.",
+            "Pon una canción que te haga sentir que estás empezando algo nuevo.",
+            "Escucha una canción que te haga sentir que estás en un día de reflexión.",
+            "Busca una canción que te haga sentir que estás creciendo.",
+            "Escucha una canción que te haga imaginar una escena triste.",
+            "Pon una canción que te haga sentir que estás en un opening de serie.",
+            "Escucha una canción que te haga sentir adrenalina.",
+            "Busca una canción que te haga sentir que estás en un videojuego de carreras.",
+            "Escucha una canción que te haga sentir que estás flotando.",
+            "Pon una canción que te haga sentir que estás en un día lluvioso.",
+            "Escucha una canción que te haga recordar un momento bonito.",
+            "Busca una canción que te haga sentir que estás en un sueño.",
+            "Escucha una canción que te haga sentir que estás en un universo alterno.",
+            "Pon una canción que te haga sentir que estás empezando una nueva etapa.",
+            "Escucha una canción que te haga sentir que estás en un viaje espacial.",
+            "Busca una canción que te haga sentir que estás en un parque de atracciones.",
+            "Escucha una canción que te haga sentir que estás en una playa.",
+            "Pon una canción que te haga sentir que estás en un reencuentro.",
+            "Escucha una canción que te haga sentir que estás en un momento de lo más épico.",
+            "Busca una canción que te haga sentir que estás en un bosque.",
+            "Escucha una canción que te haga sentir que estás en un día perfecto.",
+            "Pon una canción que te haga sentir que estás en un día de cambios.",
+            "Escucha una canción que te haga sentir que estás en un momento de reflexión.",
+            "Busca una canción que te haga sentir que estás en un amanecer.",
+            "Escucha una canción que te haga sentir que estás en un aeropuerto.",
+            "Pon una canción que te haga sentir que estás en un reencuentro emocionante.",
+            "Escucha una canción que te haga sentir que estás en un día de suerte.",
+            "Busca una canción que te haga sentir que estás en un día de lluvia suave.",
+            "Escucha una canción que te haga sentir que estás en un momento de victoria.",
+            "Pon una canción que te haga sentir que estás en un día de relax.",
+            "Escucha una canción que te haga sentir que estás en un día de aventuras.",
+            "Busca una canción que te haga sentir que estás en un día de descubrimientos.",
+            "Escucha una canción que te haga sentir que estás en un día de despedida.",
+            "Pon una canción que te haga sentir que estás en un día de celebración.",
+            "Escucha una canción que te haga sentir que estás en un día de inspiración.",
+            "Busca una canción que te haga sentir que estás en un día de calma.",
+            "Escucha una canción que te haga sentir que estás en un día de decisiones.",
+            "Pon una canción que te haga sentir que estás en un día de risas.",
+            "Escucha una canción que te haga sentir que estás en un día de cambios importantes.",
+            "Busca una canción que te haga sentir que estás en un día de sorpresas.",
+            "Escucha una canción que te haga sentir que estás en un día de conexión contigo misma.",
+            "Pon una canción que te haga sentir que estás en un día de motivación.",
+            "Escucha una canción que te haga sentir que estás en un día de calma mental.",
+            "Busca una canción que te haga sentir que estás en un día de creatividad.",
+            "Escucha una canción que te haga sentir que estás en un día de amistad.",
+            "Pon una canción que te haga sentir que estás en un día de familia.",
+            "Escucha una canción que te haga sentir que estás en un día de descubrimiento personal.",
+            "Busca una canción que te haga sentir que estás en un día de energía.",
+            "Escucha una canción que te haga sentir que estás en un día de nostalgia.",
+            "Pon una canción que te haga sentir que estás en un día de valentía.",
+            "Escucha una canción que te haga sentir que estás en un día de calma interior.",
+            "Busca una canción que te haga sentir que estás en un día de emoción.",
+            "Escucha una canción que te haga sentir que estás en un día de reflexión profunda.",
+            "Pon una canción que te haga sentir que estás en un día de claridad.",
+            "Escucha una canción que te haga sentir que estás en un día de renovación.",
+            "Pon una canción que te haga sentir que estás en un día de descubrimiento.",
+            "Escucha una canción que te haga sentir que estás en un día de calma emocional.",
+            "Busca una canción que te haga sentir que estás en un día de energía positiva.",
+            "Escucha una canción que te haga sentir que estás en un día de inspiración creativa.",
+            "Pon una canción que te haga sentir que estás en un día de conexión con alguien.",
+            "Escucha una canción que te haga sentir que estás en un día de reflexión ligera.",
+            "Busca una canción que te haga sentir que estás en un día de emoción tranquila.",
+            "Escucha una canción que te haga sentir que estás en un día de claridad mental.",
+            "Pon una canción que te haga sentir que estás en un día de motivación suave.",
+            "Escucha una canción que te haga sentir que estás en un día de descanso.",
+            "Pon una canción que te haga sentir que estás en un día de descubrimiento musical.",
+            "Escucha una canción que te haga sentir que estás en un día de sueños.",
+            "Busca una canción que te haga sentir que estás en un día de emociones nuevas.",
+            "Escucha una canción que te haga sentir que estás en un día de paz.",
+            "Pon una canción que te haga sentir que estás en un día de alegría.",
+            "Escucha una canción que te haga sentir que estás en un día de calma total.",
+            "Busca una canción que te haga sentir que estás en un día de buena vibra.",
+            "Escucha una canción que te haga sentir que estás en un día de inspiración pura.",
+            "Pon una canción que te haga sentir que estás en un día de desconexión.",
+            "Escucha una canción que te haga sentir que estás en un día de recuerdos felices.",
+            "Busca una canción que te haga sentir que estás en un día de nuevos comienzos.",
+            "Escucha una canción que te haga sentir que estás en un día de fuerza.",
+            "Pon una canción que te haga sentir que estás en un día de tranquilidad absoluta.",
+            "Escucha una canción que te haga sentir que estás en un día de optimismo.",
+            "Busca una canción que te haga sentir que estás en un día de imaginación.",
+            "Escucha una canción que te haga sentir que estás en un día de sintonía.",
+            "Pon una canción que te haga sentir que estás en un día de equilibrio.",
+            "Escucha una canción que te haga sentir que estás en un día de foco.",
+            "Busca una canción que te haga sentir que estás en un día de entusiasmo.",
+            "Escucha una canción que te haga sentir que estás en un día de serenidad.",
+            "Pon una canción que te haga sentir que estás en un día de dinamismo.",
+            "Escucha una canción que te haga sentir que estás en un día de armonía.",
+            "Busca una canción que te haga sentir que estás en un día de gratitud.",
+            "Escucha una canción que te haga sentir que estás en un día de luz.",
+            "Pon una canción que te haga sentir que estás en un día de fluidez.",
+            "Escucha una canción que te haga sentir que estás en un día de frescura.",
+            "Busca una canción que te haga sentir que estás en un día de vitalidad.",
+            "Escucha una canción que te haga sentir que estás en un día de autenticidad.",
+            "Pon una canción que te haga sentir que estás en un día de libertad total.",
+            "Escucha una canción que te haga sentir que estás en un día de superación.",
+            "Busca una canción que te haga sentir que estás en un día de bienestar.",
+            "Escucha una canción que te haga sentir que estás en un día de magia.",
+            "Pon una canción que te haga sentir que estás en un día de brillo.",
+            "Escucha una canción que te haga sentir que estás en un día de juego.",
+            "Busca una canción que te haga sentir que estás en un día de curiosidad.",
+            "Escucha una canción que te haga sentir que estás en un día de complicidad.",
+            "Pon una canción que te haga sentir que estás en un día de plenitud.",
+            "Escucha una canción que te haga sentir que estás en un día de calma azul.",
+            "Busca una canción que te haga sentir que estás en un día de horizontes nuevos.",
+            "Escucha una canción que te haga sentir que estás en un día de latidos fuertes.",
+            "Pon una canción que te haga sentir que estás en un día de pasos firmes.",
+            "Escucha una canción que te haga sentir que estás en un día de miradas al cielo.",
+            "Busca una canción que te haga sentir que estás en un día de viento fresco.",
+            "Escucha una canción que te haga sentir que estás en un día de sol radiante.",
+            "Pon una canción que te haga sentir que estás en un día de estrellas.",
+            "Escucha una canción que te haga sentir que estás en un día de misterios bonitos.",
+            "Busca una canción que te haga sentir que estás en un día de canciones eternas.",
+            "Escucha una canción que te haga sentir que estás en un día de ritmos contagiosos.",
+            "Pon una canción que te haga sentir que estás en un día de voces suaves.",
+            "Escucha una canción que te haga sentir que estás en un día de guitarras acústicas.",
+            "Busca una canción que te haga sentir que estás en un día de sintetizadores retro.",
+            "Escucha una canción que te haga sentir que estás en un día de pianos elegantes.",
+            "Pon una canción que te haga sentir que estás en un día de bajos potentes.",
+            "Escucha una canción que te haga sentir que estás en un día de letras profundas.",
+            "Busca una canción que te haga sentir que estás en un día de estribillos pegadizos.",
+            "Escucha una canción que te haga sentir que estás en un día de descubrimientos ocultos.",
+            "Pon una canción que te haga sentir que estás en un día de clásicos inolvidables.",
+            "Escucha una canción que te haga sentir que estás en un día de música indie.",
+            "Busca una canción que te haga sentir que estás en un día de pop enérgico.",
+            "Escucha una canción que te haga sentir que estás en un día de rock con fuerza.",
+            "Pon una canción que te haga sentir que estás en un día de lo-fi relajante.",
+            "Escucha una canción que te haga sentir que estás en un día de electrónica bailable.",
+            "Busca una canción que te haga sentir que estás en un día de jazz tranquilo.",
+            "Escucha una canción que te haga sentir que estás en un día de bandas sonoras.",
+            "Pon una canción que te haga sentir que estás en un día de acústicos puros.",
+            "Escucha una canción que te haga sentir que estás en un día de canciones compartidas.",
+            "Busca una canción que te haga sentir que estás en un día de listas aleatorias.",
+            "Escucha una canción que te haga sentir que estás en un día de tesoros musicales.",
+            "Pon una canción que te haga sentir que estás en un día de bucles infinitos.",
+            "Escucha una canción que te haga sentir que estás en un día de saltar de alegría.",
+            "Busca una canción que te haga sentir que estás en un día de cantar a pleno pulmón.",
+            "Escucha una canción que te haga sentir que estás en un día de bailar en la habitación.",
+            "Pon una canción que te haga sentir que estás en un día de cerrar los ojos y escuchar.",
+            "Escucha una canción que te haga sentir que estás en un día de sonreír sin motivo.",
+            "Busca una canción que te haga sentir que estás en un día de calma en el alma.",
+            "Escucha una canción que te haga sentir que estás en un día de energía renovada.",
+            "Pon una canción que te haga sentir que estás en un día de sueños despierta.",
+            "Escucha una canción que te haga sentir que estás en un día de magia cotidiana.",
+            "Busca una canción que te haga sentir que estás en un día de pequeños detalles.",
+            "Escucha una canción que te haga sentir que estás en un día de grandes momentos.",
+            "Pon una canción que te haga sentir que estás en un día de abrazos musicales.",
+            "Escucha una canción que te haga sentir que estás en un día de refugio sonoro.",
+            "Busca una canción que te haga sentir que estás en un día de viaje interior.",
+            "Escucha una canción que te haga sentir que estás en un día de horizontes infinitos.",
+            "Pon una canción que te haga sentir que estás en un día de pisar fuerte.",
+            "Escucha una canción que te haga sentir que estás en un día de calma en la tormenta.",
+            "Busca una canción que te haga sentir que estás en un día de rayos de sol.",
+            "Escucha una canción que te haga sentir que estás en un día de nubes blancas.",
+            "Pon una canción que te haga sentir que estás en un día de lluvia reconfortante.",
+            "Escucha una canción que te haga sentir que estás en un día de viento a favor.",
+            "Busca una canción que te haga sentir que estás en un día de mar tranquilo.",
+            "Escucha una canción que te haga sentir que estás en un día de montaña alta.",
+            "Pon una canción que te haga sentir que estás en un día de ciudad vibrante.",
+            "Escucha una canción que te haga sentir que estás en un día de naturaleza viva.",
+            "Busca una canción que te haga sentir que estás en un día de espacio exterior.",
+            "Escucha una canción que te haga sentir que estás en un día de mundos fantásticos.",
+            "Pon una canción que te haga sentir que estás en un día de historias por contar.",
+            "Escucha una canción que te haga sentir que estás en un día de páginas en blanco.",
+            "Busca una canción que te haga sentir que estás en un día de capítulos nuevos.",
+            "Escucha una canción que te haga sentir que estás en un día de rimas perfectas.",
+            "Pon una canción que te haga sentir que estás en un día de acordes mágicos.",
+            "Escucha una canción que te haga sentir que estás en un día de melodías que sanan.",
+            "Busca una canción que te haga sentir que estás en un día de ritmos que unen.",
+            "Escucha una canción que te haga sentir que estás en un día de voces que inspiran.",
+            "Pon una canción que te haga sentir que estás en un día de sonidos que relajan.",
+            "Escucha una canción que te haga sentir que estás en un día de energía pura.",
+            "Busca una canción que te haga sentir que estás en un día de pura positividad.",
+            "Escucha una canción que te haga sentir que estás en un día de motivación infinita.",
+            "Pon una canción que te haga sentir que estás en un día de concentración total.",
+            "Escucha una canción que te haga sentir que estás en un día de descanso merecido.",
+            "Busca una canción que te haga sentir que estás en un día de desconexión digital.",
+            "Escucha una canción que te haga sentir que estás en un día de conexión real.",
+            "Pon una canción que te haga sentir que estás en un día de risas compartidas.",
+            "Escucha una canción que te haga sentir que estás en un día de confidencias.",
+            "Busca una canción que te haga sentir que estás en un día de miradas cómplices.",
+            "Escucha una canción que te haga sentir que estás en un día de lazos fortes.",
+            "Pon una canción que te haga sentir que estás en un día de recuerdos imborrables.",
+            "Escucha una canción que te haga sentir que estás en un día de momentos dorados.",
+            "Busca una canción que te haga sentir que estás en un día de destellos de luz.",
+            "Escucha una canción que te haga sentir que estás en un día de fuego sagrado.",
+            "Pon una canción que te haga sentir que estás en un día de tierra firme.",
+            "Escucha una canción que te haga sentir que estás en un día de aire limpio.",
+            "Busca una canción que te haga sentir que estás en un día de agua cristalina.",
+            "Escucha una canción que te haga sentir que estás en un día de fluir sin prisa.",
+            "Pon una canción que te haga sentir que estás en un día de avanzar con paso firme.",
+            "Escucha una canción que te haga sentir que estás en un día de mirar al frente.",
+            "Busca una canción que te haga sentir que estás en un día de sonreír al espejo.",
+            "Escucha una canción que te haga sentir que estás en un día de quererte mucho.",
+            "Pon una canción que te haga sentir que estás en un día de cuidarte bien.",
+            "Escucha una canción que te haga sentir que estás en un día de mimar tu mente.",
+            "Busca una canción que te haga sentir que estás en un día de alimentar tus sueños.",
+            "Escucha una canción que te haga sentir que estás en un día de romper barreras.",
+            "Pon una canción que te haga sentir que estás en un día de superar retos.",
+            "Escucha una canción que te haga sentir que estás en un día de alcanzar metas.",
+            "Busca una canción que te haga sentir que estás en un día de celebrar logros.",
+            "Escucha una canción que te haga sentir que estás en un día de aplaudir tus pasos.",
+            "Pon una canción que te haga sentir que estás en un día de sentir orgullo de ti.",
+            "Escucha una canción que te haga sentir que estás en un día de ser tú misma.",
+            "Busca una canción que te haga sentir que estás en un día de autenticidad total.",
+            "Escucha una canción que te haga sentir que estás en un día de esencia pura.",
+            "Pon una canción que te haga sentir que estás en un día de vibrar alto.",
+            "Escucha una canción que te haga sentir que estás en un día de resonancia positiva.",
+            "Busca una canción que te haga sentir que estás en un día de eco feliz.",
+            "Escucha una canción que te haga sentir que estás en un día de sintonía fina.",
+            "Pon una canción que te haga sentir que estás en un día de notas altas.",
+            "Escucha una canción que te haga sentir que estás en un día de ritmo constante.",
+            "Busca una canción que te haga sentir que estás en un día de compás marcado.",
+            "Escucha una canción que te haga sentir que estás en un día de melodía eterna.",
+            "Pon una canción que te haga sentir que estás en un día de canción perfecta.",
+            "Escucha una canción que te haga sentir que estás en un día de acordes abiertos.",
+            "Busca una canción que te haga sentir que estás en un día de puentes musicales.",
+            "Escucha una canción que te haga sentir que estás en un día de estribillos salvajes.",
+            "Pon una canción que te haga sentir que estás en un día de intros.",
+            "Escucha una canción que te haga sentir que estás en un día de finales épicos.",
+            "Busca una canción que te haga sentir que estás en un día de aplausos cerrados.",
+            "Escucha una canción que te haga sentir que estás en un día de bises infinitos.",
+            "Pon una canción que te haga sentir que estás en un día de música en las venas.",
+            "Escucha una canción que te haga sentir que estás en un día de latido musical.",
+            "Busca una canción que te haga sentir que estás en un día de alma sonora.",
+            "Escucha una canción que te haga sentir que estás en un día de mente despierta.",
+            "Pon una canción que te haga sentir que estás en un día de corazón contento.",
+            "Escucha una canción que te haga sentir que estás en un día de pasos ligeros.",
+            "Busca una canción que te haga sentir que estás en un día de vuelo alto.",
+            "Escucha una canción que te haga sentir que estás en un día de alas abiertas.",
+            "Pon una canción que te haga sentir que estás en un día de cielos despejados.",
+            "Escucha una canción que te haga sentir que estás en un día de nubes de algodón.",
+            "Busca una canción que te haga sentir que estás en un día de arcoíris.",
+            "Escucha una canción que te haga sentir que estás en un día de sol dorado.",
+            "Pon una canción que te haga sentir que estás en un día de atardeceres mágicos.",
+            "Escucha una canción que te haga sentir que estás en un día de noches estrelladas.",
+            "Busca una canción que te haga sentir que estás en un día de luna brillante.",
+            "Escucha una canción que te haga sentir que estás en un día de destellos de plata.",
+            "Pon una canción que te haga sentir que estás en un día de oro puro.",
+            "Escucha una canción que te haga sentir que estás en un día de diamantes sonoros.",
+            "Busca una canción que te haga sentir que estás en un día de joyas ocultas.",
+            "Escucha una canción que te haga sentir que estás en un día de tesoros por descubrir.",
+            "Pon una canción que te haga sentir que estás en un día de mapas secretos.",
+            "Escucha una canción que te haga sentir que estás en un día de brújulas fijas.",
+            "Busca una canción que te haga sentir que estás en un día de norte claro.",
+            "Escucha una canción que te haga sentir que estás en un día de caminos abiertos.",
+            "Pon una canción que te haga sentir que estás en un día de senderos verdes.",
+            "Escucha una canción que te haga sentir que estás en un día de flores frescas.",
+            "Busca una canción que te haga sentir que estás en un día de rocío matinal.",
+            "Escucha una canción que te haga sentir que estás en un día de amaneceres limpios.",
+            "Pon una canción que te haga sentir que estás en un día de aire renovado.",
+            "Escucha una canción que te haga sentir que estás en un día de brisa marina.",
+            "Busca una canción que te haga sentir que estás en un día de olas suaves.",
+            "Escucha una canción que te haga sentir que estás en un día de arena fina.",
+            "Pon una canción que te haga sentir que estás en un día de conchas de mar.",
+            "Escucha una canción que te haga sentir que estás en un día de horizontes azules.",
+            "Busca una canción que te haga sentir que estás en un día de profundidad marina.",
+            "Escucha una canción que te haga sentir que estás en un día de corrientes a favor.",
+            "Pon una canción que te haga sentir que estás en un día de navegar sin rumbo.",
+            "Escucha una canción que te haga sentir que estás en un día de puerto seguro.",
+            "Busca una canción que te haga sentir que estás en un día de faros encendidos.",
+            "Escucha una canción que te haga sentir que estás en un día de guías místicas.",
+            "Pon una canción que te haga sentir que estás en un día de estrellas fugaces.",
+            "Escucha una canción que te haga sentir que estás en un día de deseos cumplidos.",
+            "Busca una canción que te haga sentir que estás en un día de magia pura.",
+            "Escucha una canción que te haga sentir que estás en un día de cuentos de hadas.",
+            "Pon una canción que te haga sentir que estás en un día de castillos en el aire.",
+            "Escucha una canción que te haga sentir que estás en un día de realidades bonitas.",
+            "Busca una canción que te haga sentir que estás en un día de pies en la tierra.",
+            "Escucha una canción que te haga sentir que estás en un día de raíces fuertes.",
+            "Pon una canción que te haga sentir que estás en un día de troncos firmes.",
+            "Escucha una canción que te haga sentir que estás en un día de hojas verdes.",
+            "Busca una canción que te haga sentir que estás en un día de frutos dulces.",
+            "Escucha una canción que te haga sentir que estás en un día de cosechas felices.",
+            "Pon una canción que te haga sentir que estás en un día de siembras ilusionadas.",
+            "Escucha una canción que te haga sentir que estás en un día de tierra mojada.",
+            "Busca una canción que te haga sentir que estás en un día de olor a lluvia.",
+            "Escucha una canción que te haga sentir que estás en un día de nubes pasajeras.",
+            "Pon una canción que te haga sentir que estás en un día de claros en el cielo.",
+            "Escucha una canción que te haga sentir que estás en un día de sol radiante.",
+            "Busca una canción que te haga sentir que estás en un día de calor hogareño.",
+            "Escucha una canción que te haga sentir que estás en un día de fuego acogedor.",
+            "Pon una canción que te haga sentir que estás en un día de mantas y música.",
+            "Escucha una canción que te haga sentir que estás en un día de café o té caliente.",
+            "Busca una canción que te haga sentir que estás en un día de ventanas lluviosas.",
+            "Escucha una canción que te haga sentir que estás en un día de calma interior profunda.",
+            "Pon una canción que te haga sentir que estás en un día de paz absoluta.",
+            "Escucha una canción que te haga sentir que estás en un día de silencio sonoro.",
+            "Busca una canción que te haga sentir que estás en un día de susurros dulces.",
+            "Escucha una canción que te haga sentir que estás en un día de ecos lejanos.",
+            "Pon una canción que te haga sentir que estás en un día de recuerdos que abrazan.",
+            "Escucha una canción que te haga sentir que estás en un día de nostalgia feliz.",
+            "Busca una canción que te haga sentir que estás en un día de sonrisas de ayer.",
+            "Escucha una canción que te haga sentir que estás en un día de pasos hacia el mañana.",
+            "Pon una canción que te haga sentir que estás en un día de futuro brillante.",
+            "Escucha una canción que te haga sentir que estás en un día de horizontes infinitos.",
+            "Escucha una canción que te haga sentir que estás en el último paso de tu gran año musical."
+        ];
+
+        let mesActualIndex = 5; 
+        let diaSeleccionadoGlobal = 28; 
+        const anioActual = 2026;
+
+        function calcularDiaDelAnio(mes, dia) {
+            let contador = 0;
+            for (let m = 0; m < mes; m++) {
+                contador += diasPorMes[m];
+            }
+            return contador + dia;
+        }
+
+        const diaAnioInicioRetos = calcularDiaDelAnio(5, 28); 
+
+        function obtenerMisionExacta(mes, dia) {
+            if (misionesLista.length === 0) return "Añade tus misiones al código.";
+            const diaAnioActual = calcularDiaDelAnio(mes, dia);
+            let diferencia = diaAnioActual - diaAnioInicioRetos;
+            if (diferencia < 0) diferencia = 365 + diferencia;
+            return misionesLista[diferencia % misionesLista.length];
+        }
+
+        function inicializarCalendario() {
+            verificarEstadoPremium();
+            document.getElementById("nombreMes").textContent = nombresMeses[mesActualIndex];
+            const grid = document.getElementById("gridCalendario");
+            grid.innerHTML = "";
+
+            let completados = JSON.parse(localStorage.getItem("anualCompletados")) || {};
+            const totalDias = diasPorMes[mesActualIndex];
+
+            let primerDiaFecha = new Date(anioActual, mesActualIndex, 1);
+            let diaSemanaInicio = primerDiaFecha.getDay();
+            diaSemanaInicio = diaSemanaInicio === 0 ? 6 : diaSemanaInicio - 1; 
+
+            for (let e = 0; e < diaSemanaInicio; e++) {
+                const espacioVacio = document.createElement("div");
+                grid.appendChild(espacioVacio);
+            }
+
+            for (let i = 1; i <= totalDias; i++) {
+                const claveCompletado = `${mesActualIndex}_${i}`;
+                const esCompletado = completados[claveCompletado] ? "completado" : "";
+                const esActivo = i === diaSeleccionadoGlobal ? "activo-ver" : "";
+
+                const box = document.createElement("div");
+                box.className = `dia-box ${esCompletado} ${esActivo}`;
+                box.onclick = (function(d) { return function() { cambiarDiaEnFoco(d); }; })(i);
+                box.innerHTML = `<div class="numero-dia">${i}</div>`;
+                grid.appendChild(box);
+            }
+            actualizarCajaDetalle();
+        }
+
+        function cambiarMes(direccion) {
+            mesActualIndex += direccion;
+            if (mesActualIndex > 11) mesActualIndex = 0;
+            if (mesActualIndex < 0) mesActualIndex = 11;
+            diaSeleccionadoGlobal = 1; 
+            inicializarCalendario();
+        }
+
+        function cambiarDiaEnFoco(numeroDia) {
+            diaSeleccionadoGlobal = numeroDia;
+            const cajas = document.querySelectorAll(".calendario-grid .dia-box");
+            cajas.forEach(caja => caja.classList.remove("activo-ver"));
+            if(cajas[numeroDia - 1]) cajas[numeroDia - 1].classList.add("activo-ver");
+            actualizarCajaDetalle();
+        }
+
+        function actualizarCajaDetalle() {
+            let completados = JSON.parse(localStorage.getItem("anualCompletados")) || {};
+            const textoMision = obtenerMisionExacta(mesActualIndex, diaSeleccionadoGlobal);
+
+            const diaAnioActual = calcularDiaDelAnio(mesActualIndex, diaSeleccionadoGlobal);
+            let numeroReto = diaAnioActual - diaAnioInicioRetos + 1;
+            if (numeroReto <= 0) numeroReto = 365 + numeroReto;
+
+            document.getElementById("detalleDia").textContent = `${nombresMeses[mesActualIndex]} - Día ${diaSeleccionadoGlobal} (Reto ${numeroReto})`;
+            document.getElementById("detalleAccion").textContent = textoMision;
+            
+            const claveCompletado = `${mesActualIndex}_${diaSeleccionadoGlobal}`;
+            const btnCheck = document.getElementById("btnCompletarReto");
+            if (completados[claveCompletado]) {
+                btnCheck.textContent = "Desmarcar este día";
+                btnCheck.style.color = "#7a7a7a";
+                btnCheck.style.borderColor = "#bbb";
+            } else {
+                btnCheck.textContent = "Marcar como Completado ✓";
+                btnCheck.style.color = "#2ec4b6";
+                btnCheck.style.borderColor = "#2ec4b6";
+            }
+        }
+
+        function marcarDiaActual() {
+            let completados = JSON.parse(localStorage.getItem("anualCompletados")) || {};
+            const claveCompletado = `${mesActualIndex}_${diaSeleccionadoGlobal}`;
+            completados[claveCompletado] = !completados[claveCompletado];
+            localStorage.setItem("anualCompletados", JSON.stringify(completados));
+            inicializarCalendario();
+        }
+
+        function abrirEnSpotify() {
+            const textoMision = obtenerMisionExacta(mesActualIndex, diaSeleccionadoGlobal);
+            const queryClean = encodeURIComponent(textoMision);
+            window.open(`spotify:search:${queryClean}`, '_blank');
+            setTimeout(() => {
+                window.open(`https://open.spotify.com/search/${queryClean}`, '_blank');
+            }, 250);
+        }
+
+        function verificarEstadoPremium() {
+            const yaUsado = localStorage.getItem("spotifyPremiumUsado");
+            const contenedor = document.getElementById("contenedorPremium");
+            if (yaUsado === "true") {
+                contenedor.style.display = "none";
+            }
+        }
+
+        function quemarCodigoPremium() {
+            localStorage.setItem("spotifyPremiumUsado", "true");
+            document.getElementById("contenedorPremium").style.display = "none";
+        }
+
+        window.onload = inicializarCalendario;
+    </script>
+</body>
+</html>

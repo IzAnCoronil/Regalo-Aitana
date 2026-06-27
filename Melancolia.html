@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Melancolía</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #1f2933, #3b4252);
+            color: #e5e7eb;
+        }
+
+        /* NAV */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #e5e7eb;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #9ca3af;
+            font-size: 1.1em;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            background: #111827;
+            padding: 40px;
+            margin: 30px auto 60px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        .frase {
+            font-size: 1.5em;
+            color: #e5e7eb;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .autor {
+            font-size: 1.05em;
+            color: #9ca3af;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* BOTONES GRANDES */
+        button {
+            display: inline-block;
+            padding: 18px 28px;
+            background: #7b2cbf;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 12px;
+            font-size: 1.2em;
+            min-width: 180px;
+        }
+
+        button:hover {
+            background: #6a1b9a;
+            transform: scale(1.08);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR */
+        .boton-guardar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #7b2cbf;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            transition: 0.2s;
+            z-index: 99;
+        }
+
+        .boton-guardar:hover {
+            background: #6a1b9a;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>Melancolía</h1>
+        <p>Frases que duelen suave, como un recuerdo que se queda a medias.</p>
+    </header>
+
+    <div class="contenedor">
+        <p id="fraseMelancolia" class="frase"></p>
+        <p id="autorMelancolia" class="autor"></p>
+
+        <button onclick="nuevaFraseMelancolia()">Otra frase</button>
+    </div>
+
+    <div class="boton-guardar" onclick="guardarFavorito('fraseMelancolia','autorMelancolia')">
+        ❤️ Guardar
+    </div>
+
+    <script>
+    // FRASES DE MELANCOLÍA (POÉTICAS + SUAVES)
+    const frasesMelancoliaOriginal = [
+        { texto: "Siente que hay días en los que el corazón recuerda cosas que la mente ya había olvidado.", autor: "Mario Benedetti" },
+        { texto: "Piensa que hay silencios que pesan más que cualquier palabra rota.", autor: "Pablo Neruda" },
+        { texto: "Cree que la melancolía es ese lugar donde se sientan los recuerdos a mirar el tiempo pasar.", autor: "Julio Cortázar" },
+        { texto: "Siente que a veces el alma se queda mirando por la ventana de un recuerdo que ya no vuelve.", autor: "Rainer Maria Rilke" },
+        { texto: "Piensa que hay noches en las que el pasado se sienta al borde de la cama.", autor: "Alejandra Pizarnik" },
+        { texto: "Cree que la tristeza suave es solo amor que no encontró dónde quedarse.", autor: "Sabines" },
+        { texto: "Siente que algunas canciones duelen porque recuerdan cosas que nunca llegaron a pasar.", autor: "IzAn" },
+        { texto: "Piensa que hay abrazos que se quedaron a medio camino entre el deseo y el miedo.", autor: "Mario Benedetti" },
+        { texto: "Cree que la melancolía no es querer volver, es no saber cómo seguir.", autor: "Pablo Neruda" },
+        { texto: "Siente que hay fotos que ya no existen, pero siguen colgadas en la memoria.", autor: "Julio Cortázar" },
+        { texto: "Piensa que a veces el corazón se sienta en el suelo y mira cómo se va el día.", autor: "Rainer Maria Rilke" },
+        { texto: "Cree que la nostalgia es un idioma que solo entienden los que han perdido algo que amaban.", autor: "Alejandra Pizarnik" },
+        { texto: "Siente que hay lugares que ya no pisa, pero que siguen caminando dentro de él.", autor: "Sabines" },
+        { texto: "Piensa que la melancolía es un hilo que une lo que fue con lo que nunca será.", autor: "IzAn" },
+        { texto: "Cree que hay tardes que se quedan atrapadas en una luz que ya no existe.", autor: "Mario Benedetti" },
+        { texto: "Siente que el tiempo no borra, solo difumina los bordes del recuerdo.", autor: "Pablo Neruda" },
+        { texto: "Piensa que hay nombres que ya no dice, pero que aún se le escapan en los pensamientos.", autor: "Julio Cortázar" },
+        { texto: "Cree que la melancolía es el eco de todo lo que no supo cómo despedirse.", autor: "Rainer Maria Rilke" },
+        { texto: "Siente que hay días en los que el corazón solo quiere sentarse a mirar lo que ya no es.", autor: "Alejandra Pizarnik" },
+        { texto: "Piensa que la tristeza suave es una forma de recordar sin hacer ruido.", autor: "Sabines" }
+    ];
+
+    let frasesUsuario = JSON.parse(localStorage.getItem("melancolia")) || [];
+    let frasesMelancolia = frasesMelancoliaOriginal.concat(frasesUsuario);
+
+    let ultimoAutorMelancolia = null;
+    let primeraMostrada = false;
+
+    function mostrarPrimeraFraseMelancolia() {
+        if (frasesMelancolia.length === 0) {
+            document.getElementById("fraseMelancolia").textContent = "Añade frases para comenzar.";
+            return;
+        }
+        const primera = frasesMelancolia[0];
+        document.getElementById("fraseMelancolia").textContent = primera.texto;
+        document.getElementById("autorMelancolia").textContent = "— " + primera.autor;
+        ultimoAutorMelancolia = primera.autor;
+        frasesMelancolia.splice(0, 1);
+        primeraMostrada = true;
+    }
+
+    function nuevaFraseMelancolia() {
+        if (!primeraMostrada) {
+            mostrarPrimeraFraseMelancolia();
+            return;
+        }
+
+        if (frasesMelancolia.length === 0) {
+            document.getElementById("fraseMelancolia").textContent =
+                "Hoy ya no hay más frases, pero tu melancolía sigue escribiendo las suyas en silencio.";
+            document.getElementById("autorMelancolia").textContent = "";
+            return;
+        }
+
+        let indice;
+        let intentos = 0;
+
+        do {
+            indice = Math.floor(Math.random() * frasesMelancolia.length);
+            intentos++;
+        } while (frasesMelancolia[indice].autor === ultimoAutorMelancolia && intentos < 10 && frasesMelancolia.length > 1);
+
+        const frase = frasesMelancolia[indice];
+
+        document.getElementById("fraseMelancolia").textContent = frase.texto;
+        document.getElementById("autorMelancolia").textContent = "— " + frase.autor;
+
+        ultimoAutorMelancolia = frase.autor;
+        frasesMelancolia.splice(indice, 1);
+    }
+
+    function guardarFavorito(idFrase, idAutor) {
+        const frase = document.getElementById(idFrase).textContent;
+        let autor = document.getElementById(idAutor).textContent;
+
+        if (!frase || frase.includes("Hoy ya no hay más frases") || frase === "Añade frases para comenzar.") {
+            return;
+        }
+
+        autor = autor.replace("— ", "");
+
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        const yaExiste = favoritos.some(f => f.frase === frase);
+
+        if (!yaExiste) {
+            favoritos.push({ frase, autor });
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            alert("¡Frase guardada en tus favoritos! ❤️");
+        } else {
+            alert("Esta frase ya está en tus favoritos.");
+        }
+    }
+
+    window.onload = function() {
+        mostrarPrimeraFraseMelancolia();
+    };
+    </script>
+
+</body>
+</html>

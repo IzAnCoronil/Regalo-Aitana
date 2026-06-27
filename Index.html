@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #dfe9f7, #ffffff);
+            color: #2c3e50;
+        }
+
+        /* NAV */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #4b5c6b;
+            font-size: 1.1em;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            background: white;
+            padding: 40px;
+            margin: 30px auto 60px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .contenedor h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .contenedor p {
+            color: #4b5c6b;
+            margin-bottom: 30px;
+        }
+
+        /* BOTONES GRANDES */
+        .boton {
+            display: inline-block;
+            padding: 18px 28px;
+            background: #ff8c42;
+            color: white;
+            border-radius: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+            margin: 12px;
+            font-size: 1.2em;
+            min-width: 180px;
+        }
+
+        .boton:hover {
+            background: #ff7a1f;
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>Bienvenido</h1>
+        <p>Elige una emoción y deja que las frases hagan el resto.</p>
+    </header>
+
+    <div class="contenedor">
+        <h2>Emociones</h2>
+        <p>Explora frases según cómo te sientas.</p>
+
+        <a class="boton" href="alegria.html">Alegría</a>
+        <a class="boton" href="motivacion.html">Motivación</a>
+        <a class="boton" href="melancolia.html">Melancolía</a>
+        <a class="boton" href="ansiedad.html">Ansiedad</a>
+        <a class="boton" href="estres.html">Estrés</a>
+        <a class="boton" href="desamor.html">Desamor</a>
+    </div>
+
+</body>
+</html>

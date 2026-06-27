@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir frases</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f3e8ff, #ffffff);
+            color: #3a3a3a;
+            min-height: 100vh;
+        }
+
+        /* NAV - Estructura unificada */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #4a2d7f;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #6a538f;
+            font-size: 1.1em;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            background: white;
+            padding: 40px;
+            margin: 0 auto 60px;
+            border-radius: 20px;
+            max-width: 650px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            animation: aparecer 0.4s ease-out;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        label {
+            font-weight: 600;
+            color: #4a2d7f;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+            font-size: 1.05em;
+        }
+
+        textarea, select, input {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 12px;
+            border: 1px solid #bbb;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.2s;
+            box-sizing: border-box;
+            background-color: #fafafa;
+        }
+
+        textarea:focus, select:focus, input:focus {
+            border-color: #2ec4b6;
+            box-shadow: 0 0 8px rgba(46, 196, 182, 0.3);
+            outline: none;
+            background-color: #ffffff;
+        }
+
+        /* BOTÓN DE ACCIÓN */
+        button {
+            margin-top: 30px;
+            padding: 16px 24px;
+            border: none;
+            background: #2ec4b6;
+            color: white;
+            border-radius: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1em;
+            width: 100%;
+            transition: 0.2s;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: #20a498;
+            transform: scale(1.02);
+        }
+
+        /* MENSAJES DE ESTADO */
+        .mensaje {
+            margin-top: 20px;
+            font-size: 1.05em;
+            font-weight: 600;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .mensaje.ok {
+            display: block;
+            color: #1b9c5a;
+            background: #e8f7f0;
+        }
+
+        .mensaje.error {
+            display: block;
+            color: #c0392b;
+            background: #fceae9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>Añadir frases</h1>
+        <p>Escribe una frase, elige la emoción y guárdala en tu universo.</p>
+    </header>
+
+    <div class="contenedor">
+        <label for="texto">Frase</label>
+        <textarea id="texto" rows="4" placeholder="Escribe aquí la frase que te inspira..."></textarea>
+
+        <label for="autor">Autor</label>
+        <input id="autor" type="text" placeholder="Nombre del autor (o tu nombre)">
+
+        <label for="emocion">Emoción</label>
+        <select id="emocion">
+            <option value="">Elige una emoción</option>
+            <option value="alegria">Alegría</option>
+            <option value="motivacion">Motivación</option>
+            <option value="melancolia">Melancolía</option>
+            <option value="ansiedad">Ansiedad</option>
+            <option value="estres">Estrés</option>
+            <option value="desamor">Desamor</option>
+        </select>
+
+        <button onclick="guardarFrase()">Guardar frase</button>
+
+        <div id="mensaje" class="mensaje"></div>
+    </div>
+
+    <script>
+    function guardarFrase() {
+        const texto = document.getElementById("texto").value.trim();
+        const autor = document.getElementById("autor").value.trim() || "Anónimo";
+        const emocion = document.getElementById("emocion").value;
+        const mensaje = document.getElementById("mensaje");
+
+        if (!texto || !emocion) {
+            mensaje.textContent = "⚠️ Falta rellenar la frase o seleccionar la emoción.";
+            mensaje.className = "mensaje error";
+            return;
+        }
+
+        // Se usa la clave según la emoción elegida
+        const clave = emocion; 
+        let frasesGuardadas = JSON.parse(localStorage.getItem(clave)) || [];
+
+        frasesGuardadas.push({ texto: texto, autor: autor });
+        localStorage.setItem(clave, JSON.stringify(frasesGuardadas));
+
+        // Obtener el nombre legible de la emoción elegida
+        const combo = document.getElementById("emocion");
+        const emocionTexto = combo.options[combo.selectedIndex].text;
+
+        mensaje.textContent = "✨ Frase guardada correctamente en la categoría de " + emocionTexto + ".";
+        mensaje.className = "mensaje ok";
+
+        // Limpieza de los inputs para la siguiente frase
+        document.getElementById("texto").value = "";
+        document.getElementById("autor").value = "";
+        document.getElementById("emocion").value = "";
+        
+        // Desvanecer el mensaje de éxito después de unos segundos
+        setTimeout(() => {
+            mensaje.style.display = "none";
+        }, 4000);
+    }
+    </script>
+
+</body>
+</html>

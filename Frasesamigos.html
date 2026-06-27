@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Frases de amigos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #dfe9f7, #ffffff);
+            color: #2c3e50;
+        }
+
+        /* NAV */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #4b5c6b;
+            font-size: 1.1em;
+        }
+
+        /* LISTA DE NOMBRES */
+        .lista-nombres {
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .nombre-btn {
+            display: block;
+            background: white;
+            padding: 18px;
+            margin: 12px auto;
+            border-radius: 14px;
+            max-width: 500px;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: 0.2s;
+        }
+
+        .nombre-btn:hover {
+            transform: scale(1.04);
+            background: #f7faff;
+        }
+
+        /* TARJETA */
+        .tarjeta {
+            background: white;
+            padding: 25px;
+            margin: 20px auto;
+            border-radius: 18px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: none;
+            text-align: center;
+        }
+
+        .nombre {
+            font-size: 1.8em;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .frase {
+            margin: 20px 0;
+            color: #4b5c6b;
+            font-size: 1.2em;
+            line-height: 1.5em;
+        }
+
+        .contador {
+            font-size: 0.95em;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .btn-sig {
+            padding: 12px 20px;
+            background: #ff8c42;
+            color: white;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .btn-sig:hover {
+            background: #ff7a1f;
+            transform: scale(1.05);
+        }
+
+        .volver {
+            display: none;
+            margin: 20px auto;
+            padding: 14px 22px;
+            background: #4da3ff;
+            color: white;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .volver:hover {
+            transform: scale(1.05);
+        }
+
+        /* PRIMERA FRASE */
+        .primera-frase {
+            background: white;
+            padding: 25px;
+            margin: 20px auto;
+            border-radius: 18px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+    </nav>
+
+    <header>
+        <h1>Frases de amigos</h1>
+        <p>Pincha en un nombre para ver sus frases una a una.</p>
+    </header>
+
+    <!-- PRIMERA FRASE (solo aparece 1 vez) -->
+    <div id="primeraFrase" class="primera-frase">
+        <h2>Primera frase</h2>
+        <p><b>¿Qué es ser fuerte?</b> Sospecho que ser fuerte no es solo una cuestión de poder; es fuerte la persona que encuentra un motivo por el que luchar y se dedica en cuerpo y alma a ello.</p>
+    </div>
+
+    <!-- LISTA DE NOMBRES -->
+    <div class="lista-nombres" id="listaNombres">
+        <div class="nombre-btn" onclick="mostrar('iker')">Iker de Dios</div>
+        <div class="nombre-btn" onclick="mostrar('paula')">Paula Gutiérrez</div>
+        <div class="nombre-btn" onclick="mostrar('pedro')">Pedro Jiménez</div>
+        <div class="nombre-btn" onclick="mostrar('virginia')">Virginia Delgado</div>
+        <div class="nombre-btn" onclick="mostrar('celia')">Celia García</div>
+        <div class="nombre-btn" onclick="mostrar('irene')">Irene Rodríguez</div>
+        <div class="nombre-btn" onclick="mostrar('andres')">Andrés García</div>
+        <div class="nombre-btn" onclick="mostrar('izan')">IzAn</div>
+    </div>
+
+    <div class="volver" id="volver" onclick="volver()">Volver</div>
+
+    <!-- TARJETA -->
+    <div class="tarjeta" id="tarjeta">
+        <div class="nombre" id="nombreAmigo"></div>
+        <div class="contador" id="contador"></div>
+        <div class="frase" id="textoFrase"></div>
+        <div class="btn-sig" id="btnSig" onclick="siguiente()">Siguiente</div>
+    </div>
+	
+    <script>
+        // Frases de cada amigo
+        const frases = {
+            iker: [
+                "Que la vida te devuelva toda la felicidad y el cariño que tú siempre regalas a los que te quieren.",
+                "Que nada apague tus ganas de comerte el mundo ni esa forma tan tuya de brillar.",
+                "No dejes de soñar a lo grande, porque tienes la fuerza necesaria para lograrlo todo.",
+                "Te deseo lo mejor en esta nueva etapa; el insti cambia, pero lo nuestro sigue igual.",
+                "Muchísima suerte este año; y que no te quepa duda de que pienso seguir dándote el coñazo como siempre."
+            ],
+            paula: [
+                "Que la vida te recompense por ese bonito corazón que tienes.",
+                "Tener ataques de risa contigo por cualquier tontería me alegra el día.",
+                "Me encanta saber que eres el alma de la fiesta y que siempre me contagias tu energía.",
+                "Eres como una estrella: no siempre te veo, pero sé que siempre estás ahí.",
+                "No siempre tengo cosas interesantes que contarte, pero sé que sea lo que sea me vas a escuchar y reírte de mis tonterías."
+            ],
+            pedro: [
+                "Quien tiene miedo, muere a diario.",
+                "No corras detrás de las mariposas; cuida tu jardín y ellas vendrán solas.",
+                "Todo el mundo ve lo que aparentas ser, pocos experimentan lo que realmente eres.",
+                "La medida del amor es amar sin medida.",
+                "Aprende a dejar ir, esa es la clave de la felicidad."
+            ],
+            virginia: [
+                "No tienes que ser perfecta para avanzar, solo seguir intentándolo.",
+                "Los pequeños pasos de hoy construyen los grandes logros de mañana.",
+                "Confía en ti; has superado cosas difíciles antes y volverás a hacerlo.",
+                "El éxito no es no caer, sino levantarse cada vez que caes.",
+                "Nunca sabes lo cerca que estás de conseguirlo si te rindes demasiado pronto."
+            ],
+            celia: [
+                "Mi relación contigo es difícil, pero me gusta lo difícil.",
+                "Aunque vivamos siempre peleadas, sé que nunca me faltará nada contigo.",
+                "Te daría hasta un riñón si algún día lo necesitaras.",
+                "Te quiero porque siempre estuviste ahí, incluso cuando me pasaba todos los patios sola.",
+                "Cuando no estás, siento que me falta algo."
+            ],
+            irene: [
+                "Mi pequeña grandullona… te has hecho mayor; ya no cabes en mis brazos, pero siempre en mi corazón 🩷"
+            ],
+            andres: [
+                "Te pareces tanto a mí que me da hasta un poquito de yuyu.",
+                "Tanto tú como yo tenemos esa forma de andar tan salerosa que nos hace únicos.",
+                "Los 16 años son la edad más importante después de los 15."
+            ],
+            izan: [
+                "Admiro tu fuerza, tu bondad y la forma en que siempre estás para los demás. Gracias por ser quien eres y por dejar una huella tan bonita en las personas. Nunca olvides lo importante que eres.",
+                "Encierra tus demonios con tu sonrisa, pero si alguien te lastima, abre la jaula sin miedo.",
+                "Llorar está permitido; no pasa nada. En cambio, rendirse no lo está.",
+                "Una lección necesita dolor y sacrificio para tener sentido. Pero una vez que lo superas, consigues un corazón mucho más fuerte que todo lo demás.",
+                "Si no consigues tus objetivos por talento, que sea por obsesión.",
+                "Por más consejos que te den, habrá cosas que solo aprenderás a base de caídas y golpes."
+            ]
+        };
+
+        let actual = 0;
+        let amigoActual = "";
+
+        // Mostrar tarjeta
+        function mostrar(nombre) {
+            amigoActual = nombre;
+            actual = 0;
+
+            document.getElementById("listaNombres").style.display = "none";
+            document.getElementById("volver").style.display = "block";
+
+            document.getElementById("tarjeta").style.display = "block";
+
+            // Capitalizar correctamente el nombre
+            document.getElementById("nombreAmigo").textContent =
+                nombre.charAt(0).toUpperCase() + nombre.slice(1);
+
+            mostrarFrase();
+        }
+
+        // Mostrar frase actual
+        function mostrarFrase() {
+            const lista = frases[amigoActual];
+            document.getElementById("textoFrase").textContent = lista[actual];
+            document.getElementById("contador").textContent = `Frase ${actual + 1} de ${lista.length}`;
+
+            document.getElementById("btnSig").style.display =
+                lista.length === 1 ? "none" : "inline-block";
+        }
+
+        // Siguiente frase
+        function siguiente() {
+            const lista = frases[amigoActual];
+            if (actual < lista.length - 1) {
+                actual++;
+                mostrarFrase();
+            }
+        }
+
+        // Volver
+        function volver() {
+            document.getElementById("listaNombres").style.display = "block";
+            document.getElementById("volver").style.display = "none";
+            document.getElementById("tarjeta").style.display = "none";
+        }
+
+        // Primera frase solo 1 vez
+        if (localStorage.getItem("primeraFraseVisto")) {
+            document.getElementById("primeraFrase").style.display = "none";
+        } else {
+            localStorage.setItem("primeraFraseVisto", "true");
+        }
+    </script>
+
+</body>
+</html>
