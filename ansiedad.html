@@ -13,9 +13,10 @@
             margin: 0;
             background: linear-gradient(135deg, #f3e8ff, #ffffff);
             color: #3a3a3a;
+            min-height: 100vh;
         }
 
-        /* NAV */
+        /* NAV - Estructura unificada y adaptativa */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
@@ -27,6 +28,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box;
         }
 
         nav a {
@@ -68,6 +70,8 @@
             max-width: 900px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
+            box-sizing: border-box;
+            width: 90%;
         }
 
         .frase {
@@ -136,7 +140,7 @@
 <body>
 
     <nav>
-        <a href="Index.html">Inicio</a>
+        <a href="index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
@@ -287,7 +291,7 @@
         { texto: "Nadie se baña dos veces en el mismo río.", autor: "Heráclito" },
         { texto: "La armonía invisible es más fuerte que la visible.", autor: "Heráclito" },
         { texto: "Los ojos son testigos más precisos que los oídos.", autor: "Heráclito" },
-        { texto: "Conócete a ti mismo.", autor: "Sócrates" },
+        { texto: "Conéctate a ti mismo.", autor: "Sócrates" },
         { texto: "La vida no examinada no merece ser vivida.", autor: "Sócrates" },
         { texto: "Solo sé que no sé nada.", autor: "Sócrates" },
         { texto: "La verdadera sabiduría está en reconocer la propia ignorancia.", autor: "Sócrates" },
@@ -315,7 +319,7 @@
         { texto: "La paz comienza con una sonrisa.", autor: "Madre Teresa" },
         { texto: "Si juzgas a las personas, no tendrás tiempo para amarlas.", autor: "Madre Teresa" },
         { texto: "No todos podemos hacer grandes cosas, pero sí pequeñas cosas con gran amor.", autor: "Madre Teresa" },
-        { texto: "La alegría es una red of amor.", autor: "Madre Teresa" },
+        { texto: "La alegría es una red de amor.", autor: "Madre Teresa" },
         { texto: "Las palabras amables pueden ser cortas y fáciles de decir, pero sus ecos son infinitos.", autor: "Madre Teresa" },
         { texto: "Haz lo que puedas, con lo que tengas, donde estés.", autor: "Theodore Roosevelt" },
         { texto: "Cree que puedes y ya estarás a medio camino.", autor: "Theodore Roosevelt" },
@@ -339,8 +343,8 @@
         { texto: "La confianza florece con la honestidad.", autor: "Franklin D. Roosevelt" }
     ];
 
-    // Cargar frases añadidas por el usuario y unirlas correctamente
-    let frasesUsuario = JSON.parse(localStorage.getItem("Ansiedad")) || [];
+    // CORRECCIÓN CLAVE: El nombre del storage debe ser "ansiedad" en minúscula
+    let frasesUsuario = JSON.parse(localStorage.getItem("ansiedad")) || [];
     let frasesAnsiedad = frasesAnsiedadOriginal.concat(frasesUsuario);
 
     let ultimaAutora = null;
@@ -351,7 +355,7 @@
             document.getElementById("fraseAnsiedad").textContent = "Añade frases para comenzar.";
             return;
         }
-        // Buscar la primera frase de IzAn para que sea la inicial fija
+        
         let indiceInicial = frasesAnsiedad.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Mi niña, has podido superar"));
         if (indiceInicial === -1) indiceInicial = 0;
 
