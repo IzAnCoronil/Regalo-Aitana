@@ -15,7 +15,7 @@
             color: #3a3a3a;
         }
 
-        /* NAV */
+        /* NAV - Estructura unificada */
         nav {
             background: #ffe08a;
             padding: 12px 20px;
@@ -27,6 +27,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             z-index: 100;
+            box-sizing: border-box; /* Evita desbordamiento horizontal en móviles */
         }
 
         nav a {
@@ -69,6 +70,7 @@
             max-width: 900px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
+            box-sizing: border-box;
         }
 
         .frase {
@@ -137,7 +139,7 @@
 <body>
 
     <nav>
-        <a href="Index.html">Inicio</a>
+        <a href="index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
@@ -338,7 +340,7 @@
     // -----------------------------
     let frasesUsuario = JSON.parse(localStorage.getItem("alegria")) || [];
 
-    // Mezclar originales + añadidas
+    // Mezclar originales + añadidas globalmente
     let frasesAlegria = frasesAlegriaOriginal.concat(frasesUsuario);
 
     let ultimoAutorAlegria = null;
@@ -352,7 +354,9 @@
         document.getElementById("fraseAlegria").textContent = primera.texto;
         document.getElementById("autorAlegria").textContent = "— " + primera.autor;
 
-        frasesAlegria = frasesAlegria.slice(1);
+        // Quitamos la primera frase del array de recorrido dinámico usando un filtro correcto
+        frasesAlegria = frasesAlegria.filter(f => f.texto !== primera.texto);
+        
         ultimoAutorAlegria = primera.autor;
         primeraMostrada = true;
     }
