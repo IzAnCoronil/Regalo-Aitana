@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Frases de amigos</title>
+    <title>Estrés</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -10,11 +11,12 @@
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #dfe9f7, #ffffff);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #eaf2ef, #ffffff);
+            color: #3a3a3a;
+            min-height: 100vh;
         }
 
-        /* NAV */
+        /* NAV - Menú unificado */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
@@ -26,6 +28,7 @@
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box;
         }
 
         nav a {
@@ -44,122 +47,104 @@
         /* HEADER */
         header {
             text-align: center;
-            padding: 120px 20px 40px;
+            padding: 140px 20px 20px;
         }
 
         header h1 {
             font-size: 2.6em;
-            color: #2c3e50;
+            color: #3d5a4c;
             margin-bottom: 10px;
         }
 
         header p {
-            color: #4b5c6b;
+            color: #52796f;
             font-size: 1.1em;
+            margin-top: 0;
         }
 
-        /* LISTA DE NOMBRES */
-        .lista-nombres {
-            max-width: 900px;
-            margin: 20px auto;
-            text-align: center;
-        }
-
-        .nombre-btn {
-            display: block;
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
             background: white;
-            padding: 18px;
-            margin: 12px auto;
-            border-radius: 14px;
-            max-width: 500px;
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #2c3e50;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: 0.2s;
-        }
-
-        .nombre-btn:hover {
-            transform: scale(1.04);
-            background: #f7faff;
-        }
-
-        /* TARJETA */
-        .tarjeta {
-            background: white;
-            padding: 25px;
-            margin: 20px auto;
-            border-radius: 18px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            display: none;
+            padding: 40px;
+            margin: 20px auto 60px;
+            border-radius: 20px;
+            max-width: 750px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
             text-align: center;
+            box-sizing: border-box;
         }
 
-        .nombre {
-            font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 12px;
+        /* Animación suave para la transición de frases */
+        .frase-animada {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .frase {
-            margin: 20px 0;
-            color: #4b5c6b;
-            font-size: 1.2em;
-            line-height: 1.5em;
+            font-size: 1.4em;
+            color: #2c2c2c;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.5;
         }
 
-        .contador {
-            font-size: 0.95em;
-            color: #888;
-            margin-bottom: 10px;
+        .autor {
+            font-size: 1.05em;
+            color: #7a7a7a;
+            margin-bottom: 30px;
+            font-style: italic;
         }
 
-        .btn-sig {
-            padding: 12px 20px;
-            background: #ff8c42;
-            color: white;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
+        /* BOTONES GRANDES */
+        button {
             display: inline-block;
-            transition: 0.2s;
-        }
-
-        .btn-sig:hover {
-            background: #ff7a1f;
-            transform: scale(1.05);
-        }
-
-        .volver {
-            display: none;
-            margin: 20px auto;
-            padding: 14px 22px;
-            background: #4da3ff;
+            padding: 14px 28px;
+            background: #6b9080;
             color: white;
+            border: none;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            width: fit-content;
+            transition: 0.2s;
+            font-size: 1.1em;
+            min-width: 180px;
         }
 
-        .volver:hover {
+        button:hover {
+            background: #4f6d60;
+            transform: scale(1.04);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR */
+        .boton-guardar {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #6b9080;
+            color: white;
+            padding: 14px 22px;
+            border-radius: 50px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(107, 144, 128, 0.3);
+            transition: 0.2s;
+            z-index: 99;
+        }
+
+        .boton-guardar:hover {
+            background: #4f6d60;
             transform: scale(1.05);
-        }
-
-        /* PRIMERA FRASE */
-        .primera-frase {
-            background: white;
-            padding: 25px;
-            margin: 20px auto;
-            border-radius: 18px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            text-align: center;
+            box-shadow: 0 6px 15px rgba(107, 144, 128, 0.4);
         }
     </style>
-
 </head>
 
 <body>
@@ -175,146 +160,227 @@
     </nav>
 
     <header>
-        <h1>Frases de amigos</h1>
-        <p>Pincha en un nombre para ver sus frases una a una.</p>
+        <h1>Estrés</h1>
+        <p>Frases para cuando tu cabeza va más rápido que tu día.</p>
     </header>
 
-    <!-- PRIMERA FRASE (solo aparece 1 vez) -->
-    <div id="primeraFrase" class="primera-frase">
-        <h2>Primera frase</h2>
-        <p><b>¿Qué es ser fuerte?</b> Sospecho que ser fuerte no es solo una cuestión de poder; es fuerte la persona que encuentra un motivo por el que luchar y se dedica en cuerpo y alma a ello.</p>
+    <div class="contenedor">
+        <div id="bloqueTexto">
+            <p id="fraseEstres" class="frase"></p>
+            <p id="autorEstres" class="autor"></p>
+        </div>
+
+        <button onclick="nuevaFraseEstres()">Otra frase</button>
     </div>
 
-    <!-- LISTA DE NOMBRES -->
-    <div class="lista-nombres" id="listaNombres">
-        <div class="nombre-btn" onclick="mostrar('iker')">Iker de Dios</div>
-        <div class="nombre-btn" onclick="mostrar('paula')">Paula Gutiérrez</div>
-        <div class="nombre-btn" onclick="mostrar('pedro')">Pedro Jiménez</div>
-        <div class="nombre-btn" onclick="mostrar('virginia')">Virginia Delgado</div>
-        <div class="nombre-btn" onclick="mostrar('celia')">Celia García</div>
-        <div class="nombre-btn" onclick="mostrar('irene')">Irene Rodríguez</div>
-        <div class="nombre-btn" onclick="mostrar('andres')">Andrés García</div>
-        <div class="nombre-btn" onclick="mostrar('izan')">IzAn</div>
+    <div class="boton-guardar" onclick="guardarFavorito('fraseEstres','autorEstres')">
+        ❤️ Guardar
     </div>
 
-    <div class="volver" id="volver" onclick="volver()">Volver</div>
-
-    <!-- TARJETA -->
-    <div class="tarjeta" id="tarjeta">
-        <div class="nombre" id="nombreAmigo"></div>
-        <div class="contador" id="contador"></div>
-        <div class="frase" id="textoFrase"></div>
-        <div class="btn-sig" id="btnSig" onclick="siguiente()">Siguiente</div>
-    </div>
-	
     <script>
-        // Frases de cada amigo
-        const frases = {
-            iker: [
-                "Que la vida te devuelva toda la felicidad y el cariño que tú siempre regalas a los que te quieren.",
-                "Que nada apague tus ganas de comerte el mundo ni esa forma tan tuya de brillar.",
-                "No dejes de soñar a lo grande, porque tienes la fuerza necesaria para lograrlo todo.",
-                "Te deseo lo mejor en esta nueva etapa; el insti cambia, pero lo nuestro sigue igual.",
-                "Muchísima suerte este año; y que no te quepa duda de que pienso seguir dándote el coñazo como siempre."
-            ],
-            paula: [
-                "Que la vida te recompense por ese bonito corazón que tienes.",
-                "Tener ataques de risa contigo por cualquier tontería me alegra el día.",
-                "Me encanta saber que eres el alma de la fiesta y que siempre me contagias tu energía.",
-                "Eres como una estrella: no siempre te veo, pero sé que siempre estás ahí.",
-                "No siempre tengo cosas interesantes que contarte, pero sé que sea lo que sea me vas a escuchar y reírte de mis tonterías."
-            ],
-            pedro: [
-                "Quien tiene miedo, muere a diario.",
-                "No corras detrás de las mariposas; cuida tu jardín y ellas vendrán solas.",
-                "Todo el mundo ve lo que aparentas ser, pocos experimentan lo que realmente eres.",
-                "La medida del amor es amar sin medida.",
-                "Aprende a dejar ir, esa es la clave de la felicidad."
-            ],
-            virginia: [
-                "No tienes que ser perfecta para avanzar, solo seguir intentándolo.",
-                "Los pequeños pasos de hoy construyen los grandes logros de mañana.",
-                "Confía en ti; has superado cosas difíciles antes y volverás a hacerlo.",
-                "El éxito no es no caer, sino levantarse cada vez que caes.",
-                "Nunca sabes lo cerca que estás de conseguirlo si te rindes demasiado pronto."
-            ],
-            celia: [
-                "Mi relación contigo es difícil, pero me gusta lo difícil.",
-                "Aunque vivamos siempre peleadas, sé que nunca me faltará nada contigo.",
-                "Te daría hasta un riñón si algún día lo necesitaras.",
-                "Te quiero porque siempre estuviste ahí, incluso cuando me pasaba todos los patios sola.",
-                "Cuando no estás, siento que me falta algo."
-            ],
-            irene: [
-                "Mi pequeña grandullona… te has hecho mayor; ya no cabes en mis brazos, pero siempre en mi corazón 🩷"
-            ],
-            andres: [
-                "Te pareces tanto a mí que me da hasta un poquito de yuyu.",
-                "Tanto tú como yo tenemos esa forma de andar tan salerosa que nos hace únicos.",
-                "Los 16 años son la edad más importante después de los 15."
-            ],
-            izan: [
-                "Admiro tu fuerza, tu bondad y la forma en que siempre estás para los demás. Gracias por ser quien eres y por dejar una huella tan bonita en las personas. Nunca olvides lo importante que eres.",
-                "Encierra tus demonios con tu sonrisa, pero si alguien te lastima, abre la jaula sin miedo.",
-                "Llorar está permitido; no pasa nada. En cambio, rendirse no lo está.",
-                "Una lección necesita dolor y sacrificio para tener sentido. Pero una vez que lo superas, consigues un corazón mucho más fuerte que todo lo demás.",
-                "Si no consigues tus objetivos por talento, que sea por obsesión.",
-                "Por más consejos que te den, habrá cosas que solo aprenderás a base de caídas y golpes."
-            ]
-        };
+    const frasesEstresOriginal = [
+        // FRASE FIJA
+        { texto: "Tú no estás fallando, solo estás cargando más de lo que cualquiera admitiría, y aun así sigues.", autor: "IzAn" },
 
-        let actual = 0;
-        let amigoActual = "";
+        // TUS FRASES (IzAn)
+        { texto: "A veces te exiges tanto que te olvidas de que también mereces respirar.", autor: "IzAn" },
+        { texto: "No tienes que poder con todo hoy, solo con lo que tienes delante.", autor: "IzAn" },
+        { texto: "Tu mente va rápido porque quiere hacerlo bien, no porque estés mal.", autor: "IzAn" },
+        { texto: "Estudiar no te define, pero tu esfuerzo sí dice mucho de ti.", autor: "IzAn" },
+        { texto: "No eres vaga, estás cansada de luchar con cosas que nadie vu.", autor: "IzAn" },
+        { texto: "Tu estrés no es debilidad, es señal de cuánto te importa lo que haces.", autor: "IzAn" },
+        { texto: "A veces tu cabeza pide pausa, y eso también es avanzar.", autor: "IzAn" },
+        { texto: "No tienes que entenderlo todo a la primera, tú no eres una máquina.", autor: "IzAn" },
+        { texto: "Tu valor no baja porque un día no te dé la vida.", autor: "IzAn" },
+        { texto: "Estás haciendo más de lo que crees, aunque tu mente no te lo reconozca.", autor: "IzAn" },
+        { texto: "No estás sola en esto, aunque tu estrés te haga sentir lo contrario.", autor: "IzAn" },
+        { texto: "Tu esfuerzo vale, incluso cuando nadie lo ve.", autor: "IzAn" },
+        { texto: "A veces te bloqueas, pero eso no borra todo lo que ya has conseguido.", autor: "IzAn" },
+        { texto: "No tienes que ser perfecta, solo constante, y eso ya lo eres.", autor: "IzAn" },
+        { texto: "Tu cabeza no está saturada porque seas débil, sino porque llevas demasiado tiempo siendo fuerte.", autor: "IzAn" },
+        { texto: "No te rindas por un mal día, tú has superado semanas peores.", autor: "IzAn" },
+        { texto: "Tu estrés no te controla, solo te está pidiendo que te escuches.", autor: "IzAn" },
+        { texto: "No estás atrasada, estás avanzando a tu ritmo, y eso también cuenta.", autor: "IzAn" },
+        { texto: "Tú puedes con esto, y si un día no puedes, aquí estamos para recordártelo.", autor: "IzAn" },
+        
+        // FILÓSOFOS Y ESCRITORES CLÁSICOS
+        { texto: "No es que tengamos poco tiempo, sino que perdemos mucho.", autor: "Séneca" },
+        { texto: "La dificultad fortalece la mente, como el trabajo fortalece el cuerpo.", autor: "Séneca" },
+        { texto: "Mientras haya vida, hay esperanza.", autor: "Cicerón" },
+        { texto: "La paciencia es amarga, pero su fruto es dulce.", autor: "Jean-Jacques Rousseau" },
+        { texto: "La calma es la cuna del poder.", autor: "Josiah Gilbert Holland" },
+        { texto: "Todo parece imposible hasta que se hace.", autor: "Nelson Mandela" },
+        { texto: "Incluso la noche más oscura terminará y saldrá el sol.", autor: "Victor Hugo" },
+        { texto: "La felicidad depende de nosotros mismos.", autor: "Aristóteles" },
+        { texto: "Haz lo que puedas, con lo que tengas, donde estés.", autor: "Theodore Roosevelt" },
+        { texto: "La vida es realmente sencilla, pero insistimos en hacerla complicada.", autor: "Confucio" },
+        { texto: "No juzgues cada día por la cosecha que recoges, sino por las semillas que plantas.", autor: "Robert Louis Stevenson" },
+        { texto: "El secreto para salir adelante es comenzar.", autor: "Mark Twain" },
+        { texto: "Nada es permanente excepto el cambio.", autor: "Heráclito" },
+        { texto: "La mejor manera de predecir el futuro es crearlo.", autor: "Peter Drucker" },
+        { texto: "Lo que hacemos repetidamente nos define.", autor: "Aristóteles" },
+        { texto: "La esperanza es el sueño del hombre despierto.", autor: "Aristóteles" },
+        { texto: "Cada dificultad lleva dentro la semilla de una oportunidad.", autor: "Napoleón Hill" },
+        { texto: "La fuerza no proviene de la capacidad física, sino de una voluntad indomable.", autor: "Mahatma Gandhi" },
+        { texto: "Nunca es demasiado tarde para ser lo que podrías haber sido.", autor: "George Eliot" },
+        { texto: "El coraje es la resistencia al miedo, no la ausencia de él.", autor: "Mark Twain" },
+        { texto: "Después de la tormenta siempre llega la calma.", autor: "William Shakespeare" },
+        { texto: "La adversidad revela el genio.", autor: "Horacio" },
+        { texto: "No temas avanzar lentamente; teme quedarte inmóvil.", autor: "Proverbio chino" },
+        { texto: "La perseverancia convierte lo imposible en posible.", autor: "Thomas Carlyle" },
+        { texto: "Todo lo que puedas imaginar es real.", autor: "Pablo Picasso" },
+        { texto: "La libertad comienza cuando dejas de temer.", autor: "Miguel de Unamuno" },
+        { texto: "Quien tiene un porqué para vivir puede soportar casi cualquier cómo.", autor: "Friedrich Nietzsche" },
+        { texto: "La experiencia es simplemente el nombre que damos a nuestros errores.", autor: "Oscar Wilde" },
+        { texto: "La vida no se trata de encontrarte, sino de crearte.", autor: "George Bernard Shaw" },
+        { texto: "No hay viento favorable para quien no sabe adónde va.", autor: "Séneca" },
+        { texto: "La imaginación es más importante que el conocimiento.", autor: "Albert Einstein" },
+        { texto: "La paz viene de dentro; no la busques fuera.", autor: "Buda" },
+        { texto: "Lo que niegas te somete; lo que aceptas te transforma.", autor: "Carl Jung" },
+        { texto: "La mejor salida es siempre a través.", autor: "Robert Frost" },
+        { texto: "Todo ser humano tiene dentro una reserva de fuerza inesperada.", autor: "Isabel Allende" },
+        { texto: "La vida es una serie de lecciones que deben vivirse para ser comprendidas.", autor: "Ralph Waldo Emerson" },
+        { texto: "La confianza en uno mismo es el primer secreto del éxito.", autor: "Ralph Waldo Emerson" },
+        { texto: "El alma se tiñe del color de sus pensamientos.", autor: "Marco Aurelio" },
+        { texto: "Si cambias la forma en que miras las cosas, las cosas que miras cambian.", autor: "Wayne Dyer" },
+        { texto: "La serenidad no es estar libre de la tormenta, sino encontrar paz en ella.", autor: "Thomas Merton" },
+        { texto: "No puedes controlar todos los acontecimientos, pero sí tu actitud ante ellos.", autor: "Epicteto" },
+        { texto: "La paciencia es compañera de la sabiduría.", autor: "San Agustín" },
+        { texto: "La vida es demasiado importante para tomársela siempre en serio.", autor: "Oscar Wilde" },
+        { texto: "Todo tiene belleza, pero no todos pueden verla.", autor: "Confucio" },
+        { texto: "La esperanza es la cosa con plumas que se posa en el alma.", autor: "Emily Dickinson" },
+        { texto: "El futuro belongs to quienes creen en la belleza de sus sueños.", autor: "Eleanor Roosevelt" },
+        { texto: "Cada día trae consigo sus propios regalos.", autor: "Marco Aurelio" },
+        { texto: "Las grandes obras se realizan no con fuerza, sino con perseverancia.", autor: "Samuel Johnson" },
+        { texto: "La tranquilidad perfecta consiste en el buen orden de la mente.", autor: "Marco Aurelio" },
+        { texto: "A veces el corazón ve lo que es invisible para los ojos.", autor: "H. Jackson Brown Jr." },
+        { texto: "Las estrellas no pueden brillar sin oscuridad.", autor: "D. H. Sidebottom" },
+        { texto: "Ningún invierno dura para siempre.", autor: "Hal Borland" },
+        { texto: "La vida siempre espera alguna crisis para mostrar su lado brillante.", autor: "Paulo Coelho" },
+        { texto: "La valentía es seguir adelante aunque tengas miedo.", autor: "John Wayne" },
+        { texto: "Cada momento es un nuevo comienzo.", autor: "T. S. Eliot" },
+        { texto: "Lo importante no es lo que te ocurre, sino cómo reaccionas.", autor: "Epicteto" },
+        { texto: "Las heridas son lugares por donde entra la luz.", autor: "Rumi" },
+        { texto: "No te rindas; normalmente es la última llave la que abre la puerta.", autor: "Paulo Coelho" },
+        { texto: "La sencillez es la máxima sofisticación.", autor: "Leonardo da Vinci" },
+        { texto: "La felicidad no es una meta, sino una forma de viajar.", autor: "Margaret Lee Runbeck" },
 
-        // Mostrar tarjeta
-        function mostrar(nombre) {
-            amigoActual = nombre;
-            actual = 0;
+        // NUEVAS FRASES DE BIENESTAR Y MINDFULNESS
+        { texto: "Date crédito por lo lejos que has llegado. Has sobrevivido a todos tus días difíciles.", autor: "Anónimo" },
+        { texto: "Tener un mal día no significa que tengas una mala vida. Respira.", autor: "Anónimo" },
+        { texto: "No tienes que controlarlo todo. A veces solo tienes que dejarte llevar y confiar.", autor: "Mandy Hale" },
+        { texto: "Tu mente puede ser un lugar tormentoso, pero tú eres el cielo que la contiene.", autor: "Jack Kornfield" },
+        { texto: "El descanso no es un premio que debes ganarte, es una necesidad biológica.", autor: "Anónimo" },
+        { texto: "Ralentizar el ritmo no es perder el tiempo, es recuperar la dirección.", autor: "Brooke McAlary" },
+        { texto: "La sobrecarga de hoy es la experiencia que te enseñará a poner límites mañana.", autor: "Anónimo" },
+        { texto: "Preocuparse es como pagar una deuda que aún no sabes si debes.", autor: "Mark Twain" },
+        { texto: "Casi todo vuelve a funcionar si lo desenchufas unos minutos... incluido tú.", autor: "Anne Lamott" },
+        { texto: "No te midas con la regla de los demás; cada proceso requiere su propio espacio.", autor: "Anónimo" },
+        { texto: "La tensión es lo que crees que deberías ser. La relajación es lo que eres.", autor: "Proverbio chino" },
+        { texto: "No puedes detener las olas, pero puedes aprender a surfear.", autor: "Jon Kabat-Zinn" },
+        { texto: "Una mente en calma trae fuerza interior y confianza en uno mismo.", autor: "Dalai Lama" },
+        { texto: "El mejor momento para relajarte es cuando no tienes tiempo para ello.", autor: "Sydney J. Harris" },
+        { texto: "Aprender a ignorar cosas es uno de los grandes caminos hacia la paz interior.", autor: "Robert J. Sawyer" },
+        { texto: "No te desgastes tratando de resolver el mañana desde el cansancio de hoy.", autor: "Anónimo" },
+        { texto: "La ansiedad es la mente corriendo hacia el futuro; la paz es el cuerpo habitando el presente.", autor: "Anónimo" },
+        { texto: "Hacer una pausa no interrumpe el camino, te da las fuerzas necesarias para terminarlo.", autor: "Anónimo" },
+        { texto: "No necesitas ver toda la escalera, solo da el primer paso con calma.", autor: "Martin Luther King Jr." },
+        { texto: "Toma las cosas una por una; el desorden del mundo exterior se calma ordenando el mundo interior.", autor: "Anónimo" }
+    ];
 
-            document.getElementById("listaNombres").style.display = "none";
-            document.getElementById("volver").style.display = "block";
+    let frasesUsuario = JSON.parse(localStorage.getItem("estres")) || [];
+    // Filtrar entradas del usuario para asegurar que tengan el formato correcto
+    frasesUsuario = frasesUsuario.filter(f => f && f.texto && f.autor);
+    let frasesEstres = frasesEstresOriginal.concat(frasesUsuario);
 
-            document.getElementById("tarjeta").style.display = "block";
+    let ultimoAutor = null;
+    let primeraMostrada = false;
 
-            // Capitalizar correctamente el nombre
-            document.getElementById("nombreAmigo").textContent =
-                nombre.charAt(0).toUpperCase() + nombre.slice(1);
+    // Función auxiliar para aplicar el efecto de parpadeo suave al cambiar el texto
+    function aplicarAnimacion() {
+        const elemento = document.getElementById("bloqueTexto");
+        elemento.classList.remove("frase-animada");
+        void elemento.offsetWidth; // Truco de reinicio para volver a activar la animación CSS
+        elemento.classList.add("frase-animada");
+    }
 
-            mostrarFrase();
+    function mostrarPrimeraFrase() {
+        if (frasesEstres.length === 0) {
+            document.getElementById("fraseEstres").textContent = "Añade frases para comenzar.";
+            document.getElementById("autorEstres").textContent = "";
+            return;
         }
 
-        // Mostrar frase actual
-        function mostrarFrase() {
-            const lista = frases[amigoActual];
-            document.getElementById("textoFrase").textContent = lista[actual];
-            document.getElementById("contador").textContent = `Frase ${actual + 1} de ${lista.length}`;
+        let indiceInicial = frasesEstres.findIndex(f => f.autor === "IzAn" && f.texto && f.texto.startsWith("Tú no estás fallando"));
+        if (indiceInicial === -1) indiceInicial = 0;
 
-            document.getElementById("btnSig").style.display =
-                lista.length === 1 ? "none" : "inline-block";
+        const primera = frasesEstres[indiceInicial];
+        document.getElementById("fraseEstres").textContent = primera.texto;
+        document.getElementById("autorEstres").textContent = "— " + primera.autor;
+        
+        ultimoAutor = primera.autor;
+        frasesEstres.splice(indiceInicial, 1);
+        primeraMostrada = true;
+        aplicarAnimacion();
+    }
+
+    function nuevaFraseEstres() {
+        if (!primeraMostrada) {
+            mostrarPrimeraFrase();
+            return;
         }
 
-        // Siguiente frase
-        function siguiente() {
-            const lista = frases[amigoActual];
-            if (actual < lista.length - 1) {
-                actual++;
-                mostrarFrase();
-            }
+        if (frasesEstres.length === 0) {
+            document.getElementById("fraseEstres").textContent =
+                "Hoy ya no hay más frases, pero tú sigues teniendo la fuerza para continuar.";
+            document.getElementById("autorEstres").textContent = "";
+            aplicarAnimacion();
+            return;
         }
 
-        // Volver
-        function volver() {
-            document.getElementById("listaNombres").style.display = "block";
-            document.getElementById("volver").style.display = "none";
-            document.getElementById("tarjeta").style.display = "none";
+        let indice;
+        let intentos = 0;
+
+        do {
+            indice = Math.floor(Math.random() * frasesEstres.length);
+            intentos++;
+        } while (frasesEstres[indice].autor === ultimoAutor && intentos < 10 && frasesEstres.length > 1);
+
+        const frase = frasesEstres[indice];
+
+        document.getElementById("fraseEstres").textContent = frase.texto;
+        document.getElementById("autorEstres").textContent = "— " + frase.autor;
+
+        ultimoAutor = frase.autor;
+        frasesEstres.splice(indice, 1);
+        aplicarAnimacion();
+    }
+
+    function guardarFavorito(idFrase, idAutor) {
+        const frase = document.getElementById(idFrase).textContent;
+        let autor = document.getElementById(idAutor).textContent;
+
+        if (!frase || frase.includes("Hoy ya no hay más frases") || frase === "Añade frases para comenzar.") {
+            return;
         }
 
-        // Primera frase solo 1 vez
-        if (localStorage.getItem("primeraFraseVisto")) {
-            document.getElementById("primeraFrase").style.display = "none";
+        autor = autor.replace("— ", "");
+
+        let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        const yaExiste = favoritos.some(f => f.frase === frase);
+
+        if (!yaExiste) {
+            favoritos.push({ frase, autor });
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
-            localStorage.setItem("primeraFraseVisto", "true");
+            alert("Esta frase ya está en tus favoritos.");
         }
+    }
+
+    window.onload = function() {
+        mostrarPrimeraFrase();
+    };
     </script>
 
 </body>
