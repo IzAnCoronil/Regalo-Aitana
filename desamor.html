@@ -102,7 +102,7 @@
         { texto: "No te rompieron, te enseñaron por dónde no volver.", autor: "IzAn" },
         { texto: "Tú mereces amor que no dude, no migajas disfrazadas de cariño.", autor: "IzAn" },
         { texto: "A veces el adiós es el único 'te quiero' que te puedes dar.", autor: "IzAn" },
-        { texto: "No te hizo falta que te elegirieran, te hizo falta elegirte tú.", autor: "IzAn" },
+        { texto: "No te hizo falta que te eligieran, te hizo falta elegirte tú.", autor: "IzAn" },
         { texto: "Tú no eras difícil de amar, solo estabas con quien no sabía hacerlo.", autor: "IzAn" },
         { texto: "No te fallaste, te fuiste cuando entendiste que ya no había lugar para ti.", autor: "IzAn" },
         { texto: "Tu corazón merece paz, no guerras disfrazadas de amor.", autor: "IzAn" },
@@ -110,7 +110,7 @@
         { texto: "Tú vales más que cualquier despedida que te dolió.", autor: "IzAn" },
         { texto: "No te quedaste sola, te quedaste contigo, y eso es empezar de nuevo.", autor: "IzAn" },
         { texto: "No fue tiempo perdido, fue aprendizaje caro.", autor: "IzAn" },
-        { texto: "Tú no eras demasiado, solo estabas con alguien que ofrecića muy poco.", autor: "IzAn" },
+        { texto: "Tú no eras demasiado, solo estabas con alguien que ofrecía muy poco.", autor: "IzAn" },
         { texto: "A veces el amor se va sin avisar, pero tu vida sigue siendo tuya.", autor: "IzAn" },
         { texto: "No te rompieron, te moldearon para algo mejor.", autor: "IzAn" },
         { texto: "Tú mereces un amor que se quede, no uno que te haga esperar.", autor: "IzAn" },
@@ -156,7 +156,7 @@
         { texto: "Uno no siempre hace lo que quiere, pero tiene el derecho de no hacer lo que no quiere.", autor: "Mario Benedetti" },
         { texto: "De dos lágrimas que caen, una siempre es por olvido.", autor: "Mario Benedetti" },
         { texto: "Es una lástima que no estés conmigo cuando miro el reloj y son las cuatro.", autor: "Mario Benedetti" },
-        { texto: "Posiblemente me quisiera, vaya uno a saberlo, pero lo cierto es que tenía una habilidad especial para herirme.", autor: "Mario Benedetti" },
+        { texto: "Posiblymente me quisiera, vaya uno a saberlo, pero lo cierto es que tenía una habilidad especial para herirme.", autor: "Mario Benedetti" },
         { texto: "Hay menos tiempo que lugar, no obstante, hay lugares que duran un minuto.", autor: "Mario Benedetti" },
         { texto: "El amor es un centro, pero a la deriva.", autor: "Mario Benedetti" },
         { texto: "Te espero cuando miremos al cielo de noche: tú allá, yo aquí.", autor: "Mario Benedetti" },
@@ -220,7 +220,7 @@
         { texto: "Cada vez que te vas me dejas un sabor a desierto en la boca.", autor: "Julio Cortázar" },
         { texto: "Lo que mucha gente llama amar consiste en elegir una mujer y casarse con ella. La eligen, te lo juro, los he visto. Como si se pudiese elegir en el amor.", autor: "Julio Cortázar" },
         { texto: "Lejos de ti es un lugar que no comprendo y que me duele habitar.", autor: "Julio Cortázar" },
-        { texto: "No fuiste un sueño, fuiste esa realidad que prefiero recordar durmiendo.", autor: "Julio Cortázar" },
+        { texto: "No fuiste un sueño, fuiste esa reality que prefiero recordar durmiendo.", autor: "Julio Cortázar" },
         { texto: "Nuestros encuentros eran puentes que cruzábamos sin mirar abajo.", autor: "Julio Cortázar" },
         { texto: "Te extraño en los detalles rotos de las tardes de lluvia.", autor: "Julio Cortázar" },
         { texto: "Olvidar es un trabajo de hormigas que una tormenta desarma.", autor: "Julio Cortázar" },
@@ -300,7 +300,7 @@
         { texto: "Ojalá que el olvido no sea una mentira piadosa del tiempo.", autor: "Joaquín Sabina" },
         { texto: "Cambiaste mis noches de gloria por mañanas de resaca emocional.", autor: "Joaquín Sabina" },
         { texto: "Nos dejamos llevar tanto que terminamos en acantilados distintos.", autor: "Joaquín Sabina" },
-        { texto: "Tu dirección ya no figura en mi mapa de emergencias.", autor: "Joaquín Sabina" },
+        { texto: "Tu dirección ya no figura en mi mapa de emergencies.", autor: "Joaquín Sabina" },
         { texto: "Fueron diez meses hermosos y cien años de arrepentimiento lento.", autor: "Joaquín Sabina" },
         { texto: "El corazón tiene razones que las copas de vino no logran borrar.", autor: "Joaquín Sabina" },
         { texto: "Te di las llaves de mi jaula y te marchaste con el cerrojo puesto.", autor: "Joaquín Sabina" },
@@ -351,8 +351,9 @@
         let intentos = 0;
 
         do {
-            indice = Math.floor(Math.random() * Security.escape(frasesDesamor.length));
-            intentos++; // Corregido el bug 'intentes++' que causaba el fallo
+            // CORREGIDO: Se quitó Security.escape que rompía el script
+            indice = Math.floor(Math.random() * frasesDesamor.length);
+            intentos++; 
         } while (frasesDesamor[indice].autor === ultimoAutor && intentos < 10 && frasesDesamor.length > 1);
 
         const frase = frasesDesamor[indice];
@@ -378,7 +379,7 @@
         const yaExiste = favoritos.some(f => f.frase === frase);
 
         if (!yaExiste) {
-            favoritos.push({ frase, autor });
+            favorites.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
