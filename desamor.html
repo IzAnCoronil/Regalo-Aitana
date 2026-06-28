@@ -4,65 +4,10 @@
     <meta charset="UTF-8">
     <title>Desamor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="style.css">
+    
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #f3e8ff, #ffffff); /* Fondo degradado suave unificado */
-            color: #3a3a3a;
-            min-height: 100vh;
-        }
-
-        /* NAV - Estructura fija y protegida contra desbordamientos */
-        nav {
-            background: #4da3ff; /* Azul unificado */
-            padding: 12px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 100;
-            box-sizing: border-box;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05em;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: #e8f4ff;
-            transform: scale(1.08);
-        }
-
-        /* HEADER - Ajustado para que el nav fijo no tape el título */
-        header {
-            text-align: center;
-            padding: 130px 20px 20px;
-        }
-
-        header h1 {
-            font-size: 2.6em;
-            color: #4a2d7f; /* Púrpura elegante */
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #6a538f;
-            font-size: 1.1em;
-            margin-top: 0;
-        }
-
-        /* CONTENEDOR PRINCIPAL */
+        /* Solo dejamos los estilos únicos y específicos de esta página */
         .contenedor {
             background: white;
             padding: 40px;
@@ -89,26 +34,6 @@
             font-style: italic;
         }
 
-        /* BOTÓN CAMBIAR FRASE */
-        button {
-            display: inline-block;
-            padding: 14px 28px;
-            background: #2ec4b6; /* Turquesa unificado del proyecto */
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 1.1em;
-        }
-
-        button:hover {
-            background: #20a498;
-            transform: scale(1.04);
-        }
-
-        /* BOTÓN FLOTANTE GUARDAR */
         .boton-guardar {
             position: fixed;
             bottom: 25px;
@@ -116,7 +41,7 @@
             background: #ff4d6d;
             color: white;
             padding: 14px 22px;
-            border-radius: 50px; /* Estilo píldora más moderno */
+            border-radius: 50px;
             font-size: 1.05em;
             font-weight: 600;
             cursor: pointer;
@@ -177,7 +102,7 @@
         { texto: "No te rompieron, te enseñaron por dónde no volver.", autor: "IzAn" },
         { texto: "Tú mereces amor que no dude, no migajas disfrazadas de cariño.", autor: "IzAn" },
         { texto: "A veces el adiós es el único 'te quiero' que te puedes dar.", autor: "IzAn" },
-        { texto: "No te hizo falta que te eligieran, te hizo falta elegirte tú.", autor: "IzAn" },
+        { texto: "No te hizo falta que te elegirieran, te hizo falta elegirte tú.", autor: "IzAn" },
         { texto: "Tú no eras difícil de amar, solo estabas con quien no sabía hacerlo.", autor: "IzAn" },
         { texto: "No te fallaste, te fuiste cuando entendiste que ya no había lugar para ti.", autor: "IzAn" },
         { texto: "Tu corazón merece paz, no guerras disfrazadas de amor.", autor: "IzAn" },
@@ -185,7 +110,7 @@
         { texto: "Tú vales más que cualquier despedida que te dolió.", autor: "IzAn" },
         { texto: "No te quedaste sola, te quedaste contigo, y eso es empezar de nuevo.", autor: "IzAn" },
         { texto: "No fue tiempo perdido, fue aprendizaje caro.", autor: "IzAn" },
-        { texto: "Tú no eras demasiado, solo estabas con alguien que ofrecía muy poco.", autor: "IzAn" },
+        { texto: "Tú no eras demasiado, solo estabas con alguien que ofrecića muy poco.", autor: "IzAn" },
         { texto: "A veces el amor se va sin avisar, pero tu vida sigue siendo tuya.", autor: "IzAn" },
         { texto: "No te rompieron, te moldearon para algo mejor.", autor: "IzAn" },
         { texto: "Tú mereces un amor que se quede, no uno que te haga esperar.", autor: "IzAn" },
@@ -242,7 +167,7 @@
         { texto: "Me dejaste un vacío que no se llena con silencios.", autor: "Mario Benedetti" },
         { texto: "Sé que voy a quererte sin preguntas, sé que vas a quererme sin respuestas.", autor: "Mario Benedetti" },
         { texto: "El olvido es una línea que tardamos demasiado en cruzar.", autor: "Mario Benedetti" },
-        { texto: "Tengo la horrible costumbre de pensar in ti cuando sé que no debo.", autor: "Mario Benedetti" },
+        { texto: "Tengo la horrible costumbre de pensar en ti cuando sé que no debo.", autor: "Mario Benedetti" },
         { texto: "El amor no es un puerto seguro, es un oleaje constante.", autor: "Mario Benedetti" },
         { texto: "Hay nostalgias que son trampas para el alma.", autor: "Mario Benedetti" },
         { texto: "La distancia separa cuerpos, no intenciones.", autor: "Mario Benedetti" },
@@ -426,8 +351,8 @@
         let intentos = 0;
 
         do {
-            indice = Math.floor(Math.random() * frasesDesamor.length);
-            intentes++;
+            indice = Math.floor(Math.random() * Security.escape(frasesDesamor.length));
+            intentos++; // Corregido el bug 'intentes++' que causaba el fallo
         } while (frasesDesamor[indice].autor === ultimoAutor && intentos < 10 && frasesDesamor.length > 1);
 
         const frase = frasesDesamor[indice];
