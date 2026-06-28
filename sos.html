@@ -13,6 +13,32 @@
             color: #4a4a4a;
         }
 
+        /* NAV - Estética unificada con Inicio manteniendo tonos naranjas/marrones */
+        nav {
+            background: #ffe08a;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* Sombra igualada a la de Inicio */
+            z-index: 100;
+            box-sizing: border-box;
+        }
+        nav a {
+            color: #5a3e00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+        nav a:hover {
+            color: #8a6500;
+            transform: scale(1.08); /* Efecto de aumento igualado a la de Inicio */
+        }
+
         header h1 {
             color: #5a3e00;
             margin-bottom: 10px;
