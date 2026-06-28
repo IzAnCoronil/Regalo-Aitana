@@ -13,9 +13,9 @@
             color: #2c3e50;
         }
 
-        /* NAV - Estética unificada con SOS manteniendo tonos naranjas/marrones */
+        /* NAV - ESTÉTICA ORIGINAL (Fondo Azul e Íconos/Textos Blancos) */
         nav {
-            background: #ffe08a;
+            background: #4da3ff;
             padding: 12px 20px;
             position: fixed;
             top: 0;
@@ -28,14 +28,14 @@
             box-sizing: border-box;
         }
         nav a {
-            color: #5a3e00;
+            color: white;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
         }
         nav a:hover {
-            color: #8a6500;
+            color: #e8f4ff;
             transform: scale(1.08);
         }
 
@@ -204,7 +204,6 @@
     </div>
     
     <script>
-        // Frases de cada amigo
         const frases = {
             iker: [
                 "Que la vida te devuelva toda la felicidad y el cariño que tú siempre regalas a los que te quieren.",
@@ -262,7 +261,6 @@
         let actual = 0;
         let amigoActual = "";
 
-        // Mostrar tarjeta con el nombre estilizado correctamente
         function mostrar(clave, nombreCompleto) {
             amigoActual = clave;
             actual = 0;
@@ -276,7 +274,6 @@
             mostrarFrase();
         }
 
-        // Mostrar frase actual
         function mostrarFrase() {
             const lista = frases[amigoActual];
             document.getElementById("textoFrase").textContent = lista[actual];
@@ -286,7 +283,6 @@
                 lista.length === 1 ? "none" : "inline-block";
         }
 
-        // Siguiente frase
         function siguiente() {
             const lista = frases[amigoActual];
             if (actual < lista.length - 1) {
@@ -295,14 +291,12 @@
             }
         }
 
-        // Volver a la lista de nombres
         function volver() {
             document.getElementById("listaNombres").style.display = "block";
             document.getElementById("volver").style.display = "none";
             document.getElementById("tarjeta").style.display = "none";
         }
 
-        // Controlar la visualización única de la primera frase
         if (localStorage.getItem("primeraFraseVisto")) {
             document.getElementById("primeraFrase").style.display = "none";
         } else {
