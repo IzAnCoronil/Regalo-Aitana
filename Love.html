@@ -25,12 +25,13 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV - Estructura unificada */
+        /* NAV - Estructura fluida y adaptada a móviles */
         nav {
             background: #ffe08a;
             padding: 12px 20px;
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -46,6 +47,7 @@
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
+            white-space: nowrap; /* Evita que el texto se rompa en dos líneas */
         }
 
         nav a:hover {
@@ -165,23 +167,51 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        /* Optimización responsiva para pantallas pequeñas */
-        @media (max-width: 600px) {
+        /* Optimización responsiva para pantallas pequeñas (Móviles) */
+        @media (max-width: 768px) {
             nav {
-                gap: 15px;
-                padding: 10px;
+                justify-content: flex-start;
+                gap: 20px;
+                overflow-x: auto; /* Scroll horizontal si los enlaces no caben */
+                padding: 15px 10px;
             }
+            
             nav a {
-                font-size: 0.9em;
+                font-size: 1em;
             }
+
             header {
-                padding-top: 160px;
+                padding-top: 100px;
             }
+
+            header h1 {
+                font-size: 2.1em;
+            }
+
+            .lista {
+                padding: 10px 15px 140px;
+            }
+
+            .item {
+                padding: 20px 15px;
+                margin-bottom: 20px;
+            }
+
+            .frase {
+                font-size: 1.15em;
+            }
+
             .borrarTodo {
-                bottom: 15px;
-                right: 15px;
-                padding: 10px 16px;
-                font-size: 0.95em;
+                bottom: 20px;
+                right: 50%;
+                transform: translateX(50%); /* Centra el botón flotante en pantallas pequeñas */
+                width: 85%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .borrarTodo:hover {
+                transform: translateX(50%) scale(1.02); /* Evita romper el centrado al pasar el dedo */
             }
         }
     </style>
@@ -249,16 +279,26 @@
             favoritos.splice(indice, 1);
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             cargarFavoritos();
+            
+            // Ajuste de scroll: Al eliminar una frase, la pantalla se reajusta suavemente
+            window.scrollBy({ top: -50, behavior: "smooth" });
         }
 
         function borrarTodos() {
             if (confirm("¿Estás seguro de que deseas eliminar todas tus frases favoritas?")) {
                 localStorage.removeItem("favoritos");
                 cargarFavoritos();
+                
+                // Hace un scroll automático hacia la parte superior al limpiar todo
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }
         }
 
-        window.onload = cargarFavoritos;
+        // Asegura que al entrar a la sección la ventana se posicione al inicio de manera limpia
+        window.onload = function() {
+            cargarFavoritos();
+            window.scrollTo({ top: 0 });
+        };
     </script>
 
 </body>
