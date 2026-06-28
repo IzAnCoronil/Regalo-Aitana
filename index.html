@@ -2,17 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <title>Inicio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frases de amigos</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
     <style>
-        /* Optimización de Scroll y Vista General */
+        /* ESTILOS GENERALES DE LA WEB */
         html {
             scroll-behavior: smooth;
         }
-
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -23,8 +20,7 @@
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
         }
-
-        /* NAV - Estructura fluida y corregida para móviles con scroll horizontal táctil */
+        /* NAV - Optimización fluida para scroll lateral en pantallas pequeñas */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
@@ -39,7 +35,6 @@
             z-index: 100;
             box-sizing: border-box;
         }
-
         nav a {
             color: white;
             text-decoration: none;
@@ -48,135 +43,119 @@
             transition: 0.2s;
             white-space: nowrap;
         }
-
         nav a:hover {
             color: #e8f4ff;
             transform: scale(1.08);
         }
-
         /* HEADER */
         header {
             text-align: center;
             padding: 120px 20px 40px;
         }
-
         header h1 {
             font-size: 2.6em;
             color: #2c3e50;
             margin-bottom: 10px;
         }
-
         header p {
             color: #4b5c6b;
             font-size: 1.1em;
         }
-
-        /* LISTA DE NOMBRES */
-        .lista-nombres {
-            max-width: 900px;
-            margin: 20px auto;
-            text-align: center;
-            padding: 0 15px;
-        }
-
-        .nombre-btn {
-            display: block;
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
             background: white;
-            padding: 18px;
-            margin: 12px auto;
-            border-radius: 14px;
-            max-width: 500px;
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #2c3e50;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: 0.2s;
-        }
-
-        .nombre-btn:hover {
-            transform: scale(1.04);
-            background: #f7faff;
-        }
-
-        /* TARJETA */
-        .tarjeta {
-            background: white;
-            padding: 25px;
-            margin: 20px auto;
-            border-radius: 18px;
+            padding: 40px;
+            margin: 30px auto 60px;
+            border-radius: 20px;
             max-width: 900px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            display: none;
             text-align: center;
             box-sizing: border-box;
         }
-
-        .nombre {
+        .contenedor h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
             font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 12px;
         }
-
-        .frase {
-            margin: 20px 0;
+        .contenedor p {
             color: #4b5c6b;
-            font-size: 1.2em;
-            line-height: 1.5em;
+            margin-bottom: 30px;
         }
-
-        .contador {
-            font-size: 0.95em;
-            color: #888;
-            margin-bottom: 10px;
-        }
-
-        .btn-sig {
-            padding: 12px 20px;
+        /* BOTONES GRANDES */
+        .boton {
+            display: inline-block;
+            padding: 18px 28px;
             background: #ff8c42;
             color: white;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 600;
-            cursor: pointer;
-            display: inline-block;
+            text-decoration: none;
             transition: 0.2s;
+            margin: 12px;
+            font-size: 1.2em;
+            min-width: 180px;
+        }
+        .boton:hover {
+            background: #ff7a1f;
+            transform: scale(1.08);
         }
 
-        .btn-sig:hover {
+        /* ESTILOS DE LAS PANTALLAS DE BIENVENIDA Y USO */
+        .capa-bienvenida {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff3b0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            box-sizing: border-box;
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        .cuadro-texto {
+            max-width: 700px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: auto;
+        }
+        .cuadro-texto h2 {
+            color: #5a3e00;
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .cuadro-texto p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #4a4a4a;
+            margin-bottom: 0;
+        }
+        .btn-interactivo {
+            margin-top: 30px;
+            padding: 14px 24px;
+            background: #ff8c42;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-interactivo:hover {
             background: #ff7a1f;
             transform: scale(1.05);
         }
 
-        .volver {
-            display: none;
-            margin: 20px auto;
-            padding: 14px 22px;
-            background: #4da3ff;
-            color: white;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            width: fit-content;
-            transition: 0.2s;
-        }
-
-        .volver:hover {
-            transform: scale(1.05);
-        }
-
-        /* PRIMERA FRASE */
-        .primera-frase {
-            background: white;
-            padding: 25px;
-            margin: 20px auto;
-            border-radius: 18px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        /* ADAPTACIÓN PARA MÓVILES */
+        /* ADAPTACIÓN PARA MÓVILES (Consistencia entre páginas) */
         @media (max-width: 768px) {
             nav {
                 justify-content: flex-start;
@@ -184,203 +163,105 @@
                 overflow-x: auto;
                 padding: 15px 10px;
             }
-
             header {
                 padding: 100px 15px 20px;
             }
-
             header h1 {
                 font-size: 2em;
             }
-
             header p {
                 font-size: 1em;
             }
-
-            .nombre-btn {
-                font-size: 1.15em;
-                padding: 15px;
+            .contenedor {
+                padding: 25px 20px;
+                margin: 20px 15px;
                 max-width: 95%;
             }
-
-            .tarjeta, .primera-frase {
-                margin: 20px 15px;
-                padding: 20px 15px;
-            }
-
-            .nombre {
-                font-size: 1.5em;
-            }
-
-            .frase {
+            .boton {
                 font-size: 1.1em;
+                padding: 15px 22px;
+                min-width: 140px;
+                margin: 8px;
+            }
+            .cuadro-texto {
+                padding: 25px 20px;
             }
         }
     </style>
-
 </head>
-
 <body>
 
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="musica.html">Música</a>
-        <a href="anadir.html">Añadir frases</a>
-        <a href="sos.html">SOS</a>
-        <a href="Love.html">Favoritos</a>
-        <a href="album.html">Álbum</a>
-        <a href="frasesamigos.html">Frases de amigos</a>
-    </nav>
-
-    <header>
-        <h1>Frases de amigos</h1>
-        <p>Pincha en un nombre para ver sus frases una a una.</p>
-    </header>
-
-    <div id="primeraFrase" class="primera-frase">
-        <h2>Primera frase</h2>
-        <p><b>¿Qué es ser fuerte?</b> Sospecho que ser fuerte no es solo una cuestión de poder; es fuerte la persona que encuentra un motivo por el que luchar y se dedica en cuerpo y alma a ello.</p>
+    <div id="bienvenida" class="capa-bienvenida" style="display: none;">
+        <div class="cuadro-texto">
+            <h2>Buenos días cumpleañera ❤️</h2>
+            <p>
+                Seguro que te lo pasas genial en tu día. Esta página es mi regalo para ti, ya que me dijiste de broma que querías un regalo que te diera ganas de vivir… pues aquí lo tienes. Bueno, eso y que no sé cuándo te podré dar algo físico que también tengo preparado para ti (espero que no lo tengas ya). Después de esta pantalla te saldrá otra con la info de uso. Un abrazo y ya hablaremos.
+            </p>
+            <button class="btn-interactivo" onclick="cerrarBienvenida()">Continuar</button>
+        </div>
     </div>
 
-    <div class="lista-nombres" id="listaNombres">
-        <div class="nombre-btn" onclick="mostrar('iker', 'Iker de Dios')">Iker de Dios</div>
-        <div class="nombre-btn" onclick="mostrar('paula', 'Paula Gutiérrez')">Paula Gutiérrez</div>
-        <div class="nombre-btn" onclick="mostrar('pedro', 'Pedro Jiménez')">Pedro Jiménez</div>
-        <div class="nombre-btn" onclick="mostrar('virginia', 'Virginia Delgado')">Virginia Delgado</div>
-        <div class="nombre-btn" onclick="mostrar('celia', 'Celia García')">Celia García</div>
-        <div class="nombre-btn" onclick="mostrar('irene', 'Irene Rodríguez')">Irene Rodríguez</div>
-        <div class="nombre-btn" onclick="mostrar('andres', 'Andrés García')">Andrés García</div>
-        <div class="nombre-btn" onclick="mostrar('izan', 'IzAn')">IzAn</div>
+    <div id="uso" class="capa-bienvenida" style="display: none;">
+        <div class="cuadro-texto">
+            <h2>Cómo funciona esta página</h2>
+            <p>
+                Esta página está hecha para ti, para que tengas un sitio donde refugiarte cuando lo necesites, que sea tu nuevo lugar seguro y este te aseguro que nadie te lo va a quitar. Aquí puedes encontrar frases según cómo te sientas, guardar tus favoritas, añadir las tuyas propias y retos musicales para todos los días.
+                <br><br>
+                No tienes que usarla de ninguna manera concreta: simplemente entra cuando te apetezca, cuando estés mal, cuando estés bien, o cuando quieras recordar que alguien piensa en ti. Importante: arriba habrá un botón de SOS, sólo pulsalo cuando lo necesites de verdad y no, no me manda tu ubicación ni nada del estilo.
+            </p>
+            <button class="btn-interactivo" onclick="cerrarUso()">Entrar a la Página</button>
+        </div>
     </div>
 
-    <div class="volver" id="volver" onclick="volver()">Volver</div>
+    <div id="contenido-web">
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="musica.html">Música</a>
+            <a href="anadir.html">Añadir frases</a>
+            <a href="sos.html">SOS</a>
+            <a href="Love.html">Favoritos</a>
+            <a href="album.html">Álbum</a>
+            <a href="frasesamigos.html">Frases de amigos</a>
+        </nav>
 
-    <div class="tarjeta" id="tarjeta">
-        <div class="nombre" id="nombreAmigo"></div>
-        <div class="contador" id="contador"></div>
-        <div class="frase" id="textoFrase"></div>
-        <div class="btn-sig" id="btnSig" onclick="siguiente()">Siguiente</div>
+        <header>
+            <h1>Bienvenido</h1>
+            <p>Elige una emoción y deja que las frases hagan el resto.</p>
+        </header>
+
+        <div class="contenedor">
+            <h2>Emociones</h2>
+            <p>Explora frases según cómo te sientas.</p>
+            <a class="boton" href="alegria.html">Alegría</a>
+            <a class="boton" href="motivacion.html">Motivación</a>
+            <a class="boton" href="melancolia.html">Melancolía</a>
+            <a class="boton" href="ansiedad.html">Ansiedad</a>
+            <a class="boton" href="estres.html">Estrés</a>
+            <a class="boton" href="desamor.html">Desamor</a>
+        </div>
     </div>
-    
+
     <script>
-        // Frases de cada amigo
-        const frases = {
-            iker: [
-                "Que la vida te devuelva toda la felicidad y el cariño que tú siempre regalas a los que te quieren.",
-                "Que nada apague tus ganas de comerte el mundo ni esa forma tan tuya de brillar.",
-                "No dejes de soñar a lo grande, porque tienes la fuerza necesaria para lograrlo todo.",
-                "Te deseo lo mejor en esta nueva etapa; el insti cambia, pero lo nuestro sigue igual.",
-                "Muchísima suerte este año; y que no te quepa duda de que pienso seguir dándote el coñazo como siempre."
-            ],
-            paula: [
-                "Que la vida te recompense por ese bonito corazón que tienes.",
-                "Tener ataques de risa contigo por cualquier tontería me alegra el día.",
-                "Me encanta saber que eres el alma de la fiesta y que siempre me contagias tu energía.",
-                "Eres como una estrella: no siempre te veo, pero sé que siempre estás ahí.",
-                "No siempre tengo cosas interesantes que contarte, pero sé que sea lo que sea me vas a escuchar y reírte de mis tonterías."
-            ],
-            pedro: [
-                "Quien tiene miedo, muere a diario.",
-                "No corras detrás de las mariposas; cuida tu jardín y ellas vendrán solas.",
-                "Todo el mundo ve lo que aparentas ser, pocos experimentan lo que realmente eres.",
-                "La medida del amor es amar sin medida.",
-                "Aprende a dejar ir, esa es la clave de la felicidad."
-            ],
-            virginia: [
-                "No tienes que ser perfecta para avanzar, solo seguir intentándolo.",
-                "Los pequeños pasos de hoy construyen los grandes logros de mañana.",
-                "Confía en ti; has superado cosas difíciles antes y volverás a hacerlo.",
-                "El éxito no es no caer, sino levantarse cada vez que caes.",
-                "Nunca sabes lo cerca que estás de conseguirlo si te rindes demasiado pronto."
-            ],
-            celia: [
-                "Mi relación contigo es difícil, pero me gusta lo difícil.",
-                "Aunque vivamos siempre peleadas, sé que nunca me faltará nada contigo.",
-                "Te daría hasta un riñón si algún día lo necesitaras.",
-                "Te quiero porque siempre estuviste ahí, incluso cuando me pasaba todos los patios sola.",
-                "Cuando no estás, siento que me falta algo."
-            ],
-            irene: [
-                "Mi pequeña grandullona… te has hecho mayor; ya no cabes en mis brazos, pero siempre en mi corazón 🩷"
-            ],
-            andres: [
-                "Te pareces tanto a mí que me da hasta un poquito de yuyu.",
-                "Tanto tú como yo tenemos esa forma de andar tan salerosa que nos hace únicos.",
-                "Los 16 años son la edad más importante después de los 15."
-            ],
-            izan: [
-                "Admiro tu fuerza, tu bondad y la forma en que siempre estás para los demás. Gracias por ser quien eres y por dejar una huella tan bonita en las personas. Nunca olvides lo importante que eres.",
-                "Encierra tus demonios con tu sonrisa, pero si alguien te lastima, abre la jaula sin miedo.",
-                "Llorar está permitido; no pasa nada. En cambio, rendirse no lo está.",
-                "Una lección necesita dolor y sacrificio para tener sentido. Pero una vez que lo superas, consigues un corazón mucho más fuerte que todo lo demás.",
-                "Si no consigues tus objetivos por talento, que sea por obsesión.",
-                "Por más consejos que te den, habrá cosas que solo aprenderás a base de caídas y golpes."
-            ]
-        };
-
-        let actual = 0;
-        let amigoActual = "";
-
-        // Mostrar tarjeta
-        function mostrar(idNombre, nombrePantalla) {
-            amigoActual = idNombre;
-            actual = 0;
-
-            document.getElementById("listaNombres").style.display = "none";
-            document.getElementById("volver").style.display = "block";
-
-            const tarjeta = document.getElementById("tarjeta");
-            tarjeta.style.display = "block";
-
-            // Usamos el nombre estético que pasamos por parámetro para mantener mayúsculas especiales
-            document.getElementById("nombreAmigo").textContent = nombrePantalla;
-
-            mostrarFrase();
-
-            // Desplazamiento automático hacia la tarjeta
-            tarjeta.scrollIntoView({ behavior: "smooth", block: "start" });
+        // Comprobación inmediata antes de que carguen las imágenes o estilos pesados
+        if (localStorage.getItem("webVisitada") !== "true") {
+            // Es la primera vez: ocultamos la web y mostramos la bienvenida
+            document.getElementById("contenido-web").style.display = "none";
+            document.getElementById("bienvenida").style.display = "flex";
         }
 
-        // Mostrar frase actual
-        function mostrarFrase() {
-            const lista = frases[amigoActual];
-            document.getElementById("textoFrase").textContent = lista[actual];
-            document.getElementById("contador").textContent = `Frase ${actual + 1} de ${lista.length}`;
-
-            // Oculta el botón 'Siguiente' si el amigo solo tiene una frase o si ya estás en la última
-            if (lista.length === 1 || actual === lista.length - 1) {
-                document.getElementById("btnSig").style.display = "none";
-            } else {
-                document.getElementById("btnSig").style.display = "inline-block";
-            }
+        // Pasar de Bienvenida a Instrucciones de Uso
+        function cerrarBienvenida() {
+            document.getElementById("bienvenida").style.display = "none";
+            document.getElementById("uso").style.display = "flex";
         }
 
-        // Siguiente frase
-        function siguiente() {
-            const lista = frases[amigoActual];
-            if (actual < lista.length - 1) {
-                actual++;
-                mostrarFrase();
-            }
-        }
-
-        // Volver
-        function volver() {
-            document.getElementById("listaNombres").style.display = "block";
-            document.getElementById("volver").style.display = "none";
-            document.getElementById("tarjeta").style.display = "none";
-
-            // Sube arriba del todo suavemente al regresar
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-
-        // Primera frase solo 1 vez
-        if (localStorage.getItem("primeraFraseVisto")) {
-            document.getElementById("primeraFrase").style.display = "none";
-        } else {
-            localStorage.setItem("primeraFraseVisto", "true");
+        // Finalizar introducción y guardar el estado para siempre
+        function cerrarUso() {
+            document.getElementById("uso").style.display = "none";
+            document.getElementById("contenido-web").style.display = "block";
+            // Guardamos el token en el dispositivo
+            localStorage.setItem("webVisitada", "true");
         }
     </script>
-
 </body>
 </html>
