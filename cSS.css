@@ -1,27 +1,42 @@
-/* Tipografía elegante desde Google Fonts */
+/* ==========================================================================
+   TIPOGRAFÍA E ELEGANTE (Google Fonts)
+   ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* ==========================================================================
+   ESTILOS GENERALES Y OPTIMIZACIÓN DE VISTA
+   ========================================================================== */
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    background: linear-gradient(135deg, #f3e8ff, #ffffff); /* Unificado con el fondo degradado */
+    background: linear-gradient(135deg, #f3e8ff, #ffffff);
     color: #3a3a3a;
     min-height: 100vh;
+    /* Control de scroll e integridad horizontal */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* NAV - Estructura unificada y protegida contra desbordamientos */
+/* ==========================================================================
+   NAVEGACIÓN (NAV)
+   ========================================================================== */
 nav {
-    background: #4da3ff; /* Color azul unificado para la barra de navegación */
+    background: #4da3ff;
     padding: 12px 20px;
     position: fixed;
     top: 0;
     width: 100%;
     display: flex;
-    justify-content: center; /* Centra los enlaces del menú */
-    gap: 35px; /* Espaciado idéntico al resto de las páginas */
+    justify-content: center;
+    gap: 35px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     z-index: 100;
-    box-sizing: border-box; /* Evita roturas de layout en móviles */
+    box-sizing: border-box;
 }
 
 nav a {
@@ -37,10 +52,12 @@ nav a:hover {
     transform: scale(1.08);
 }
 
-/* HEADER */
+/* ==========================================================================
+   HEADER Y PRESENTACIÓN
+   ========================================================================== */
 header {
     text-align: center;
-    padding: 120px 20px 40px; /* Ajustado el padding superior para no tapar el contenido con el nav */
+    padding: 120px 20px 40px;
     color: #4a2d7f;
 }
 
@@ -55,7 +72,9 @@ header h1 {
     font-size: 1.1em;
 }
 
-/* Frase del día / Contenedores comunes */
+/* ==========================================================================
+   CONTENEDORES Y BLOQUES COMUNES
+   ========================================================================== */
 .frase-dia {
     background: white;
     padding: 40px;
@@ -67,10 +86,10 @@ header h1 {
     text-align: center;
 }
 
-/* Tarjetas de emociones */
+/* GRID DE EMOCIONES */
 .emociones .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adaptativo: se ajusta según la pantalla */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     padding: 20px;
     max-width: 900px;
@@ -94,7 +113,7 @@ header h1 {
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
 
-/* Colores de las tarjetas de emociones según la paleta del proyecto */
+/* COLORES TEMÁTICOS (Paleta del proyecto) */
 .alegria { background: #ffbe0b; }
 .motivacion { background: #ff8c42; }
 .melancolia { background: #6a8caf; }
@@ -102,7 +121,7 @@ header h1 {
 .estres { background: #2ec4b6; }
 .desamor { background: #e63946; }
 
-/* Lista de Frases */
+/* LISTADOS DE TEXTO Y FRASES */
 .lista-frases {
     padding: 20px;
     max-width: 900px;
@@ -117,12 +136,12 @@ header h1 {
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* Botones de acción */
+/* ELEMENTOS DE ACCIÓN (BOTONES) */
 button {
     margin-top: 15px;
     padding: 12px 20px;
     border: none;
-    background: #2ec4b6; /* Unificado con el tono turquesa del proyecto */
+    background: #2ec4b6;
     color: white;
     border-radius: 12px;
     cursor: pointer;
@@ -136,11 +155,38 @@ button:hover {
     transform: scale(1.03);
 }
 
-/* Footer */
+/* PIE DE PÁGINA */
 footer {
     text-align: center;
     padding: 30px 20px;
     margin-top: 40px;
     color: #6a538f;
     font-size: 0.95em;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES - ADAPTACIÓN MÓVIL GLOBAL
+   ========================================================================== */
+@media (max-width: 600px) {
+    nav {
+        gap: 15px;
+        padding: 10px;
+    }
+    nav a {
+        font-size: 0.9em;
+    }
+    header {
+        padding-top: 160px;
+    }
+    header h1 {
+        font-size: 2em;
+    }
+    .frase-dia, .lista-frases, .emociones .grid {
+        width: 92%;
+        padding: 20px;
+    }
+    button {
+        width: 100%;
+        padding: 14px 20px;
+    }
 }
