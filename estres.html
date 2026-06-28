@@ -130,7 +130,7 @@
         { texto: "No tienes que poder con todo hoy, solo con lo que tienes delante.", autor: "IzAn" },
         { texto: "Tu mente va rápido porque quiere hacerlo bien, no porque estés mal.", autor: "IzAn" },
         { texto: "Estudiar no te define, pero tu esfuerzo sí dice mucho de ti.", autor: "IzAn" },
-        { texto: "No eres vaga, estás cansada de luchar con cosas que nadie ve.", autor: "IzAn" },
+        { texto: "No estás con pereza, estás cansada de luchar con cosas que nadie ve.", autor: "IzAn" },
         { texto: "Tu estrés no es debilidad, es señal de cuánto te importa lo que haces.", autor: "IzAn" },
         { texto: "A veces tu cabeza pide pausa, y eso también es avanzar.", autor: "IzAn" },
         { texto: "No tienes que entenderlo todo a la primera, tú no eres una máquina.", autor: "IzAn" },
@@ -301,6 +301,7 @@
         const yaExiste = favoritos.some(f => f.frase === frase);
 
         if (!yaExiste) {
+            // CORREGIDO: se cambió 'favorites.push' por 'favoritos.push'
             favoritos.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
