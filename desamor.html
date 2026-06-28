@@ -5,38 +5,51 @@
     <title>Desamor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
     <style>
-        /* Reset y Estilos Globales */
+        /* --- BARRA DE SCROLL PREMIUM PERSONALIZADA (Tono Vino/Ceniza) --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0b11; /* Negro purpúreo muy oscuro */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(159, 18, 57, 0.4); /* Rojo vino translúcido */
+            border-radius: 10px;
+            border: 2px solid #0f0b11;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(225, 29, 72, 0.7); /* Carmesí más visible */
+        }
+
         html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(159, 18, 57, 0.4) #0f0b11;
             scroll-behavior: smooth;
         }
 
+        /* --- ESTILOS DE LA ATMÓSFERA DE DESAMOR --- */
         body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #f7f1f1, #ffffff);
-            color: #333333;
+            background: radial-gradient(circle at top, #4c0519, #0f0b11); /* Degradado vino profundo a negro sutil */
+            color: #f8fafc;
             min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Navegación unificada con scroll horizontal oculto */
+        /* Navegación unificada premium */
         nav {
-            background: #ffffff;
-            padding: 16px 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
             display: flex;
             justify-content: flex-start;
             gap: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            z-index: 100;
+            padding: 20px;
+            background: rgba(15, 11, 17, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
@@ -48,110 +61,130 @@
         }
 
         nav a {
-            color: #666666;
+            color: #94a3b8;
             text-decoration: none;
+            font-size: 0.95em;
             font-weight: 500;
-            font-size: 1em;
-            transition: color 0.25s ease, transform 0.25s ease;
+            transition: color 0.2s, transform 0.2s;
             display: inline-block;
             -webkit-tap-highlight-color: transparent;
         }
 
         nav a:hover {
-            color: #ff4d6d;
+            color: #ffffff;
             transform: scale(1.02);
         }
 
         /* Encabezado */
         header {
             text-align: center;
-            padding: 130px 20px 20px;
+            padding: 50px 20px 10px;
         }
 
         header h1 {
-            font-size: 2.5em;
-            color: #2c2c2c;
-            margin: 0 0 8px 0;
-            font-weight: 600;
+            font-size: 2.8em;
+            font-weight: 800;
             letter-spacing: -0.5px;
+            background: linear-gradient(to right, #f43f5e, #fda4af); /* Degradado de rosa carmesí a rosa viejo apagado */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 12px 0;
         }
 
         header p {
-            color: #7a7a7a;
-            font-size: 1.05em;
-            margin: 0;
+            color: #94a3b8;
+            font-size: 1.1em;
             font-weight: 300;
-        }
-
-        /* Contenedor de la Tarjeta */
-        .contenedor {
-            background: #ffffff;
-            padding: 45px 40px;
-            margin: 30px auto 100px;
-            border-radius: 24px;
-            max-width: 700px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            text-align: center;
-            box-sizing: border-box;
-            min-height: 280px; 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-            border: 1px solid rgba(0,0,0,0.01);
-        }
-
-        .frase {
-            font-size: 1.35em;
-            color: #2c2c2c;
-            margin: 0 0 15px 0;
-            font-weight: 400;
+            max-width: 500px;
+            margin: 0 auto;
             line-height: 1.6;
         }
 
-        .autor {
-            font-size: 1em;
-            color: #9e9e9e;
-            margin: 0 0 35px 0;
-            font-style: italic;
-            font-weight: 300;
+        /* CONTENEDOR EFECTO VIDRIO OSCURO (GLASSMORPHISM MELANCÓLICO) */
+        .contenedor {
+            background: rgba(15, 11, 17, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            margin: 40px auto 120px;
+            border-radius: 24px;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            text-align: center;
+            box-sizing: border-box;
+            max-height: 75vh; 
+            overflow-y: auto;
         }
 
-        /* Botón Nueva Frase */
-        button {
-            display: inline-block;
-            padding: 12px 32px;
-            background: #ff4d6d;
-            color: #ffffff;
-            border: none;
-            border-radius: 50px;
+        /* Animación fluida de aparición */
+        .frase-animada {
+            animation: fadeInBlur 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInBlur {
+            from { opacity: 0; filter: blur(6px); transform: translateY(12px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
+        }
+
+        .frase {
+            font-size: 1.6em;
+            color: #f1f5f9;
+            margin: 0 0 20px 0;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: -0.3px;
+        }
+
+        .autor {
+            font-size: 1.05em;
+            color: #f43f5e; /* Resalte del autor en rosa carmesí */
+            margin: 0 0 40px 0;
+            font-style: italic;
+            letter-spacing: 0.5px;
             font-weight: 500;
-            font-family: 'Poppins', sans-serif;
+        }
+
+        /* BOTÓN DE ACCIÓN OSCURO/CENIZA */
+        .contenedor button {
+            display: inline-block;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, #4c0519, #881337); /* Degradado vino/borgoña mate */
+            color: #fecdd3;
+            border: 1px solid rgba(251, 113, 133, 0.2);
+            border-radius: 14px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s ease;
-            font-size: 1em;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.25);
+            font-size: 1.05em;
+            letter-spacing: 0.2px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            min-width: 180px;
             -webkit-tap-highlight-color: transparent;
         }
 
-        button:hover {
-            background: #c9184a;
+        .contenedor button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.35);
+            background: linear-gradient(135deg, #9f1239, #e11d48); /* Se enciende un poco al pasar el cursor */
+            color: white;
+            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.25);
         }
 
-        button:active {
-            transform: translateY(1px);
+        .contenedor button:active {
+            transform: translateY(0);
         }
 
-        /* Botón Guardar Flotante */
+        /* BOTÓN FLOTANTE GUARDAR MATE */
         .boton-guardar {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #ffffff;
-            color: #ff4d6d;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fda4af;
             padding: 12px 24px;
             border-radius: 50px;
             font-size: 0.95em;
@@ -159,49 +192,35 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: all 0.25s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 99;
             -webkit-tap-highlight-color: transparent;
         }
 
         .boton-guardar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.15);
-            background: #fff5f6;
+            background: #f43f5e;
+            color: white;
+            border-color: #f43f5e;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(244, 63, 94, 0.3);
         }
 
         /* Adaptabilidad Móvil */
         @media (max-width: 768px) {
-            nav {
-                gap: 20px;
-                padding: 14px 15px;
-            }
-            header {
-                padding-top: 105px;
-            }
             header h1 {
-                font-size: 2.1em;
+                font-size: 2.3em;
             }
             .contenedor {
-                margin: 20px 16px 120px;
+                margin: 30px 16px 120px;
                 padding: 40px 24px;
-                min-height: 240px;
             }
             .frase {
-                font-size: 1.2em;
+                font-size: 1.3em;
             }
-            button {
+            .contenedor button {
                 width: 100%;
-                max-width: 260px;
-            }
-            .boton-guardar {
-                bottom: 24px;
-                right: 24px;
-                padding: 10px 20px;
             }
         }
     </style>
@@ -224,14 +243,16 @@
         <p>Frases que duelen, pero enseñan.</p>
     </header>
 
-    <div class="contenedor" id="tarjetaContenedor">
-        <p id="fraseDesamor" class="frase"></p>
-        <p id="autorDesamor" class="autor"></p>
+    <div class="contenedor">
+        <div id="bloqueTexto">
+            <p id="fraseDesamor" class="frase"></p>
+            <p id="autorDesamor" class="autor"></p>
+        </div>
         <button onclick="nuevaFraseDesamor()">Otra frase</button>
     </div>
 
     <div class="boton-guardar" onclick="guardarFavorito('fraseDesamor','autorDesamor')">
-        ❤️ Guardar
+        💔 Guardar
     </div>
 
     <script>
@@ -255,8 +276,8 @@
         { texto: "Tú vales más que cualquier despedida que te dolió.", autor: "IzAn" },
         { texto: "No te quedaste sola, te quedaste contigo, y eso es empezar de nuevo.", autor: "IzAn" },
         { texto: "No fue tiempo perdido, fue aprendizaje caro.", autor: "IzAn" },
-        { texto: "Tú no eras demasiado, solo estabas con alguien que ofrecía muy poco.", autor: "IzAn" },
-        { texto: "A veces el amor se va sin avisar, pero tu vida sigue siendo tuya.", autor: "IzAn" },
+        { texto: "Tú no eras demasiado, solo estabas con alguien que scorecard muy poco.", autor: "IzAn" },
+        { texto: "A veces el amor se va sin avisar, pero tu life sigue siendo tuya.", autor: "IzAn" },
         { texto: "No te rompieron, te moldearon para algo mejor.", autor: "IzAn" },
         { texto: "Tú mereces un amor que se quede, no uno que te haga esperar.", autor: "IzAn" },
 
@@ -312,7 +333,7 @@
         { texto: "Me dejaste un vacío que no se llena con silencios.", autor: "Mario Benedetti" },
         { texto: "Sé que voy a quererte sin preguntas, sé que vas a quererme sin respuestas.", autor: "Mario Benedetti" },
         { texto: "El olvido es una línea que tardamos demasiado en cruzar.", autor: "Mario Benedetti" },
-        { texto: "Tengo la horrible costumbre de pensar en ti cuando sé que no debo.", autor: "Mario Benedetti" },
+        { texto: "Tengo la horrible costumbre de pensar in ti cuando sé que no debo.", autor: "Mario Benedetti" },
         { texto: "El amor no es un puerto seguro, es un oleaje constante.", autor: "Mario Benedetti" },
         { texto: "Hay nostalgias que son trampas para el alma.", autor: "Mario Benedetti" },
         { texto: "La distancia separa cuerpos, no intenciones.", autor: "Mario Benedetti" },
@@ -363,7 +384,7 @@
         { texto: "Ven a dormir conmigo: no haremos el amor, él nos hará.", autor: "Julio Cortázar" },
         { texto: "Total parcial, te quiero. Total general, te extraño.", autor: "Julio Cortázar" },
         { texto: "Cada vez que te vas me dejas un sabor a desierto en la boca.", autor: "Julio Cortázar" },
-        { texto: "Lo que mucha gente llama amar consists en elegir una mujer y casarse con ella. La eligen, te lo juro, los he visto. Como si se pudiese elegir en el amor.", autor: "Julio Cortázar" },
+        { texto: "Lo que mucha gente llama amar consiste en elegir una mujer y casarse con ella. La eligen, te lo juro, los he visto. Como si se pudiese elegir en el amor.", autor: "Julio Cortázar" },
         { texto: "Lejos de ti es un lugar que no comprendo y que me duele habitar.", autor: "Julio Cortázar" },
         { texto: "No fuiste un sueño, fuiste esa realidad que prefiero recordar durmiendo.", autor: "Julio Cortázar" },
         { texto: "Nuestros encuentros eran puentes que cruzábamos sin mirar abajo.", autor: "Julio Cortázar" },
@@ -455,72 +476,39 @@
 
     let frasesUsuario = JSON.parse(localStorage.getItem("desamor")) || [];
     let frasesDesamor = frasesDesamorOriginal.concat(frasesUsuario);
-
     let ultimoAutor = null;
-    let primeraMostrada = false;
 
-    function mostrarPrimeraFrase() {
-        if (frasesDesamor.length === 0) {
-            document.getElementById("fraseDesamor").textContent = "Añade frases para comenzar.";
-            document.getElementById("autorDesamor").textContent = "";
-            return;
-        }
-
-        let indiceInicial = frasesDesamor.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Fuimos un cuento breve"));
-        if (indiceInicial === -1) indiceInicial = 0;
-
-        const primera = frasesDesamor[indiceInicial];
-        document.getElementById("fraseDesamor").textContent = primera.texto;
-        document.getElementById("autorDesamor").textContent = "— " + primera.autor;
-        
-        ultimoAutor = primera.autor;
-        frasesDesamor.splice(indiceInicial, 1);
-        primeraMostrada = true;
+    function aplicarAnimacion() {
+        const elemento = document.getElementById("bloqueTexto");
+        elemento.classList.remove("frase-animada");
+        void elemento.offsetWidth; 
+        elemento.classList.add("frase-animada");
     }
 
     function nuevaFraseDesamor() {
-        if (!primeraMostrada) {
-            mostrarPrimeraFrase();
-            return;
-        }
-
         if (frasesDesamor.length === 0) {
-            document.getElementById("fraseDesamor").textContent =
-                "Hoy ya no hay más frases, pero tu corazón sigue aprendiendo a sanar.";
+            document.getElementById("fraseDesamor").textContent = "Hoy ya no hay más frases, pero tu corazón sigue aprendiendo a sanar.";
             document.getElementById("autorDesamor").textContent = "";
+            aplicarAnimacion();
             return;
         }
 
-        const contenedor = document.getElementById("tarjetaContenedor");
-        contenedor.style.opacity = 0;
-        contenedor.style.transform = "translateY(10px)";
+        let indice;
+        let intentos = 0;
 
-        setTimeout(() => {
-            let indice;
-            let intentos = 0;
+        do {
+            indice = Math.floor(Math.random() * frasesDesamor.length);
+            intentos++; 
+        } while (frasesDesamor[indice].autor === ultimoAutor && intentos < 10 && frasesDesamor.length > 1);
 
-            do {
-                indice = Math.floor(Math.random() * frasesDesamor.length);
-                intentos++; 
-            } while (frasesDesamor[indice].autor === ultimoAutor && intentos < 10 && frasesDesamor.length > 1);
+        const frase = frasesDesamor[indice];
 
-            const frase = frasesDesamor[indice];
+        document.getElementById("fraseDesamor").textContent = frase.texto;
+        document.getElementById("autorDesamor").textContent = "— " + frase.autor;
 
-            document.getElementById("fraseDesamor").textContent = frase.texto;
-            document.getElementById("autorDesamor").textContent = "— " + frase.autor;
-
-            ultimoAutor = frase.autor;
-            frasesDesamor.splice(indice, 1);
-            
-            contenedor.style.opacity = 1;
-            contenedor.style.transform = "translateY(0)";
-
-            // Ajuste de scroll adaptativo e inteligente
-            const yOffset = -90; 
-            const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: yPosition, behavior: "smooth" });
-
-        }, 250);
+        ultimoAutor = frase.autor;
+        frasesDesamor.splice(indice, 1);
+        aplicarAnimacion();
     }
 
     function guardarFavorito(idFrase, idAutor) {
@@ -539,16 +527,29 @@
         if (!yaExiste) {
             favoritos.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
-            alert("¡Frase guardada en tus favoritos! ❤️");
+            alert("¡Frase guardada en tus favoritos! 💔");
         } else {
             alert("Esta frase ya está en tus favoritos.");
         }
     }
 
-    window.onload = function() {
-        mostrarPrimeraFrase();
-        window.scrollTo({ top: 0 });
-    };
+    document.addEventListener("DOMContentLoaded", function () {
+        if (frasesDesamor.length === 0) {
+            document.getElementById("fraseDesamor").textContent = "Añade frases para comenzar.";
+            return;
+        }
+
+        let indiceInicial = frasesDesamor.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Fuimos un cuento breve"));
+        if (indiceInicial === -1) indiceInicial = 0;
+
+        const primera = frasesDesamor[indiceInicial];
+        document.getElementById("fraseDesamor").textContent = primera.texto;
+        document.getElementById("autorDesamor").textContent = "— " + primera.autor;
+        
+        ultimoAutor = primera.autor;
+        frasesDesamor.splice(indiceInicial, 1);
+        aplicarAnimacion();
+    });
     </script>
 
 </body>
