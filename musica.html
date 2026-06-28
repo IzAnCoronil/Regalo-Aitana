@@ -77,7 +77,6 @@
             gap: 15px;
             align-items: center;
         }
-        /* Etiqueta bloqueada contra escritura y teclado virtual */
         .codigo-texto {
             background: rgba(0, 0, 0, 0.18);
             padding: 10px 20px;
@@ -90,8 +89,6 @@
             border: 2px dashed rgba(255, 255, 255, 0.6);
             display: inline-block;
             cursor: pointer;
-            
-            /* Permite selección rápida al tocar, pero bloquea interacciones de edición */
             user-select: all; 
             -webkit-user-select: all;
             -moz-user-select: all;
@@ -173,7 +170,7 @@
         .botones-accion {
             display: flex;
             gap: 12px;
-            margin-top: 15px;
+            margin-top: 25px; /* Mantiene la separación baja del botón de spotify */
             flex-wrap: wrap;
         }
         .btn-completar {
@@ -262,6 +259,51 @@
             .dia-box { min-height: 50px; padding: 10px 2px; }
             .dia-box .numero-dia { font-size: 1.1em; }
         }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            overflow-y:auto;
+            overflow-x:hidden;
+            -webkit-overflow-scrolling:touch;
+        }
+
+        .guardar-cancion{
+            margin-top:20px;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+
+        .guardar-cancion input{
+            padding:12px;
+            border:2px solid #ddd;
+            border-radius:10px;
+            font-size:16px;
+            font-family:'Poppins',sans-serif;
+        }
+
+        .guardar-cancion button{
+            padding:12px;
+            background:#1DB954;
+            color:white;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:600;
+        }
+
+        .guardar-cancion button:hover{
+            background:#18a449;
+        }
+
+        #cancionGuardada{
+            color:#1DB954;
+            font-weight:600;
+            margin-top:10px;
+        }
     </style>
 </head>
 <body>
@@ -302,12 +344,20 @@
         <div class="info-reto-hoy" id="bloqueDetalle">
             <h2 id="detalleDia">Junio - Día 28 (Reto 1)</h2>
             <p id="detalleAccion">Cargando misión diaria...</p>
+            
             <div class="botones-accion">
-                <button id="btnCompletarReto" class="btn-completar" onclick="marcarDiaActual()">Marcar como Completado ✓</button>
+                <button id="btnCompletarReto" class="btn-completar" onclick="marcarDiaActual()">
+                    Marcar como Completado ✓
+                </button>
                 <button class="btn-spotify" onclick="abrirEnSpotify()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.893-.982-.336.075-.668-.135-.744-.47-.075-.336.135-.668.47-.743 3.856-.88 7.15-.51 9.82 1.127.296.18.387.563.207.86zm1.225-2.72c-.227.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.08-1.182-.413.125-.847-.107-.972-.52-.125-.413.108-.847.52-.972 3.67-1.114 8.238-.575 11.348 1.337.367.226.488.707.258 1.076zm.105-2.81c-.273.447-.857.593-1.304.32-3.184-1.89-8.423-2.063-11.45-1.144-.503.153-1.033-.133-1.186-.636-.153-.503.133-1.033.636-1.186 3.606-1.094 9.387-.9 13.04 1.272.448.266.593.85.32 1.304z"/></svg>
                     Buscar en Spotify
                 </button>
+            </div>
+
+            <div class="guardar-cancion">
+                <input id="inputCancion" type="text" placeholder="Escribe la canción" oninput="guardarCancion()">
+                <p id="cancionGuardada"></p>
             </div>
         </div>
 
@@ -319,9 +369,7 @@
     </section>
 
     <script>
-        const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-        const diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-
+        // Array completo con las 365 misiones integradas
         const misionesLista = [
             "Escucha una canción que te encantaba cuando eras más peque.",
             "Busca una canción nueva del género que menos escuchas.",
@@ -618,7 +666,7 @@
             "Escucha una canción que te haga sentir que estás en un día de flores frescas.",
             "Busca una canción que te haga sentir que estás en un día de rocío matinal.",
             "Escucha una canción que te haga sentir que estás en un día de amaneceres limpios.",
-            "Pon una canción que te haga sentir que estás en un día de aire renovado.",
+            "Pon una canción que te haga sentir que estás en un día de aire limpio.",
             "Escucha una canción que te haga sentir que estás en un día de brisa marina.",
             "Busca una canción que te haga sentir que estás en un día de olas suaves.",
             "Escucha una canción que te haga sentir que estás en un día de arena fina.",
@@ -666,7 +714,9 @@
             "Escucha una canción que te haga sentir que estás en un día de horizontes infinitos.",
             "Escucha una canción que te haga sentir que estás en el último paso de tu gran año musical."
         ];
-
+        
+        const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        const diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; 
         let mesActualIndex = 5; 
         let diaSeleccionadoGlobal = 28; 
         const anioActual = 2026;
@@ -759,6 +809,8 @@
                 btnCheck.style.color = "#2ec4b6";
                 btnCheck.style.borderColor = "#2ec4b6";
             }
+
+            mostrarCancion();
         }
 
         function marcarDiaActual() {
@@ -789,6 +841,25 @@
         function quemarCodigoPremium() {
             localStorage.setItem("spotifyPremiumUsado", "true");
             document.getElementById("contenedorPremium").style.display = "none";
+        }
+
+        function guardarCancion(){
+            const clave=`${mesActualIndex}_${diaSeleccionadoGlobal}`;
+            let canciones=JSON.parse(localStorage.getItem("canciones"))||{};
+            canciones[clave]=document.getElementById("inputCancion").value;
+            localStorage.setItem("canciones",JSON.stringify(canciones));
+            mostrarCancion();
+        }
+
+        function mostrarCancion(){
+            const clave=`${mesActualIndex}_${diaSeleccionadoGlobal}`;
+            let canciones=JSON.parse(localStorage.getItem("canciones"))||{};
+            let texto=canciones[clave]|| "";
+            document.getElementById("inputCancion").value=texto;
+            document.getElementById("cancionGuardada").innerHTML=
+                texto===""
+                ?"No hay canción guardada."
+                :"🎵 Canción guardada:<br><b>"+texto+"</b>";
         }
 
         window.onload = inicializarCalendario;
