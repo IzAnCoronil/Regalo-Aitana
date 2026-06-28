@@ -7,77 +7,183 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Estilos específicos para la sección de Motivación */
+        /* --- BARRA DE SCROLL PREMIUM PERSONALIZADA --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; /* Azul pizarra oscuro profundo */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(58, 134, 255, 0.4); /* Azul motivador translúcido */
+            border-radius: 10px;
+            border: 2px solid #0f172a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(37, 117, 252, 0.8);
+        }
+
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(58, 134, 255, 0.4) #0f172a;
+            scroll-behavior: smooth;
+        }
+
+        /* --- ESTILOS DE LA ATMÓSFERA DE MOTIVACIÓN --- */
+        body {
+            background: radial-gradient(circle at top, #1e3a8a, #0f172a); /* Degradado azul energético y profundo */
+            color: #f8fafc;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px 10px;
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #3a86ff, #00f5d4); /* Texto con degradado vivo */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1.1em;
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* CONTENEDOR EFECTO VIDRIO BRILLANTE (GLASSMORPHISM) */
+        .contenedor {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 50px 40px;
+            margin: 40px auto 120px; /* Margen inferior seguro anti-bloqueo del botón flotante */
+            border-radius: 24px;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            text-align: center;
+            box-sizing: border-box;
+            max-height: 75vh; 
+            overflow-y: auto; /* Scroll interno estético si la frase es larga en pantallas pequeñas */
+        }
+
+        /* Animación fluida de aparición */
+        .frase-animada {
+            animation: fadeInBlur 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInBlur {
+            from { opacity: 0; filter: blur(4px); transform: translateY(10px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
+        }
+
         .frase {
-            font-size: 1.5em;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-weight: 500;
-            line-height: 1.4;
+            font-size: 1.6em;
+            color: #f1f5f9;
+            margin-bottom: 20px;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: -0.3px;
         }
 
         .autor {
             font-size: 1.05em;
-            color: #4b5c6b;
-            margin-bottom: 30px;
+            color: #3a86ff; /* Resalte en el autor con el color temático */
+            margin-bottom: 40px;
             font-style: italic;
+            letter-spacing: 0.5px;
+            font-weight: 500;
         }
 
-        /* Animación suave para la transición de frases */
-        .frase-animada {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* BOTONES INTERNOS */
+        /* BOTÓN ENÉRGICO PRINCIPAL */
         .contenedor button {
             display: inline-block;
-            padding: 18px 28px;
-            background: #3a86ff;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, #3a86ff, #2575fc);
             color: white;
             border: none;
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            margin: 12px;
-            font-size: 1.2em;
+            font-size: 1.05em;
+            letter-spacing: 0.2px;
+            box-shadow: 0 4px 15px rgba(58, 134, 255, 0.3);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             min-width: 180px;
         }
 
         .contenedor button:hover {
-            background: #2575fc;
-            transform: scale(1.08);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(58, 134, 255, 0.5);
         }
 
-        /* BOTÓN FLOTANTE GUARDAR */
+        .contenedor button:active {
+            transform: translateY(0);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR PREMIUM */
         .boton-guardar {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #3a86ff;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            padding: 14px 22px;
+            padding: 12px 24px;
             border-radius: 50px;
-            font-size: 1.05em;
+            font-size: 0.95em;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: 0.2s;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 99;
         }
 
         .boton-guardar:hover {
-            background: #2575fc;
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(58, 134, 255, 0.3);
+            background: #ffffff;
+            color: #0f172a;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(58, 134, 255, 0.3);
+        }
+        
+        /* Navegación */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(15, 23, 42, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #ffffff;
         }
     </style>
 </head>
@@ -124,7 +230,7 @@
             { texto: "No te exijas ser perfecta, solo sigue siendo tú, que ya es más que suficiente.", autor: "IzAn" },
             { texto: "No te das cuenta, pero incluso en tus días malos sigues siendo increíble.", autor: "IzAn" },
             { texto: "No importa lo que venga, tú siempre encuentras la manera de seguir.", autor: "IzAn" },
-            { texto: "Tú no cae, tú aprendes. Y eso te hace imparable.", autor: "IzAn" },
+            { texto: "Tú no caes, tú aprendes. Y eso te hace imparable.", autor: "IzAn" },
             { texto: "No te olvides de algo: tú puedes con esto, como con todo lo demás.", autor: "IzAn" },
             { texto: "No eres débil por sentirte así, eres fuerte por seguir a pesar de ello.", autor: "IzAn" },
             { texto: "Tú no necesitas suerte, tú tienes carácter.", autor: "IzAn" },
@@ -204,7 +310,7 @@
             { texto: "La esperanza es como el sol; arroja todas las sombras detrás de nosotros.", autor: "Samuel Smiles" },
             { texto: "El amanecer es siempre una esperanza para el hombre.", autor: "J. R. R. Tolkien" },
             { texto: "Esperando, el nudo se deshace y la fruta madura.", autor: "Federico García Lorca" },
-            { texto: "La adversidad revela el genio.", autor: "Horacio" },
+            { texto: "La adversidad reveals el genio.", autor: "Horacio" },
             { texto: "Mientras haya vida, hay esperanza.", autor: "Cicerón" },
             { texto: "La calma es la cuna del poder.", autor: "Josiah Gilbert Holland" },
             { texto: "Todo lo que puedas imaginar es real.", autor: "Pablo Picasso" },
@@ -284,7 +390,7 @@
         function aplicarAnimacion() {
             const elemento = document.getElementById("bloqueTexto");
             elemento.classList.remove("frase-animada");
-            void elemento.offsetWidth; // Forzar reinicio de animación CSS
+            void elemento.offsetWidth; 
             elemento.classList.add("frase-animada");
         }
 
@@ -332,8 +438,8 @@
             
             const yaExiste = favoritos.some(f => f.frase === frase);
             if (!yaExiste) {
-                favoritos.push({ frase, autor }); // Bug solucionado (era favoritos.push)
-                localStorage.setItem("favoritos", JSON.stringify(favoritos));
+                favoritos.push({ frase, autor }); 
+                localStorage.setItem("favoritos", JSON.stringify(favorites));
                 alert("¡Frase guardada en tus favoritos! ❤️");
             } else {
                 alert("Esta frase ya está en tus favoritos.");
