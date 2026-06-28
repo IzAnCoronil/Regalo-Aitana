@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frases de amigos</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -20,12 +21,14 @@
             padding: 12px 20px;
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box;
         }
 
         nav a {
@@ -34,6 +37,7 @@
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
+            white-space: nowrap;
         }
 
         nav a:hover {
@@ -63,6 +67,7 @@
             max-width: 900px;
             margin: 20px auto;
             text-align: center;
+            padding: 0 15px;
         }
 
         .nombre-btn {
@@ -158,6 +163,47 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             text-align: center;
         }
+
+        /* ADAPTACIÓN PARA MÓVILES */
+        @media (max-width: 768px) {
+            nav {
+                justify-content: flex-start;
+                gap: 20px;
+                overflow-x: auto; /* Permite scroll horizontal en el menú si no cabe */
+                padding: 15px 10px;
+            }
+
+            header {
+                padding: 100px 15px 20px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .nombre-btn {
+                font-size: 1.15em;
+                padding: 15px;
+                max-width: 90%;
+            }
+
+            .tarjeta, .primera-frase {
+                margin: 20px 15px;
+                padding: 20px 15px;
+            }
+
+            .nombre {
+                font-size: 1.5em;
+            }
+
+            .frase {
+                font-size: 1.1em;
+            }
+        }
     </style>
 
 </head>
@@ -165,13 +211,13 @@
 <body>
 
     <nav>
-        <a href="Index.html">Inicio</a>
+        <a href="index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
         <a href="Love.html">Favoritos</a>
         <a href="album.html">Álbum</a>
-        <a href="Frasesamigos.html">Frases de amigos</a>
+        <a href="frasesamigos.html">Frases de amigos</a>
     </nav>
 
     <header>
@@ -189,7 +235,7 @@
         <div class="nombre-btn" onclick="mostrar('paula')">Paula Gutiérrez</div>
         <div class="nombre-btn" onclick="mostrar('pedro')">Pedro Jiménez</div>
         <div class="nombre-btn" onclick="mostrar('virginia')">Virginia Delgado</div>
-        <div class="nombre-btn" onclick="without spaces: 'celia')">Celia García</div>
+        <div class="nombre-btn" onclick="mostrar('celia')">Celia García</div>
         <div class="nombre-btn" onclick="mostrar('irene')">Irene Rodríguez</div>
         <div class="nombre-btn" onclick="mostrar('andres')">Andrés García</div>
         <div class="nombre-btn" onclick="mostrar('izan')">IzAn</div>
@@ -280,7 +326,7 @@
 
             mostrarFrase();
 
-            // Hace scroll suave automático hacia la tarjeta de frases
+            // Desplazamiento automático y suave hacia la tarjeta
             tarjeta.scrollIntoView({ behavior: "smooth", block: "start" });
         }
 
@@ -309,7 +355,7 @@
             document.getElementById("volver").style.display = "none";
             document.getElementById("tarjeta").style.display = "none";
 
-            // Sube de nuevo suavemente al principio de la página al regresar
+            // Sube suavemente arriba del todo al regresar a la lista
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
