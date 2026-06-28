@@ -4,72 +4,10 @@
     <meta charset="UTF-8">
     <title>Motivación</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            background: linear-gradient(135deg, #dfe9f7, #ffffff);
-            color: #2c3e50;
-        }
-
-        /* NAV */
-        nav {
-            background: #4da3ff;
-            padding: 12px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 100;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05em;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: #e8f4ff;
-            transform: scale(1.08);
-        }
-
-        /* HEADER */
-        header {
-            text-align: center;
-            padding: 120px 20px 40px;
-        }
-
-        header h1 {
-            font-size: 2.6em;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #4b5c6b;
-            font-size: 1.1em;
-        }
-
-        /* CONTENEDOR PRINCIPAL */
-        .contenedor {
-            background: white;
-            padding: 40px;
-            margin: 30px auto 60px;
-            border-radius: 20px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            text-align: center;
-        }
-
+        /* Estilos específicos para la sección de Motivación */
         .frase {
             font-size: 1.5em;
             color: #2c3e50;
@@ -85,8 +23,18 @@
             font-style: italic;
         }
 
-        /* BOTONES GRANDES */
-        button {
+        /* Animación suave para la transición de frases */
+        .frase-animada {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* BOTONES INTERNOS */
+        .contenedor button {
             display: inline-block;
             padding: 18px 28px;
             background: #3a86ff;
@@ -101,7 +49,7 @@
             min-width: 180px;
         }
 
-        button:hover {
+        .contenedor button:hover {
             background: #2575fc;
             transform: scale(1.08);
         }
@@ -109,19 +57,19 @@
         /* BOTÓN FLOTANTE GUARDAR */
         .boton-guardar {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             background: #3a86ff;
             color: white;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 1.1em;
+            padding: 14px 22px;
+            border-radius: 50px;
+            font-size: 1.05em;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             transition: 0.2s;
             z-index: 99;
         }
@@ -129,6 +77,7 @@
         .boton-guardar:hover {
             background: #2575fc;
             transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(58, 134, 255, 0.3);
         }
     </style>
 </head>
@@ -151,8 +100,10 @@
     </header>
 
     <div class="contenedor">
-        <p id="fraseMotivacion" class="frase"></p>
-        <p id="autorMotivacion" class="autor"></p>
+        <div id="bloqueTexto">
+            <p id="fraseMotivacion" class="frase"></p>
+            <p id="autorMotivacion" class="autor"></p>
+        </div>
 
         <button onclick="nuevaFraseMotivacion()">Otra frase</button>
     </div>
@@ -162,9 +113,6 @@
     </div>
 
     <script>
-        // ==========================
-        // FRASES ORIGINALES
-        // ==========================
         const frasesMotivacionOriginal = [
             { texto: "Bueno, ahora tienes dudas pero nada que no puedas soportar porque eres la chica más fuerte que conozco.", autor: "IzAn" },
             { texto: "Sé que ahora te cuesta verlo, pero tú siempre sales adelante, incluso cuando nadie lo sabe.", autor: "IzAn" },
@@ -176,7 +124,7 @@
             { texto: "No te exijas ser perfecta, solo sigue siendo tú, que ya es más que suficiente.", autor: "IzAn" },
             { texto: "No te das cuenta, pero incluso en tus días malos sigues siendo increíble.", autor: "IzAn" },
             { texto: "No importa lo que venga, tú siempre encuentras la manera de seguir.", autor: "IzAn" },
-            { texto: "Tú no caes, tú aprendes. Y eso te hace imparable.", autor: "IzAn" },
+            { texto: "Tú no cae, tú aprendes. Y eso te hace imparable.", autor: "IzAn" },
             { texto: "No te olvides de algo: tú puedes con esto, como con todo lo demás.", autor: "IzAn" },
             { texto: "No eres débil por sentirte así, eres fuerte por seguir a pesar de ello.", autor: "IzAn" },
             { texto: "Tú no necesitas suerte, tú tienes carácter.", autor: "IzAn" },
@@ -274,7 +222,7 @@
             { texto: "La medida de lo que somos es lo que hacemos con lo que tenemos.", autor: "Vince Lombardi" },
             { texto: "Nunca sabes lo fuerte que eres hasta que ser fuerte es tu única opción.", autor: "Bob Marley" },
             { texto: "La mejor salida es siempre a través.", autor: "Robert Frost" },
-            { texto: "La felicidad no es algo hecho. Proviene de tus propias actions.", autor: "Dalái Lama" },
+            { texto: "La felicidad no es algo hecho. Proviene de tus propias acciones.", autor: "Dalái Lama" },
             { texto: "Si puedes soñarlo, puedes hacerlo.", autor: "Walt Disney" },
             { texto: "Todos nuestros sueños pueden hacerse realidad si tenemos el coraje de perseguirlos.", autor: "Walt Disney" },
             { texto: "Lo que consigues al alcanzar tus metas no es tan importante como en lo que te conviertes.", autor: "Zig Ziglar" },
@@ -306,7 +254,7 @@
             { texto: "El hombre que mueve montañas comienza llevando pequeñas piedras.", autor: "Confucio" },
             { texto: "Exígete mucho a ti mismo y espera poco de los demás.", autor: "Confucio" },
             { texto: "La alegría de ver y comprender es el más perfecto don de la naturaleza.", autor: "Albert Einstein" },
-            { texto: "La creatividad es la intelligence divirtiéndose.", autor: "Albert Einstein" },
+            { texto: "La creatividad es la inteligencia divirtiéndose.", autor: "Albert Einstein" },
             { texto: "No lloramos por las cosas, sino por la idea que tenemos de ellas.", autor: "Epicteto" },
             { texto: "Nadie es libre si no es dueño de sí mismo.", autor: "Epicteto" },
             { texto: "La vida no consiste en encontrarte a ti mismo, sino en crearte a ti mismo.", autor: "George Bernard Shaw" },
@@ -333,14 +281,18 @@
         let frasesMotivacion = frasesMotivacionOriginal.concat(frasesUsuario);
         let ultimoAutor = null;
 
-        // ==========================
-        // NUEVA FRASE
-        // ==========================
+        function aplicarAnimacion() {
+            const elemento = document.getElementById("bloqueTexto");
+            elemento.classList.remove("frase-animada");
+            void elemento.offsetWidth; // Forzar reinicio de animación CSS
+            elemento.classList.add("frase-animada");
+        }
+
         function nuevaFraseMotivacion() {
-            // Si ya no quedan frases en el mazo, muestra el mensaje personalizado pedido
             if (frasesMotivacion.length === 0) {
                 document.getElementById("fraseMotivacion").textContent = "Ya no hay más frases si quieres más sólo tienes que pedirlas";
                 document.getElementById("autorMotivacion").textContent = "";
+                aplicarAnimacion();
                 return;
             }
 
@@ -363,16 +315,13 @@
 
             ultimoAutor = frase.autor;
             frasesMotivacion.splice(indice, 1);
+            aplicarAnimacion();
         }
 
-        // ==========================
-        // GUARDAR FAVORITO
-        // ==========================
         function guardarFavorito(idFrase, idAutor) {
             const frase = document.getElementById(idFrase).textContent;
             let autor = document.getElementById(idAutor).textContent;
 
-            // Filtro actualizado para que no guarde el aviso final en favoritos
             if (!frase || frase === "Ya no hay más frases si quieres más sólo tienes que pedirlas" || frase === "Añade frases para comenzar.") {
                 return; 
             }
@@ -383,7 +332,7 @@
             
             const yaExiste = favoritos.some(f => f.frase === frase);
             if (!yaExiste) {
-                favorites.push({ frase, autor });
+                favoritos.push({ frase, autor }); // Bug solucionado (era favoritos.push)
                 localStorage.setItem("favoritos", JSON.stringify(favoritos));
                 alert("¡Frase guardada en tus favoritos! ❤️");
             } else {
@@ -391,10 +340,7 @@
             }
         }
 
-        // ==========================
-        // PRIMERA FRASE AL CARGAR
-        // ==========================
-        window.onload = function () {
+        document.addEventListener("DOMContentLoaded", function () {
             if (frasesMotivacion.length === 0) {
                 document.getElementById("fraseMotivacion").textContent = "Añade frases para comenzar.";
                 return;
@@ -411,7 +357,8 @@
 
             ultimoAutor = primera.autor;
             frasesMotivacion.splice(indiceInicial, 1);
-        };
+            aplicarAnimacion();
+        });
     </script>
 
 </body>
