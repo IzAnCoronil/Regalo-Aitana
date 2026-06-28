@@ -25,12 +25,13 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV - Estructura unificada y protegida contra desbordamientos */
+        /* NAV - Estructura unificada, fluida y corregida para móviles */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -46,6 +47,7 @@
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
+            white-space: nowrap; /* Evita roturas de línea incómodas */
         }
 
         nav a:hover {
@@ -161,20 +163,29 @@
         }
 
         /* Ajustes responsivos móviles */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             nav {
-                gap: 15px;
-                padding: 10px;
+                justify-content: flex-start;
+                gap: 20px;
+                overflow-x: auto; /* Permite scroll horizontal táctil en el menú */
+                padding: 15px 10px;
             }
             nav a {
-                font-size: 0.9em;
+                font-size: 1em;
             }
             header {
-                padding-top: 160px;
+                padding-top: 100px;
+            }
+            header h1 {
+                font-size: 2.1em;
             }
             .contenedor {
-                padding: 20px;
+                padding: 25px 20px;
                 margin: 0 15px 40px;
+            }
+            button {
+                padding: 15px;
+                font-size: 1.05em;
             }
         }
     </style>
@@ -230,6 +241,7 @@
         if (!texto || !emocion) {
             mensaje.textContent = "⚠️ Falta rellenar la frase o seleccionar la emoción.";
             mensaje.className = "mensaje error";
+            mensaje.style.display = "block"; // Asegura visibilidad explícita al fallar
             return;
         }
 
@@ -246,6 +258,7 @@
 
         mensaje.textContent = "✨ Frase guardada correctamente en la categoría de " + emocionTexto + ".";
         mensaje.className = "mensaje ok";
+        mensaje.style.display = "block"; // Asegura visibilidad explícita al guardar exitosamente
 
         // Limpieza de los inputs para la siguiente frase
         document.getElementById("texto").value = "";
