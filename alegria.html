@@ -397,6 +397,7 @@
     ];
 
     let frasesUsuario = JSON.parse(localStorage.getItem("alegria")) || [];
+    // Creamos una copia del array para no vaciar el original al filtrar
     let frasesAlegria = frasesAlegriaOriginal.concat(frasesUsuario);
 
     let ultimoAutorAlegria = null;
@@ -407,6 +408,7 @@
         document.getElementById("fraseAlegria").textContent = primera.texto;
         document.getElementById("autorAlegria").textContent = "— " + primera.autor;
 
+        // Filtramos para que no salga repetida inmediatamente en el orden aleatorio
         frasesAlegria = frasesAlegria.filter(f => f.texto !== primera.texto);
         
         ultimoAutorAlegria = primera.autor;
@@ -448,7 +450,7 @@
             
             contenedor.style.opacity = 1;
 
-            // Scroll suave calculando dinámicamente el centro del contenedor
+            // Scroll suave dinámico
             const yOffset = -100; 
             const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: yPosition, behavior: "smooth" });
@@ -469,7 +471,8 @@
         
         if (!yaExiste) {
             favoritos.push({ frase, autor });
-            localStorage.setItem("favoritos", JSON.stringify(favorites));
+            // AQUÍ CORREGIDO: Usar 'favoritos' en vez de 'favorites'
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
             alert("Esta frase ya está en tus favoritos.");
