@@ -367,8 +367,8 @@
         { texto: "Una inversión en conocimiento paga el mejor interés.", autor: "Benjamin Franklin" },
         { texto: "La puerta de la sabiduría nunca está cerrada.", autor: "Benjamin Franklin" },
         { texto: "La imaginación gobierna el mundo.", autor: "Napoleón Bonaparte" },
-        { texto: "La victoria belongs al más perseverante.", autor: "Napoleón Bonaparte" },
-        { texto: "La fortaleza de una persona está en su voluntad.", autor: "Napoleón Bonaparte" },
+        { texto: "La victoria pertenece al más perseverante.", autor: "Napoleón Bonaparte" },
+        { texto: "La fortaleza de una person está en su voluntad.", autor: "Napoleón Bonaparte" },
         { texto: "La habilidad no significa nada sin oportunidad.", autor: "Napoleón Bonaparte" },
         { texto: "El coraje no es tener fuerza para seguir, es seguir cuando no tienes fuerza.", autor: "Napoleón Bonaparte" },
         { texto: "Lo único que debemos temer es al miedo mismo.", autor: "Franklin D. Roosevelt" },
@@ -420,7 +420,7 @@
 
         do {
             indice = Math.floor(Math.random() * frasesAnsiedad.length);
-            intentas++;
+            intentos++; // <- CORREGIDO AQUÍ (Antes decía intentas++)
         } while (frasesAnsiedad[indice].autor === ultimaAutora && intentos < 10 && frasesAnsiedad.length > 1);
 
         const frase = frasesAnsiedad[indice];
