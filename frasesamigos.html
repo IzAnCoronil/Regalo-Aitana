@@ -4,18 +4,29 @@
     <meta charset="UTF-8">
     <title>Frases de amigos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* Estilos específicos para la sección de Frases de Amigos */
-        body {
-            background: linear-gradient(135deg, #dfe9f7, #ffffff);
-            color: #2c3e50;
+        /* Optimización global del Scroll */
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* NAV - ESTÉTICA ORIGINAL (Fondo Azul e Íconos/Textos Blancos) */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #fff0f5, #ffffff); /* Mismo fondo que Love */
+            color: #4a4a4a;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* NAV - Estructura unificada idéntica a Love */
         nav {
-            background: #4da3ff;
+            background: #ffe08a;
             padding: 12px 20px;
             position: fixed;
             top: 0;
@@ -23,140 +34,182 @@
             display: flex;
             justify-content: center;
             gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             z-index: 100;
             box-sizing: border-box;
         }
+
         nav a {
-            color: white;
+            color: #5a3e00;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
         }
+
         nav a:hover {
-            color: #e8f4ff;
+            color: #8a6500;
             transform: scale(1.08);
         }
 
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 130px 20px 20px;
+            color: #7d2d40;
+        }
+
         header h1 {
-            color: #2c3e50;
+            font-size: 2.6em;
             margin-bottom: 10px;
         }
 
         header p {
-            color: #4b5c6b;
+            color: #a04e60;
+            font-size: 1.1em;
+            margin-top: 0;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor-principal {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 60px; 
+            box-sizing: border-box;
+        }
+
+        /* ESTILO PARA TARJETAS (Mensaje inicial, Lista y Frases) */
+        .tarjeta-estilo {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-left: 5px solid #ff6f91; /* Línea rosa característica de Love */
+            transition: 0.2s;
+            box-sizing: border-box;
+        }
+
+        .tarjeta-estilo h2 {
+            margin-top: 0;
+            color: #7d2d40;
+            font-size: 1.6em;
         }
 
         /* LISTA DE NOMBRES */
         .lista-nombres {
-            max-width: 900px;
-            margin: 20px auto;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         .nombre-btn {
-            display: block;
-            background: white;
-            padding: 18px;
-            margin: 12px auto;
+            background: #fff0f2;
+            color: #ff4f7a;
+            border: 1px solid #ffccd5;
+            padding: 16px;
             border-radius: 14px;
-            max-width: 500px;
-            font-size: 1.3em;
+            font-size: 1.2em;
             font-weight: 600;
-            color: #2c3e50;
+            text-align: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.11);
             transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
         .nombre-btn:hover {
-            transform: scale(1.04);
-            background: #f7faff;
+            background: #ff4f7a;
+            color: white;
+            border-color: #ff4f7a;
+            transform: scale(1.03);
         }
 
-        /* TARJETA DE FRASES */
-        .tarjeta {
-            background: white;
-            padding: 35px 25px;
-            margin: 20px auto;
-            border-radius: 18px;
-            max-width: 600px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.11);
-            display: none;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .nombre {
+        /* TEXTOS INTERNOS DE LAS FRASES */
+        .nombre-titulo {
             font-size: 1.8em;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
-
-        .frase {
-            margin: 25px 0;
-            color: #4b5c6b;
-            font-size: 1.25em;
-            line-height: 1.6em;
+            color: #7d2d40;
+            margin-bottom: 5px;
         }
 
         .contador {
             font-size: 0.95em;
-            color: #888;
-            margin-bottom: 10px;
+            color: #8a8a8a;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
-        .btn-sig {
-            padding: 12px 24px;
-            background: #ff8c42;
+        .frase-texto {
+            font-size: 1.3em;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #333;
+            margin: 25px 0;
+        }
+
+        /* BOTONES DE ACCIÓN */
+        .btn-accion {
+            background: #ff4f7a;
             color: white;
+            border: none;
+            padding: 12px 24px;
             border-radius: 12px;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
-            display: inline-block;
             transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 79, 122, 0.2);
+            display: inline-block;
         }
 
-        .btn-sig:hover {
-            background: #ff7a1f;
+        .btn-accion:hover {
+            background: #e0355f;
             transform: scale(1.05);
         }
 
         .volver {
             display: none;
             margin: 20px auto;
-            padding: 14px 24px;
-            background: #4da3ff;
-            color: white;
+            background: #fff0f2;
+            color: #ff4f7a;
+            border: 1px solid #ffccd5;
+            padding: 12px 24px;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             width: fit-content;
             transition: 0.2s;
+            text-align: center;
         }
 
         .volver:hover {
+            background: #ff4f7a;
+            color: white;
+            border-color: #ff4f7a;
             transform: scale(1.05);
-            background: #3a8ee6;
         }
 
-        /* SECCIÓN DE BIENVENIDA / PRIMERA FRASE */
-        .primera-frase {
-            background: white;
-            padding: 30px;
-            margin: 20px auto;
-            border-radius: 18px;
-            max-width: 600px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        /* Ocultar tarjeta dinámicamente */
+        #tarjeta {
+            display: none;
             text-align: center;
-            box-sizing: border-box;
         }
 
-        .primera-frase h2 {
-            margin-top: 0;
-            color: #2c3e50;
+        /* Optimización responsiva */
+        @media (max-width: 600px) {
+            nav {
+                gap: 15px;
+                padding: 10px;
+            }
+            nav a {
+                font-size: 0.9em;
+            }
+            header {
+                padding-top: 160px;
+            }
         }
     </style>
 </head>
@@ -168,7 +221,7 @@
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
-        <a href="Love.html">Favoritos</a>
+        <a href="love.html">Favoritos</a>
         <a href="album.html">Álbum</a>
         <a href="frasesamigos.html">Frases de amigos</a>
     </nav>
@@ -178,32 +231,37 @@
         <p>Pincha en un nombre para ver sus frases una a una.</p>
     </header>
 
-    <div id="primeraFrase" class="primera-frase">
-        <h2>Un mensaje para ti</h2>
-        <p><b>¿Qué es ser fuerte?</b> Sospecho que ser fuerte no es solo una cuestión de poder; es fuerte la persona que encuentra un motivo por el que luchar y se dedica en cuerpo y alma a ello.</p>
-    </div>
+    <section class="contenedor-principal">
 
-    <div class="lista-nombres" id="listaNombres">
-        <div class="nombre-btn" onclick="mostrar('iker', 'Iker de Dios')">Iker de Dios</div>
-        <div class="nombre-btn" onclick="mostrar('paula', 'Paula Gutiérrez')">Paula Gutiérrez</div>
-        <div class="nombre-btn" onclick="mostrar('pedro', 'Pedro Jiménez')">Pedro Jiménez</div>
-        <div class="nombre-btn" onclick="mostrar('virginia', 'Virginia Delgado')">Virginia Delgado</div>
-        <div class="nombre-btn" onclick="mostrar('celia', 'Celia García')">Celia García</div>
-        <div class="nombre-btn" onclick="mostrar('irene', 'Irene Rodríguez')">Irene Rodríguez</div>
-        <div class="nombre-btn" onclick="mostrar('andres', 'Andrés García')">Andrés García</div>
-        <div class="nombre-btn" onclick="mostrar('izan', 'IzAn')">IzAn</div>
-    </div>
+        <div id="primeraFrase" class="tarjeta-estilo">
+            <h2>Un mensaje para ti</h2>
+            <p style="font-size: 1.15em; line-height: 1.6; margin: 0;"><b>¿Qué es ser fuerte?</b> Sospecho que ser fuerte no es solo una cuestión de poder; es fuerte la persona que encuentra un motivo por el que luchar y se dedica en cuerpo y alma a ello.</p>
+        </div>
 
-    <div class="volver" id="volver" onclick="volver()">Volver</div>
+        <div class="lista-nombres" id="listaNombres">
+            <div class="nombre-btn" onclick="mostrar('iker', 'Iker de Dios')">Iker de Dios</div>
+            <div class="nombre-btn" onclick="mostrar('paula', 'Paula Gutiérrez')">Paula Gutiérrez</div>
+            <div class="nombre-btn" onclick="mostrar('pedro', 'Pedro Jiménez')">Pedro Jiménez</div>
+            <div class="nombre-btn" onclick="mostrar('virginia', 'Virginia Delgado')">Virginia Delgado</div>
+            <div class="nombre-btn" onclick="mostrar('celia', 'Celia García')">Celia García</div>
+            <div class="nombre-btn" onclick="mostrar('irene', 'Irene Rodríguez')">Irene Rodríguez</div>
+            <div class="nombre-btn" onclick="mostrar('andres', 'Andrés García')">Andrés García</div>
+            <div class="nombre-btn" onclick="mostrar('izan', 'IzAn')">IzAn</div>
+        </div>
 
-    <div class="tarjeta" id="tarjeta">
-        <div class="nombre" id="nombreAmigo"></div>
-        <div class="contador" id="contador"></div>
-        <div class="frase" id="textoFrase"></div>
-        <div class="btn-sig" id="btnSig" onclick="siguiente()">Siguiente</div>
-    </div>
+        <div class="volver" id="volver" onclick="volver()">← Volver a la lista</div>
+
+        <div class="tarjeta-estilo" id="tarjeta">
+            <div class="nombre-titulo" id="nombreAmigo"></div>
+            <div class="contador" id="contador"></div>
+            <div class="frase-texto" id="textoFrase"></div>
+            <div class="btn-accion" id="btnSig" onclick="siguiente()">Siguiente frase →</div>
+        </div>
+
+    </section>
     
     <script>
+        // Frases de cada amigo
         const frases = {
             iker: [
                 "Que la vida te devuelva toda la felicidad y el cariño que tú siempre regalas a los que te quieren.",
@@ -276,7 +334,7 @@
 
         function mostrarFrase() {
             const lista = frases[amigoActual];
-            document.getElementById("textoFrase").textContent = lista[actual];
+            document.getElementById("textoFrase").textContent = `“${lista[actual]}”`;
             document.getElementById("contador").textContent = `Frase ${actual + 1} de ${lista.length}`;
 
             document.getElementById("btnSig").style.display =
@@ -292,7 +350,7 @@
         }
 
         function volver() {
-            document.getElementById("listaNombres").style.display = "block";
+            document.getElementById("listaNombres").style.display = "flex";
             document.getElementById("volver").style.display = "none";
             document.getElementById("tarjeta").style.display = "none";
         }
