@@ -4,69 +4,30 @@
     <meta charset="UTF-8">
     <title>Melancolía</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
     <style>
+        /* Estilos específicos para la atmósfera de Melancolía */
         body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
             background: linear-gradient(135deg, #1f2933, #3b4252);
             color: #e5e7eb;
             min-height: 100vh;
         }
 
-        /* NAV - Menú unificado */
-        nav {
-            background: #4da3ff;
-            padding: 12px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 100;
-            box-sizing: border-box;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05em;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: #e8f4ff;
-            transform: scale(1.08);
-        }
-
-        /* HEADER */
-        header {
-            text-align: center;
-            padding: 140px 20px 20px;
-        }
-
         header h1 {
-            font-size: 2.6em;
             color: #e5e7eb;
             margin-bottom: 10px;
         }
 
         header p {
             color: #9ca3af;
-            font-size: 1.1em;
-            margin-top: 0;
         }
 
         /* CONTENEDOR PRINCIPAL */
         .contenedor {
             background: #111827;
             padding: 40px;
-            margin: 30px auto 60px;
+            margin: 30px auto 80px; /* Margen inferior para que no lo tape el botón flotante */
             border-radius: 20px;
             max-width: 750px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
@@ -99,8 +60,8 @@
             font-style: italic;
         }
 
-        /* BOTONES GRANDES */
-        button {
+        /* BOTONES INTERNOS */
+        .contenedor button {
             display: inline-block;
             padding: 16px 28px;
             background: #7b2cbf;
@@ -114,7 +75,7 @@
             min-width: 180px;
         }
 
-        button:hover {
+        .contenedor button:hover {
             background: #6a1b9a;
             transform: scale(1.04);
         }
@@ -143,13 +104,6 @@
             background: #6a1b9a;
             transform: scale(1.05);
             box-shadow: 0 6px 15px rgba(123, 44, 191, 0.4);
-        }
-
-        /* Responsive */
-        @media (max-width: 600px) {
-            nav { gap: 15px; padding: 10px; }
-            nav a { font-size: 0.95em; }
-            header { padding-top: 160px; }
         }
     </style>
 </head>
@@ -218,7 +172,7 @@
     function aplicarAnimacion() {
         const elemento = document.getElementById("bloqueTexto");
         elemento.classList.remove("frase-animada");
-        void elemento.offsetWidth; // Forzar el reinicio de la animación CSS
+        void elemento.offsetWidth; // Forzar reinicio de la animación CSS
         elemento.classList.add("frase-animada");
     }
 
@@ -229,7 +183,6 @@
             return;
         }
         
-        // Cambiado para que use un índice aleatorio al cargar o tome el primero de forma segura
         const primera = frasesMelancolia[0];
         document.getElementById("fraseMelancolia").textContent = primera.texto;
         document.getElementById("autorMelancolia").textContent = "— " + primera.autor;
@@ -259,7 +212,7 @@
 
         do {
             indice = Math.floor(Math.random() * frasesMelancolia.length);
-            intentos++;
+            intentes++;
         } while (frasesMelancolia[indice].autor === ultimoAutorMelancolia && intentos < 10 && frasesMelancolia.length > 1);
 
         const frase = frasesMelancolia[indice];
@@ -294,9 +247,10 @@
         }
     }
 
-    window.onload = function() {
+    // Cambiado window.onload por DOMContentLoaded para consistencia con el proyecto
+    document.addEventListener("DOMContentLoaded", function() {
         mostrarPrimeraFraseMelancolia();
-    };
+    });
     </script>
 
 </body>
