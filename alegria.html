@@ -19,16 +19,15 @@
             background: linear-gradient(135deg, #fffbe0, #ffffff);
             color: #3a3a3a;
             min-height: 100vh;
-            /* Control de scroll nativo y estabilidad horizontal */
             overflow-y: auto;
             overflow-x: hidden;
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV - Barra unificada y fluida con scroll horizontal independiente */
+        /* NAV - Barra unificada con scroll horizontal limpio */
         nav {
             background: #ffe08a;
-            padding: 12px 20px;
+            padding: 14px 20px;
             position: fixed;
             top: 0;
             left: 0;
@@ -36,16 +35,14 @@
             display: flex;
             justify-content: flex-start;
             gap: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             z-index: 100;
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
             box-sizing: border-box;
         }
 
-        /* Oculta la barra de scroll en el menú para mantener la estética limpia */
         nav::-webkit-scrollbar {
             display: none;
         }
@@ -55,20 +52,20 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
-            transition: 0.25s ease;
+            transition: color 0.25s ease, transform 0.25s ease;
             display: inline-block;
             -webkit-tap-highlight-color: transparent;
         }
 
         nav a:hover {
             color: #8a6200;
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
-        /* HEADER - Se mejoró el contraste del texto secundario */
+        /* HEADER */
         header {
             text-align: center;
-            padding: 130px 20px 30px;
+            padding: 140px 20px 20px;
             color: #5a3e00;
         }
 
@@ -80,25 +77,28 @@
         }
 
         header p {
-            color: #5a3e00; /* Mejor contraste para legibilidad en pantallas brillantes */
+            color: #61460b;
             font-size: 1.1em;
             margin: 0;
-            opacity: 0.85;
+            opacity: 0.9;
         }
 
         /* CONTENEDOR PRINCIPAL */
         .contenedor {
             background: white;
             padding: 40px;
-            margin: 20px auto 60px;
-            border-radius: 20px;
+            margin: 20px auto 80px;
+            border-radius: 24px;
             max-width: 750px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             text-align: center;
             box-sizing: border-box;
-            /* Evita saltos bruscos de altura en la pantalla al cambiar entre frases */
             min-height: 280px; 
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease;
         }
 
         .frase {
@@ -106,45 +106,45 @@
             color: #2c2c2c;
             margin: 15px 0;
             font-weight: 500;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .autor {
             font-size: 1.05em;
-            color: #8a8a8a;
-            margin: 0 0 35px 0;
+            color: #757575;
+            margin: 0 0 30px 0;
             font-style: italic;
         }
 
-        /* BOTONES PRINCIPALES - Estilo más moderno y estilizado */
+        /* BOTONES PRINCIPALES */
         button {
             display: inline-block;
-            padding: 14px 32px;
+            padding: 14px 36px;
             background: #ff8c42;
             color: white;
             border: none;
-            border-radius: 50px; /* Bordes redondeados tipo píldora, más agradables a la vista */
+            border-radius: 50px;
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: all 0.25s ease;
             margin: 10px;
             font-size: 1.1em;
-            box-shadow: 0 4px 12px rgba(243, 140, 66, 0.3);
+            box-shadow: 0 4px 14px rgba(243, 140, 66, 0.35);
             -webkit-tap-highlight-color: transparent;
         }
 
         button:hover {
             background: #ff7a1f;
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(243, 140, 66, 0.4);
+            box-shadow: 0 6px 20px rgba(243, 140, 66, 0.45);
         }
 
         button:active {
             transform: translateY(1px);
         }
 
-        /* BOTÓN FLOTANTE GUARDAR - Rediseño estético y corrección en móvil */
+        /* BOTÓN FLOTANTE GUARDAR */
         .boton-guardar {
             position: fixed;
             bottom: 25px;
@@ -160,8 +160,8 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-            border: 1px solid rgba(255, 82, 82, 0.2);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 82, 82, 0.15);
             transition: all 0.25s ease;
             z-index: 99;
             -webkit-tap-highlight-color: transparent;
@@ -169,11 +169,11 @@
 
         .boton-guardar:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 82, 82, 0.2);
+            box-shadow: 0 8px 25px rgba(255, 82, 82, 0.18);
             background: #fff5f5;
         }
 
-        /* Ajustes responsivos inteligentes para dispositivos móviles */
+        /* Ajustes Responsivos */
         @media (max-width: 768px) {
             nav {
                 gap: 20px;
@@ -188,7 +188,7 @@
             .contenedor {
                 margin: 15px 15px 100px;
                 padding: 35px 20px;
-                min-height: 240px;
+                min-height: 250px;
             }
             .frase {
                 font-size: 1.25em;
@@ -196,17 +196,12 @@
             button {
                 width: 100%;
                 max-width: 290px;
-                box-sizing: border-box;
             }
-            /* Corrección de error estético: ya no bloquea la pantalla completa abajo */
             .boton-guardar {
                 bottom: 20px;
                 right: 20px;
                 padding: 10px 20px;
                 font-size: 0.95em;
-            }
-            .boton-guardar:hover {
-                transform: translateY(-2px);
             }
         }
     </style>
@@ -229,10 +224,9 @@
         <p>Frases que le recuerdan que su sonrisa también sabe dar guerra.</p>
     </header>
 
-    <div class="contenedor">
+    <div class="contenedor" id="tarjetaContenedor">
         <p id="fraseAlegria" class="frase"></p>
         <p id="autorAlegria" class="autor"></p>
-
         <button onclick="nuevaFraseAlegria()">Otra frase</button>
     </div>
 
@@ -241,9 +235,6 @@
     </div>
 
     <script>
-    // -----------------------------
-    // 1. FRASES ORIGINALES (200)
-    // -----------------------------
     const frasesAlegriaOriginal = [
         { texto: "Sigue dando guerra con su sonrisa, que al final acabará derrotando a la tristeza.", autor: "IzAn" },
         { texto: "Cuando sonríes, hasta el mal humor pide vacaciones.", autor: "IzAn" },
@@ -405,35 +396,23 @@
         { texto: "Mañana puede ser mejor de lo que imaginas.", autor: "Emily Dickinson" }
     ];
 
-    // -----------------------------
-    // 2. CARGAR FRASES AÑADIDAS POR EL USUARIO
-    // -----------------------------
     let frasesUsuario = JSON.parse(localStorage.getItem("alegria")) || [];
-
-    // Mezclar originales + añadidas globalmente
     let frasesAlegria = frasesAlegriaOriginal.concat(frasesUsuario);
 
     let ultimoAutorAlegria = null;
     let primeraMostrada = false;
 
-    // -----------------------------
-    // 3. MOSTRAR PRIMERA FRASE FIJA
-    // -----------------------------
     function mostrarPrimeraFrase() {
         const primera = frasesAlegriaOriginal[0];
         document.getElementById("fraseAlegria").textContent = primera.texto;
         document.getElementById("autorAlegria").textContent = "— " + primera.autor;
 
-        // Quitamos la primera frase del array de recorrido dinámico usando un filtro correcto
         frasesAlegria = frasesAlegria.filter(f => f.texto !== primera.texto);
         
         ultimoAutorAlegria = primera.autor;
         primeraMostrada = true;
     }
 
-    // -----------------------------
-    // 4. NUEVA FRASE ALEATORIA
-    // -----------------------------
     function nuevaFraseAlegria() {
         if (!primeraMostrada) {
             mostrarPrimeraFrase();
@@ -447,29 +426,36 @@
             return;
         }
 
-        let indice;
-        let intentos = 0;
+        const contenedor = document.getElementById("tarjetaContenedor");
+        contenedor.style.opacity = 0;
 
-        do {
-            indice = Math.floor(Math.random() * frasesAlegria.length);
-            intentos++;
-        } while (frasesAlegria[indice].autor === ultimoAutorAlegria && intentos < 10 && frasesAlegria.length > 1);
+        setTimeout(() => {
+            let indice;
+            let intentos = 0;
 
-        const frase = frasesAlegria[indice];
+            do {
+                indice = Math.floor(Math.random() * frasesAlegria.length);
+                intentos++;
+            } while (frasesAlegria[indice].autor === ultimoAutorAlegria && intentos < 10 && frasesAlegria.length > 1);
 
-        document.getElementById("fraseAlegria").textContent = frase.texto;
-        document.getElementById("autorAlegria").textContent = "— " + frase.autor;
+            const frase = frasesAlegria[indice];
 
-        ultimoAutorAlegria = frase.autor;
-        frasesAlegria.splice(indice, 1);
-        
-        // Ajuste suave automático: hace un scroll sutil al cambiar de frase para centrar la vista
-        window.scrollTo({ top: document.querySelector('.contenedor').offsetTop - 120, behavior: "smooth" });
+            document.getElementById("fraseAlegria").textContent = frase.texto;
+            document.getElementById("autorAlegria").textContent = "— " + frase.autor;
+
+            ultimoAutorAlegria = frase.autor;
+            frasesAlegria.splice(indice, 1);
+            
+            contenedor.style.opacity = 1;
+
+            // Scroll suave calculando dinámicamente el centro del contenedor
+            const yOffset = -100; 
+            const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: yPosition, behavior: "smooth" });
+
+        }, 250);
     }
 
-    // -----------------------------
-    // 5. GUARDAR FAVORITOS
-    // -----------------------------
     function guardarFavorito(idFrase, idAutor) {
         const frase = document.getElementById(idFrase).textContent;
         let autor = document.getElementById(idAutor).textContent;
@@ -483,7 +469,7 @@
         
         if (!yaExiste) {
             favoritos.push({ frase, autor });
-            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            localStorage.setItem("favoritos", JSON.stringify(favorites));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
             alert("Esta frase ya está en tus favoritos.");
