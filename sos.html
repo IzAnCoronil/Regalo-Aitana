@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Estilos específicos para la atmósfera de calma y apoyo de SOS */
+        /* Fondo suave */
         body {
             background: linear-gradient(135deg, #fff9d9, #ffffff);
             color: #4a4a4a;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* NAV - Estética unificada con Inicio manteniendo tonos naranjas/marrones */
+        /* NAV */
         nav {
             background: #ffe08a;
             padding: 12px 20px;
@@ -23,32 +26,41 @@
             display: flex;
             justify-content: center;
             gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* Sombra igualada a la de Inicio */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
-            box-sizing: border-box;
         }
+
         nav a {
             color: #5a3e00;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
-            transition: 0.2s;
+            transition: 0.25s ease;
         }
+
         nav a:hover {
             color: #8a6500;
-            transform: scale(1.08); /* Efecto de aumento igualado a la de Inicio */
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 110px 20px 20px; /* Ajustado por el menú fijo */
         }
 
         header h1 {
             color: #5a3e00;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 2.2em;
         }
 
         header p {
             color: #7c5c16;
+            font-size: 1.1em;
         }
 
-        /* CONTENEDOR Y BLOQUES */
+        /* CONTENIDO */
         .contenido {
             padding: 20px;
             max-width: 900px;
@@ -56,32 +68,38 @@
         }
 
         .bloque {
-            background: white;
+            background: #ffffff;
             padding: 40px;
             border-radius: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             text-align: center;
+        }
+
+        .mensaje {
+            font-size: 1.15em;
+            line-height: 1.6;
+            color: #4a4a4a;
+            margin-bottom: 18px;
         }
 
         .frase-unica {
             font-size: 1.6em;
             font-weight: 600;
             color: #b06200;
-            text-align: center;
             margin: 30px 0;
             line-height: 1.5;
-            padding: 0 10px;
         }
 
-        .mensaje {
-            font-size: 1.15em;
-            line-height: 1.6;
-            text-align: center;
-            color: #4a4a4a;
+        .mensaje-final {
+            font-weight: 600;
+            color: #b06200;
+            border-top: 1px dashed #ffe08a;
+            padding-top: 20px;
+            margin-top: 25px;
         }
 
-        /* ANIMACIÓN DE RESPIRACIÓN MEJORADA */
+        /* RESPIRACIÓN */
         #respirar {
             width: 180px;
             height: 180px;
@@ -98,9 +116,9 @@
             font-size: 1.2em;
         }
 
-        #respirar::after {
-            content: "Inhala";
-            animation: cambiarTexto 8s infinite step-end;
+        /* Texto animado dentro del círculo */
+        #respirar span {
+            animation: cambiarTexto 8s infinite;
         }
 
         @keyframes respirar {
@@ -109,9 +127,10 @@
         }
 
         @keyframes cambiarTexto {
-            0%, 100% { content: "Inhala"; }
+            0%, 20% { content: "Inhala"; }
             40% { content: "Mantén"; }
-            60% { content: "Exhala"; }
+            60%, 80% { content: "Exhala"; }
+            100% { content: "Inhala"; }
         }
     </style>
 </head>
@@ -142,26 +161,31 @@
             </p>
 
             <p class="frase-unica">
-                “Has podido con tormentas más grandes, y esta no va a ser la excepción. Tómate tu tiempo, que yo te espero aquí.”
+                “Has podido con tormentas más grandes, y esta no va a ser la excepción.  
+                Tómate tu tiempo, que yo te espero aquí.”
             </p>
 
-            <p class="mensaje" style="margin-bottom: 25px;">
+            <p class="mensaje">
                 No estás sola. No estás solo.<br>
                 Respira con calma. Estoy contigo en esto, acompañándote paso a paso.
             </p>
 
-            <p class="mensaje" style="font-weight: 600; color: #b06200; border-top: 1px dashed #ffe08a; padding-top: 20px; margin-top: 20px;">
-                Ya no hay más frases si quieres más sólo tienes que pedirlas
+            <p class="mensaje-final">
+                Ya no hay más frases; si quieres más, solo tienes que pedirlas.
             </p>
         </div>
 
         <div class="bloque">
-            <h2 style="color:#5a3e00; font-weight: 600; margin-bottom: 10px;">Respira conmigo</h2>
-            <p class="mensaje" style="color: #7a7a7a; font-size: 1em;">Sigue el ritmo del círculo para estabilizar el pulso.</p>
-            
-            <div id="respirar"></div>
-            
-            <p class="mensaje" style="font-weight: 500;">Inhala cuando crezca. Sostén un momento. Exhala cuando baje.</p>
+            <h2 style="color:#5a3e00; font-weight:600; margin-bottom:10px;">Respira conmigo</h2>
+            <p class="mensaje" style="color:#7a7a7a; font-size:1em;">Sigue el ritmo del círculo para estabilizar el pulso.</p>
+
+            <div id="respirar">
+                <span>Inhala</span>
+            </div>
+
+            <p class="mensaje" style="font-weight:500;">
+                Inhala cuando crezca. Sostén un momento. Exhala cuando baje.
+            </p>
         </div>
 
     </section>
