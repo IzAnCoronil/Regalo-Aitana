@@ -8,11 +8,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        /* Optimización de Scroll y Vista */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             background: linear-gradient(135deg, #dfe9f7, #ffffff);
             color: #2c3e50;
+            min-height: 100vh;
+            /* Control de scroll y estabilidad */
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* NAV - Unificado y corregido */
@@ -96,6 +106,20 @@
         .boton-album:hover {
             background: #ff7a1f;
             transform: scale(1.07);
+        }
+
+        /* Ajustes responsivos móviles */
+        @media (max-width: 600px) {
+            nav {
+                gap: 15px;
+                padding: 10px;
+            }
+            nav a {
+                font-size: 0.9em;
+            }
+            header {
+                padding-top: 160px;
+            }
         }
     </style>
 </head>
