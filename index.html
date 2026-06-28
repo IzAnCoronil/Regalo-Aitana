@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         /* ESTILOS GENERALES DE LA WEB */
@@ -13,18 +13,21 @@
             background: linear-gradient(135deg, #dfe9f7, #ffffff);
             color: #2c3e50;
         }
+        
         /* NAV */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
             gap: 35px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            box-sizing: border-box;
         }
         nav a {
             color: white;
@@ -32,11 +35,13 @@
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
+            white-space: nowrap; /* Evita que los textos del menú se partan en dos líneas */
         }
         nav a:hover {
             color: #e8f4ff;
             transform: scale(1.08);
         }
+        
         /* HEADER */
         header {
             text-align: center;
@@ -51,6 +56,7 @@
             color: #4b5c6b;
             font-size: 1.1em;
         }
+        
         /* CONTENEDOR PRINCIPAL */
         .contenedor {
             background: white;
@@ -70,6 +76,7 @@
             color: #4b5c6b;
             margin-bottom: 30px;
         }
+        
         /* BOTONES GRANDES */
         .boton {
             display: inline-block;
@@ -105,7 +112,7 @@
             padding: 30px;
             box-sizing: border-box;
             z-index: 2000;
-            overflow-y: auto; /* CORRECCIÓN: Permite hacer scroll vertical si el contenido supera la pantalla */
+            overflow-y: auto;
         }
         .cuadro-texto {
             max-width: 700px;
@@ -113,7 +120,7 @@
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin: auto; /* CORRECCIÓN: Evita cortes visuales y mantiene el centrado correcto al desplazar */
+            margin: auto;
         }
         .cuadro-texto h2 {
             color: #5a3e00;
@@ -143,12 +150,64 @@
             background: #ff7a1f;
             transform: scale(1.05);
         }
+
+        /* ADAPTACIÓN PARA MÓVILES */
+        @media (max-width: 768px) {
+            nav {
+                justify-content: flex-start;
+                gap: 20px;
+                overflow-x: auto; /* Scroll horizontal en el menú si el móvil es pequeño */
+                padding: 15px 10px;
+            }
+
+            header {
+                padding: 100px 15px 20px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            .contenedor {
+                margin: 20px 15px 40px;
+                padding: 25px 15px;
+            }
+
+            .contenedor h2 {
+                font-size: 1.5em;
+            }
+
+            .boton {
+                display: block; /* En móviles los botones de las emociones se apilan mejor uno abajo de otro */
+                font-size: 1.1em;
+                padding: 15px 20px;
+                margin: 10px auto;
+                min-width: unset;
+                max-width: 90%;
+            }
+
+            .cuadro-texto {
+                padding: 25px 20px;
+            }
+
+            .cuadro-texto h2 {
+                font-size: 1.4em;
+            }
+
+            .cuadro-texto p {
+                font-size: 0.95em;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="bienvenida" class="capa-bienvenida" style="display: none;">
-        <div class="cuadro-texto">
+        <div class="cuadro-texto" id="cuadroBienvenida">
             <h2>Buenos días cumpleañera ❤️</h2>
             <p>
                 Seguro que te lo pasas genial en tu día. Esta página es mi regalo para ti, ya que me dijiste de broma que querías un regalo que te diera ganas de vivir… pues aquí lo tienes. Bueno, eso y que no sé cuándo te podré dar algo físico que también tengo preparado para ti (espero que no lo tengas ya). Después de esta pantalla te saldrá otra con la info de uso. Un abrazo y ya hablaremos.
@@ -158,7 +217,7 @@
     </div>
 
     <div id="uso" class="capa-bienvenida" style="display: none;">
-        <div class="cuadro-texto">
+        <div class="cuadro-texto" id="cuadroUso">
             <h2>Cómo funciona esta página</h2>
             <p>
                 Esta página está hecha para ti, para que tengas un sitio donde refugiarte cuando lo necesites, que sea tu nuevo lugar seguro y este te aseguro que nadie te lo va a quitar. Aquí puedes encontrar frases según cómo te sientas, guardar tus favoritas, añadir las tuyas propias y retos musicales para todos los días.
@@ -203,12 +262,18 @@
             // Es la primera vez: ocultamos la web y mostramos la bienvenida
             document.getElementById("contenido-web").style.display = "none";
             document.getElementById("bienvenida").style.display = "flex";
+            
+            // Forzar el scroll arriba al inicio en las pantallas emergentes
+            window.scrollTo(0, 0);
         }
 
         // Pasar de Bienvenida a Instrucciones de Uso
         function cerrarBienvenida() {
             document.getElementById("bienvenida").style.display = "none";
             document.getElementById("uso").style.display = "flex";
+            
+            // Scroll automático suave hacia la parte superior del cuadro de uso (útil en pantallas móviles pequeñas)
+            document.getElementById("cuadroUso").scrollIntoView({ behavior: "smooth", block: "start" });
         }
 
         // Finalizar introducción y guardar el estado para siempre
@@ -217,6 +282,9 @@
             document.getElementById("contenido-web").style.display = "block";
             // Guardamos el token en el dispositivo
             localStorage.setItem("webVisitada", "true");
+
+            // Scroll suave de entrada hacia el encabezado principal de la web
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
     </script>
 </body>
