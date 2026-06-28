@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Calendario Musical Anual</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -13,17 +13,37 @@
             color: #3a3a3a;
             min-height: 100vh;
         }
+        
+        /* Ajustes de scroll global y rendimiento móvil */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Scroll fluido nativo en iOS */
+        }
+
+        /* BARRA DE NAVEGACIÓN: Con scroll horizontal responsivo por si añades más links */
         nav {
             background: #4da3ff;
             padding: 12px 20px;
             position: fixed;
             top: 0;
-            width: 100%;
+            left: 0;
+            right: 0;
             display: flex;
-            justify-content: center;
-            gap: 35px;
+            justify-content: flex-start;
+            gap: 25px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+        nav::-webkit-scrollbar {
+            display: none; /* Esconde la barra en móvil para dejarlo limpio */
         }
         nav a {
             color: white;
@@ -31,11 +51,13 @@
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
+            display: inline-block;
         }
         nav a:hover {
             color: #e8f4ff;
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
+
         header {
             text-align: center;
             padding: 140px 20px 20px;
@@ -49,6 +71,7 @@
             color: #6a538f;
             font-size: 1.1em;
         }
+
         .seccion-premium {
             background: #1DB954;
             color: white;
@@ -108,6 +131,8 @@
             background: #e6f7ec;
             transform: scale(1.02);
         }
+
+        /* CONTROL DEL MES */
         .navegacion-mes {
             display: flex;
             align-items: center;
@@ -129,10 +154,14 @@
             justify-content: center;
             box-shadow: 0 3px 8px rgba(77, 163, 255, 0.3);
             transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
         }
         .btn-flecha:hover {
             background: #338be6;
             transform: scale(1.1);
+        }
+        .btn-flecha:active {
+            transform: scale(0.95); /* Feedback al pulsar en pantallas touch */
         }
         .mes-titulo {
             font-size: 1.8em;
@@ -142,11 +171,13 @@
             text-align: center;
             text-transform: capitalize;
         }
+
         .contenido {
             padding: 20px;
             max-width: 900px;
             margin: 0 auto 60px;
         }
+
         .info-reto-hoy {
             background: white;
             padding: 25px 30px;
@@ -167,10 +198,11 @@
             color: #555;
             line-height: 1.5;
         }
+
         .botones-accion {
             display: flex;
             gap: 12px;
-            margin-top: 25px; /* Mantiene la separación baja del botón de spotify */
+            margin-top: 25px;
             flex-wrap: wrap;
         }
         .btn-completar {
@@ -200,11 +232,14 @@
             background: #1ed760;
             transform: scale(1.02);
         }
+
+        /* GRID DEL CALENDARIO: Asegura que el scroll e interacciones verticales no se bloqueen */
         .calendario-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 12px;
             margin-bottom: 40px;
+            overscroll-behavior: contain; /* Control de rebote elástico */
         }
         .dias-semana-header {
             display: grid;
@@ -216,6 +251,7 @@
             margin-bottom: 8px;
             font-size: 0.9em;
         }
+
         .dia-box {
             background: white;
             padding: 15px 5px;
@@ -223,18 +259,23 @@
             box-shadow: 0 3px 10px rgba(0,0,0,0.04);
             text-align: center;
             cursor: pointer;
-            transition: 0.2s;
+            transition: transform 0.1s, box-shadow 0.2s, border-color 0.2s;
             border: 2px solid transparent;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 70px;
+            -webkit-tap-highlight-color: transparent;
         }
         .dia-box:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 12px rgba(77, 163, 255, 0.2);
             border-color: #4da3ff;
+        }
+        /* Respuesta táctil instantánea en teléfonos */
+        .dia-box:active {
+            transform: scale(0.95);
         }
         .dia-box .numero-dia {
             font-size: 1.4em;
@@ -252,57 +293,48 @@
         .dia-box.completado .numero-dia {
             color: #20a498;
         }
+
+        .guardar-cancion {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .guardar-cancion input {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .guardar-cancion button {
+            padding: 12px;
+            background: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .guardar-cancion button:hover {
+            background: #18a449;
+        }
+
+        #cancionGuardada {
+            color: #1DB954;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* MEDIA QUERIES MEJORADOS */
         @media (max-width: 600px) {
+            nav { justify-content: flex-start; gap: 20px; } /* Asegura scroll si la pantalla es enana */
             .seccion-premium { flex-direction: column; text-align: center; }
             .premium-inputs { width: 100%; justify-content: center; }
             .calendario-grid, .dias-semana-header { gap: 6px; }
-            .dia-box { min-height: 50px; padding: 10px 2px; }
+            .dia-box { min-height: 55px; padding: 10px 2px; border-radius: 10px; }
             .dia-box .numero-dia { font-size: 1.1em; }
-        }
-
-        html{
-            scroll-behavior:smooth;
-        }
-
-        body{
-            overflow-y:auto;
-            overflow-x:hidden;
-            -webkit-overflow-scrolling:touch;
-        }
-
-        .guardar-cancion{
-            margin-top:20px;
-            display:flex;
-            flex-direction:column;
-            gap:10px;
-        }
-
-        .guardar-cancion input{
-            padding:12px;
-            border:2px solid #ddd;
-            border-radius:10px;
-            font-size:16px;
-            font-family:'Poppins',sans-serif;
-        }
-
-        .guardar-cancion button{
-            padding:12px;
-            background:#1DB954;
-            color:white;
-            border:none;
-            border-radius:10px;
-            cursor:pointer;
-            font-weight:600;
-        }
-
-        .guardar-cancion button:hover{
-            background:#18a449;
-        }
-
-        #cancionGuardada{
-            color:#1DB954;
-            font-weight:600;
-            margin-top:10px;
+            header { padding-top: 100px; } /* Ajuste de espacio por el nav fijo */
         }
     </style>
 </head>
@@ -367,6 +399,8 @@
 
         <div class="calendario-grid" id="gridCalendario"></div>
     </section>
+</body>
+</html>
 
     <script>
         // Array completo con las 365 misiones integradas
