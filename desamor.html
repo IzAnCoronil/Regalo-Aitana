@@ -3,60 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <title>Desamor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        /* Solo dejamos los estilos únicos y específicos de esta página */
-        .contenedor {
-            background: white;
-            padding: 40px;
-            margin: 20px auto 60px;
-            border-radius: 20px;
-            max-width: 750px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-            text-align: center;
+        /* Optimización de Scroll y Vista Global */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #fceade, #ffffff); /* Fondo cálido, suave y reconfortante */
+            color: #3a3a3a;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* NAV - Barra unificada con scroll horizontal limpio */
+        nav {
+            background: #ffe08a;
+            padding: 14px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: flex-start;
+            gap: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
             box-sizing: border-box;
         }
 
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav a {
+            color: #5a3e00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        nav a:hover {
+            color: #8a6200;
+            transform: scale(1.03);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 140px 20px 20px;
+            color: #c9184a;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            color: #9b1c31; /* Tono vino/rosa oscuro armónico */
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+
+        header p {
+            color: #c9184a;
+            font-size: 1.1em;
+            margin: 0;
+            opacity: 0.85;
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            background: white;
+            padding: 40px;
+            margin: 20px auto 80px;
+            border-radius: 24px;
+            max-width: 750px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            text-align: center;
+            box-sizing: border-box;
+            min-height: 280px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease;
+        }
+
         .frase {
-            font-size: 1.4em;
+            font-size: 1.45em;
             color: #2c2c2c;
-            margin-bottom: 15px;
+            margin: 15px 0;
             font-weight: 500;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .autor {
             font-size: 1.05em;
-            color: #7a7a7a;
-            margin-bottom: 30px;
+            color: #757575;
+            margin: 0 0 30px 0;
             font-style: italic;
         }
 
+        /* BOTONES PRINCIPALES */
+        button {
+            display: inline-block;
+            padding: 14px 36px;
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin: 10px;
+            font-size: 1.1em;
+            box-shadow: 0 4px 14px rgba(255, 77, 109, 0.3);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:hover {
+            background: #c9184a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR */
         .boton-guardar {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: #ff4d6d;
-            color: white;
-            padding: 14px 22px;
+            background: #ffffff;
+            color: #ff4d6d;
+            padding: 12px 24px;
             border-radius: 50px;
-            font-size: 1.05em;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.3);
-            transition: 0.2s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 77, 109, 0.15);
+            transition: all 0.25s ease;
             z-index: 99;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .boton-guardar:hover {
-            background: #c9184a;
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(255, 77, 109, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.18);
+            background: #fff5f6;
+        }
+
+        /* Ajustes Responsivos */
+        @media (max-width: 768px) {
+            nav {
+                gap: 20px;
+                padding: 14px 15px;
+            }
+            header {
+                padding-top: 110px;
+            }
+            header h1 {
+                font-size: 2.1em;
+            }
+            .contenedor {
+                margin: 15px 15px 100px;
+                padding: 35px 20px;
+                min-height: 250px;
+            }
+            .frase {
+                font-size: 1.25em;
+            }
+            button {
+                width: 100%;
+                max-width: 290px;
+            }
+            .boton-guardar {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
         }
     </style>
 </head>
@@ -78,10 +224,9 @@
         <p>Frases que duelen, pero enseñan.</p>
     </header>
 
-    <div class="contenedor">
+    <div class="contenedor" id="tarjetaContenedor">
         <p id="fraseDesamor" class="frase"></p>
         <p id="autorDesamor" class="autor"></p>
-
         <button onclick="nuevaFraseDesamor()">Otra frase</button>
     </div>
 
@@ -110,7 +255,7 @@
         { texto: "Tú vales más que cualquier despedida que te dolió.", autor: "IzAn" },
         { texto: "No te quedaste sola, te quedaste contigo, y eso es empezar de nuevo.", autor: "IzAn" },
         { texto: "No fue tiempo perdido, fue aprendizaje caro.", autor: "IzAn" },
-        { texto: "Tú no eras demasiado, solo estabas con alguien que ofrecía muy poco.", autor: "IzAn" },
+        { texto: "Tú no eras demasiado, solo estabas con alguien que ofrecića muy poco.", autor: "IzAn" },
         { texto: "A veces el amor se va sin avisar, pero tu vida sigue siendo tuya.", autor: "IzAn" },
         { texto: "No te rompieron, te moldearon para algo mejor.", autor: "IzAn" },
         { texto: "Tú mereces un amor que se quede, no uno que te haga esperar.", autor: "IzAn" },
@@ -156,7 +301,7 @@
         { texto: "Uno no siempre hace lo que quiere, pero tiene el derecho de no hacer lo que no quiere.", autor: "Mario Benedetti" },
         { texto: "De dos lágrimas que caen, una siempre es por olvido.", autor: "Mario Benedetti" },
         { texto: "Es una lástima que no estés conmigo cuando miro el reloj y son las cuatro.", autor: "Mario Benedetti" },
-        { texto: "Posiblymente me quisiera, vaya uno a saberlo, pero lo cierto es que tenía una habilidad especial para herirme.", autor: "Mario Benedetti" },
+        { texto: "Posiblemente me quisiera, vaya uno a saberlo, pero lo cierto es que tenía una habilidad especial para herirme.", autor: "Mario Benedetti" },
         { texto: "Hay menos tiempo que lugar, no obstante, hay lugares que duran un minuto.", autor: "Mario Benedetti" },
         { texto: "El amor es un centro, pero a la deriva.", autor: "Mario Benedetti" },
         { texto: "Te espero cuando miremos al cielo de noche: tú allá, yo aquí.", autor: "Mario Benedetti" },
@@ -220,7 +365,7 @@
         { texto: "Cada vez que te vas me dejas un sabor a desierto en la boca.", autor: "Julio Cortázar" },
         { texto: "Lo que mucha gente llama amar consiste en elegir una mujer y casarse con ella. La eligen, te lo juro, los he visto. Como si se pudiese elegir en el amor.", autor: "Julio Cortázar" },
         { texto: "Lejos de ti es un lugar que no comprendo y que me duele habitar.", autor: "Julio Cortázar" },
-        { texto: "No fuiste un sueño, fuiste esa reality que prefiero recordar durmiendo.", autor: "Julio Cortázar" },
+        { texto: "No fuiste un sueño, fuiste esa realidad que prefiero recordar durmiendo.", autor: "Julio Cortázar" },
         { texto: "Nuestros encuentros eran puentes que cruzábamos sin mirar abajo.", autor: "Julio Cortázar" },
         { texto: "Te extraño en los detalles rotos de las tardes de lluvia.", autor: "Julio Cortázar" },
         { texto: "Olvidar es un trabajo de hormigas que una tormenta desarma.", autor: "Julio Cortázar" },
@@ -264,11 +409,11 @@
         { texto: "Se apagan las luces de nuestro horizonte común.", autor: "Pablo Neruda" },
         { texto: "La distancia es un hilo amargo que nos amarra al pasado.", autor: "Pablo Neruda" },
         { texto: "Mi corazón se quedó varado en una playa donde tú ya no caminas.", autor: "Pablo Neruda" },
-        { texto: "Eramos lluvia y sol, pero la tormenta nos deshizo.", autor: "Pablo Neruda" },
+        { texto: "Éramos lluvia y sol, pero la tormenta nos deshizo.", autor: "Pablo Neruda" },
         { texto: "Te nombraba en secreto para no romper el encanto del dolor.", autor: "Pablo Neruda" },
         { texto: "Me duele el aire cuando tú no lo respiras conmigo.", autor: "Pablo Neruda" },
         { texto: "Fuiste la primavera más breve que ha cruzado mi vida.", autor: "Pablo Neruda" },
-        { texto: "El olvido es un mar espeso donde tus ojos se borran despacio.", autor: "Pablo Neruda" },
+        { texto: "El olvido es un mar espeso donde tus ojo se borran despacio.", autor: "Pablo Neruda" },
         { texto: "Guardo tus silencios como si fueran tesoros rotos.", autor: "Pablo Neruda" },
         { texto: "Me queda de ti el perfume que la noche no pudo borrar.", autor: "Pablo Neruda" },
         { texto: "No hay herida más honda que la de un 'te amo' dicho a medias.", autor: "Pablo Neruda" },
@@ -308,7 +453,6 @@
         { texto: "Se acabó la función, apaguen las luces y recojan los cristales.", autor: "Joaquín Sabina" }
     ];
 
-    // Cargar frases añadidas por el usuario desde anadir.html
     let frasesUsuario = JSON.parse(localStorage.getItem("desamor")) || [];
     let frasesDesamor = frasesDesamorOriginal.concat(frasesUsuario);
 
@@ -347,22 +491,34 @@
             return;
         }
 
-        let indice;
-        let intentos = 0;
+        const contenedor = document.getElementById("tarjetaContenedor");
+        contenedor.style.opacity = 0;
 
-        do {
-            // CORREGIDO: Se quitó Security.escape que rompía el script
-            indice = Math.floor(Math.random() * frasesDesamor.length);
-            intentos++; 
-        } while (frasesDesamor[indice].autor === ultimoAutor && intentos < 10 && frasesDesamor.length > 1);
+        setTimeout(() => {
+            let indice;
+            let intentos = 0;
 
-        const frase = frasesDesamor[indice];
+            do {
+                indice = Math.floor(Math.random() * frasesDesamor.length);
+                intentos++; 
+            } while (frasesDesamor[indice].autor === ultimoAutor && intentos < 10 && frasesDesamor.length > 1);
 
-        document.getElementById("fraseDesamor").textContent = frase.texto;
-        document.getElementById("autorDesamor").textContent = "— " + frase.autor;
+            const frase = frasesDesamor[indice];
 
-        ultimoAutor = frase.autor;
-        frasesDesamor.splice(indice, 1);
+            document.getElementById("fraseDesamor").textContent = frase.texto;
+            document.getElementById("autorDesamor").textContent = "— " + frase.autor;
+
+            ultimoAutor = frase.autor;
+            frasesDesamor.splice(indice, 1);
+            
+            contenedor.style.opacity = 1;
+
+            // Scroll suave calculando dinámicamente el centro del contenedor
+            const yOffset = -100; 
+            const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: yPosition, behavior: "smooth" });
+
+        }, 250);
     }
 
     function guardarFavorito(idFrase, idAutor) {
@@ -379,7 +535,7 @@
         const yaExiste = favoritos.some(f => f.frase === frase);
 
         if (!yaExiste) {
-            favorites.push({ frase, autor });
+            favoritos.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
@@ -389,6 +545,7 @@
 
     window.onload = function() {
         mostrarPrimeraFrase();
+        window.scrollTo({ top: 0 });
     };
     </script>
 
