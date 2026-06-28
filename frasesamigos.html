@@ -8,204 +8,240 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        /* BARRA DE SCROLL PERSONALIZADA */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #dfe9f7, #ffffff);
-            color: #2c3e50;
+            background: linear-gradient(135deg, #e0f2fe, #f0fdf4, #ffffff); /* Fondo premium suave y alegre */
+            color: #1e293b;
+            min-height: 100vh;
         }
 
-        /* NAV */
+        /* NAV PREMIUM UNIFICADO */
         nav {
-            background: #4da3ff;
-            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 14px 20px;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            gap: 30px;
+            box-shadow: 0 1px 10px rgba(0,0,0,0.05);
             z-index: 100;
             box-sizing: border-box;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05em;
-            transition: 0.2s;
+            overflow-x: auto;
             white-space: nowrap;
         }
 
+        nav::-webkit-scrollbar {
+            display: none; /* Oculta scroll en barra de navegación */
+        }
+
+        nav a {
+            color: #334155;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.2s ease;
+        }
+
         nav a:hover {
-            color: #e8f4ff;
-            transform: scale(1.08);
+            color: #38bdf8;
+            transform: translateY(-1px);
         }
 
         /* HEADER */
         header {
             text-align: center;
-            padding: 120px 20px 40px;
+            padding: 140px 20px 20px;
         }
 
         header h1 {
-            font-size: 2.6em;
-            color: #2c3e50;
-            margin-bottom: 10px;
+            font-size: 2.8em;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #0284c7, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 10px 0;
         }
 
         header p {
-            color: #4b5c6b;
+            color: #64748b;
             font-size: 1.1em;
+            margin: 0;
+        }
+
+        /* PRIMERA FRASE */
+        .primera-frase {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 30px;
+            margin: 20px auto;
+            border-radius: 20px;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .primera-frase h2 {
+            margin-top: 0;
+            color: #0284c7;
+            font-size: 1.4em;
         }
 
         /* LISTA DE NOMBRES */
         .lista-nombres {
-            max-width: 900px;
-            margin: 20px auto;
+            max-width: 600px;
+            margin: 20px auto 80px;
             text-align: center;
-            padding: 0 15px;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .nombre-btn {
             display: block;
             background: white;
             padding: 18px;
-            margin: 12px auto;
-            border-radius: 14px;
-            max-width: 500px;
-            font-size: 1.3em;
+            margin: 14px auto;
+            border-radius: 16px;
+            font-size: 1.2em;
             font-weight: 600;
-            color: #2c3e50;
+            color: #334155;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: 0.2s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.01);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .nombre-btn:hover {
-            transform: scale(1.04);
-            background: #f7faff;
+            transform: translateY(-3px) scale(1.01);
+            background: #f8fafc;
+            box-shadow: 0 12px 24px rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.2);
         }
 
-        /* TARJETA */
+        /* TARJETA DE FRASES */
         .tarjeta {
             background: white;
-            padding: 25px;
-            margin: 20px auto;
-            border-radius: 18px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            padding: 40px 30px;
+            margin: 30px auto 60px;
+            border-radius: 24px;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
             display: none;
             text-align: center;
+            box-sizing: border-box;
+            border: 1px solid rgba(0,0,0,0.02);
         }
 
         .nombre {
             font-size: 1.8em;
             font-weight: 600;
-            margin-bottom: 12px;
-        }
-
-        .frase {
-            margin: 20px 0;
-            color: #4b5c6b;
-            font-size: 1.2em;
-            line-height: 1.5em;
+            color: #0f172a;
+            margin-bottom: 5px;
         }
 
         .contador {
-            font-size: 0.95em;
-            color: #888;
-            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #94a3b8;
+            margin-bottom: 25px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
+        .frase {
+            margin: 30px 0;
+            color: #334155;
+            font-size: 1.3em;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* BOTONES DE ACCIÓN */
         .btn-sig {
-            padding: 12px 20px;
-            background: #ff8c42;
+            padding: 14px 30px;
+            background: linear-gradient(135deg, #ff8c42, #ff6b1a);
             color: white;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
             display: inline-block;
-            transition: 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
         }
 
         .btn-sig:hover {
-            background: #ff7a1f;
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 66, 0.4);
         }
 
         .volver {
             display: none;
-            margin: 20px auto;
-            padding: 14px 22px;
-            background: #4da3ff;
-            color: white;
+            margin: 20px auto 0;
+            padding: 12px 24px;
+            background: #f1f5f9;
+            color: #475569;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             width: fit-content;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
         }
 
         .volver:hover {
-            transform: scale(1.05);
+            background: #e2e8f0;
+            color: #1e293b;
         }
 
-        /* PRIMERA FRASE */
-        .primera-frase {
-            background: white;
-            padding: 25px;
-            margin: 20px auto;
-            border-radius: 18px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            text-align: center;
-        }
-
-        /* ADAPTACIÓN PARA MÓVILES */
+        /* ADAPTACIÓN MÓVIL */
         @media (max-width: 768px) {
             nav {
                 justify-content: flex-start;
                 gap: 20px;
-                overflow-x: auto; /* Permite scroll horizontal en el menú si no cabe */
-                padding: 15px 10px;
+                padding: 14px 15px;
             }
-
             header {
-                padding: 100px 15px 20px;
+                padding: 110px 20px 10px;
             }
-
             header h1 {
-                font-size: 2em;
+                font-size: 2.2em;
             }
-
-            header p {
-                font-size: 1em;
-            }
-
             .nombre-btn {
-                font-size: 1.15em;
-                padding: 15px;
-                max-width: 90%;
-            }
-
-            .tarjeta, .primera-frase {
-                margin: 20px 15px;
-                padding: 20px 15px;
-            }
-
-            .nombre {
-                font-size: 1.5em;
-            }
-
-            .frase {
                 font-size: 1.1em;
+                padding: 16px;
+            }
+            .tarjeta, .primera-frase {
+                margin: 20px 16px;
+                padding: 30px 20px;
+            }
+            .frase {
+                font-size: 1.15em;
             }
         }
     </style>
-
 </head>
 
 <body>
@@ -231,25 +267,26 @@
     </div>
 
     <div class="lista-nombres" id="listaNombres">
-        <div class="nombre-btn" onclick="mostrar('iker')">Iker de Dios</div>
-        <div class="nombre-btn" onclick="mostrar('paula')">Paula Gutiérrez</div>
-        <div class="nombre-btn" onclick="mostrar('pedro')">Pedro Jiménez</div>
-        <div class="nombre-btn" onclick="mostrar('virginia')">Virginia Delgado</div>
-        <div class="nombre-btn" onclick="mostrar('celia')">Celia García</div>
-        <div class="nombre-btn" onclick="mostrar('irene')">Irene Rodríguez</div>
-        <div class="nombre-btn" onclick="mostrar('andres')">Andrés García</div>
-        <div class="nombre-btn" onclick="mostrar('izan')">IzAn</div>
+        <div class="nombre-btn" onclick="mostrar('iker', 'Iker de Dios')">Iker de Dios</div>
+        <div class="nombre-btn" onclick="mostrar('paula', 'Paula Gutiérrez')">Paula Gutiérrez</div>
+        <div class="nombre-btn" onclick="mostrar('pedro', 'Pedro Jiménez')">Pedro Jiménez</div>
+        <div class="nombre-btn" onclick="mostrar('virginia', 'Virginia Delgado')">Virginia Delgado</div>
+        <div class="nombre-btn" onclick="mostrar('celia', 'Celia García')">Celia García</div>
+        <div class="nombre-btn" onclick="mostrar('irene', 'Irene Rodríguez')">Irene Rodríguez</div>
+        <div class="nombre-btn" onclick="mostrar('andres', 'Andrés García')">Andrés García</div>
+        <div class="nombre-btn" onclick="mostrar('izan', 'IzAn')">IzAn</div>
     </div>
-
-    <div class="volver" id="volver" onclick="volver()">Volver</div>
 
     <div class="tarjeta" id="tarjeta">
         <div class="nombre" id="nombreAmigo"></div>
         <div class="contador" id="contador"></div>
         <div class="frase" id="textoFrase"></div>
-        <div class="btn-sig" id="btnSig" onclick="siguiente()">Siguiente</div>
+        <div class="btn-sig" id="btnSig" onclick="siguiente()">Siguiente frase</div>
+        <div>
+            <div class="volver" id="volver" onclick="volver()">← Volver a la lista</div>
+        </div>
     </div>
-	
+    
     <script>
         // Frases de cada amigo
         const frases = {
@@ -310,19 +347,21 @@
         let amigoActual = "";
 
         // Mostrar tarjeta
-        function mostrar(nombre) {
-            amigoActual = nombre;
+        function mostrar(key, nombreCompleto) {
+            amigoActual = key;
             actual = 0;
 
+            // Ocultamos elementos principales
             document.getElementById("listaNombres").style.display = "none";
-            document.getElementById("volver").style.display = "block";
-
+            document.getElementById("primeraFrase").style.display = "none";
+            
+            // Mostramos la tarjeta y botón volver
             const tarjeta = document.getElementById("tarjeta");
             tarjeta.style.display = "block";
+            document.getElementById("volver").style.display = "inline-block";
 
-            // Capitalizar correctamente el nombre
-            document.getElementById("nombreAmigo").textContent =
-                nombre.charAt(0).toUpperCase() + nombre.slice(1);
+            // Ponemos el nombre exacto que pasamos por parámetro
+            document.getElementById("nombreAmigo").textContent = nombreCompleto;
 
             mostrarFrase();
 
@@ -336,8 +375,18 @@
             document.getElementById("textoFrase").textContent = lista[actual];
             document.getElementById("contador").textContent = `Frase ${actual + 1} de ${lista.length}`;
 
-            document.getElementById("btnSig").style.display =
-                lista.length === 1 ? "none" : "inline-block";
+            // Si es la última frase, cambiamos el texto del botón a "Empezar de nuevo" o lo gestionamos
+            const btnSig = document.getElementById("btnSig");
+            if (lista.length === 1) {
+                btnSig.style.display = "none";
+            } else {
+                btnSig.style.display = "inline-block";
+                if (actual === lista.length - 1) {
+                    btnSig.textContent = "Volver a empezar";
+                } else {
+                    btnSig.textContent = "Siguiente frase";
+                }
+            }
         }
 
         // Siguiente frase
@@ -345,21 +394,27 @@
             const lista = frases[amigoActual];
             if (actual < lista.length - 1) {
                 actual++;
-                mostrarFrase();
+            } else {
+                actual = 0; // Si llega al final y vuelven a pulsar, reinicia el bucle
             }
+            mostrarFrase();
         }
 
-        // Volver
+        // Volver a la lista
         function volver() {
             document.getElementById("listaNombres").style.display = "block";
-            document.getElementById("volver").style.display = "none";
             document.getElementById("tarjeta").style.display = "none";
+            
+            // Comprobamos si la primera frase debe mostrarse o no basándonos en el localStorage original
+            if (!localStorage.getItem("primeraFraseVisto")) {
+                document.getElementById("primeraFrase").style.display = "block";
+            }
 
             // Sube suavemente arriba del todo al regresar a la lista
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
-        // Primera frase solo 1 vez
+        // Primera frase lógica al cargar la página
         if (localStorage.getItem("primeraFraseVisto")) {
             document.getElementById("primeraFrase").style.display = "none";
         } else {
