@@ -25,12 +25,13 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV - Estructura unificada */
+        /* NAV - Estructura unificada y fluida */
         nav {
             background: #ffe08a;
             padding: 12px 20px;
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -46,6 +47,7 @@
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.2s;
+            white-space: nowrap; /* Evita roturas de línea incómodas */
         }
 
         nav a:hover {
@@ -81,6 +83,8 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
             box-sizing: border-box;
+            /* Padding inferior extra para evitar colisiones con el botón de guardar en móvil */
+            padding-bottom: 50px; 
         }
 
         .frase {
@@ -133,6 +137,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             box-shadow: 0 3px 6px rgba(0,0,0,0.2);
             transition: 0.2s;
@@ -145,16 +150,43 @@
         }
 
         /* Ajustes responsivos móviles */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             nav {
-                gap: 15px;
-                padding: 10px;
+                justify-content: flex-start;
+                gap: 20px;
+                overflow-x: auto; /* Scroll horizontal fluido para el menú */
+                padding: 15px 10px;
             }
             nav a {
-                font-size: 0.9em;
+                font-size: 1em;
             }
             header {
-                padding-top: 160px;
+                padding-top: 100px;
+            }
+            header h1 {
+                font-size: 2.1em;
+            }
+            .contenedor {
+                margin: 20px 15px 120px; /* Margen inferior amplio para el botón flotante */
+                padding: 30px 20px 40px;
+            }
+            .frase {
+                font-size: 1.25em;
+            }
+            button {
+                width: 90%;
+                font-size: 1.1em;
+                padding: 15px;
+            }
+            .boton-guardar {
+                bottom: 20px;
+                right: 50%;
+                transform: translateX(50%); /* Centra el botón abajo en pantallas pequeñas */
+                width: 85%;
+                box-sizing: border-box;
+            }
+            .boton-guardar:hover {
+                transform: translateX(50%) scale(1.02);
             }
         }
     </style>
@@ -410,6 +442,9 @@
 
         ultimoAutorAlegria = frase.autor;
         frasesAlegria.splice(indice, 1);
+        
+        // Ajuste suave automático: hace un scroll sutil al cambiar de frase para centrar la vista
+        window.scrollTo({ top: document.querySelector('.contenedor').offsetTop - 120, behavior: "smooth" });
     }
 
     // -----------------------------
@@ -427,7 +462,7 @@
         const yaExiste = favoritos.some(f => f.frase === frase);
         
         if (!yaExiste) {
-            favorites = favoritos.push({ frase, autor });
+            favoritos.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
@@ -437,6 +472,7 @@
 
     window.onload = function() {
         mostrarPrimeraFrase();
+        window.scrollTo({ top: 0 });
     };
     </script>
 
