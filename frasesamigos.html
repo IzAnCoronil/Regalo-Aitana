@@ -3,59 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Frases de amigos</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 
     <style>
+        /* Estilos específicos para la sección de Frases de Amigos */
         body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
             background: linear-gradient(135deg, #dfe9f7, #ffffff);
             color: #2c3e50;
         }
 
-        /* NAV */
-        nav {
-            background: #4da3ff;
-            padding: 12px 20px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 100;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05em;
-            transition: 0.2s;
-        }
-
-        nav a:hover {
-            color: #e8f4ff;
-            transform: scale(1.08);
-        }
-
-        /* HEADER */
-        header {
-            text-align: center;
-            padding: 120px 20px 40px;
-        }
-
         header h1 {
-            font-size: 2.6em;
             color: #2c3e50;
             margin-bottom: 10px;
         }
 
         header p {
             color: #4b5c6b;
-            font-size: 1.1em;
         }
 
         /* LISTA DE NOMBRES */
@@ -76,7 +40,7 @@
             font-weight: 600;
             color: #2c3e50;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.11);
             transition: 0.2s;
         }
 
@@ -85,29 +49,31 @@
             background: #f7faff;
         }
 
-        /* TARJETA */
+        /* TARJETA DE FRASES */
         .tarjeta {
             background: white;
-            padding: 25px;
+            padding: 35px 25px;
             margin: 20px auto;
             border-radius: 18px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.11);
             display: none;
             text-align: center;
+            box-sizing: border-box;
         }
 
         .nombre {
             font-size: 1.8em;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            color: #2c3e50;
         }
 
         .frase {
-            margin: 20px 0;
+            margin: 25px 0;
             color: #4b5c6b;
-            font-size: 1.2em;
-            line-height: 1.5em;
+            font-size: 1.25em;
+            line-height: 1.6em;
         }
 
         .contador {
@@ -117,7 +83,7 @@
         }
 
         .btn-sig {
-            padding: 12px 20px;
+            padding: 12px 24px;
             background: #ff8c42;
             color: white;
             border-radius: 12px;
@@ -135,31 +101,38 @@
         .volver {
             display: none;
             margin: 20px auto;
-            padding: 14px 22px;
+            padding: 14px 24px;
             background: #4da3ff;
             color: white;
             border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
             width: fit-content;
+            transition: 0.2s;
         }
 
         .volver:hover {
             transform: scale(1.05);
+            background: #3a8ee6;
         }
 
-        /* PRIMERA FRASE */
+        /* SECCIÓN DE BIENVENIDA / PRIMERA FRASE */
         .primera-frase {
             background: white;
-            padding: 25px;
+            padding: 30px;
             margin: 20px auto;
             border-radius: 18px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             text-align: center;
+            box-sizing: border-box;
+        }
+
+        .primera-frase h2 {
+            margin-top: 0;
+            color: #2c3e50;
         }
     </style>
-
 </head>
 
 <body>
@@ -179,34 +152,31 @@
         <p>Pincha en un nombre para ver sus frases una a una.</p>
     </header>
 
-    <!-- PRIMERA FRASE (solo aparece 1 vez) -->
     <div id="primeraFrase" class="primera-frase">
-        <h2>Primera frase</h2>
+        <h2>Un mensaje para ti</h2>
         <p><b>¿Qué es ser fuerte?</b> Sospecho que ser fuerte no es solo una cuestión de poder; es fuerte la persona que encuentra un motivo por el que luchar y se dedica en cuerpo y alma a ello.</p>
     </div>
 
-    <!-- LISTA DE NOMBRES -->
     <div class="lista-nombres" id="listaNombres">
-        <div class="nombre-btn" onclick="mostrar('iker')">Iker de Dios</div>
-        <div class="nombre-btn" onclick="mostrar('paula')">Paula Gutiérrez</div>
-        <div class="nombre-btn" onclick="mostrar('pedro')">Pedro Jiménez</div>
-        <div class="nombre-btn" onclick="mostrar('virginia')">Virginia Delgado</div>
-        <div class="nombre-btn" onclick="mostrar('celia')">Celia García</div>
-        <div class="nombre-btn" onclick="mostrar('irene')">Irene Rodríguez</div>
-        <div class="nombre-btn" onclick="mostrar('andres')">Andrés García</div>
-        <div class="nombre-btn" onclick="mostrar('izan')">IzAn</div>
+        <div class="nombre-btn" onclick="mostrar('iker', 'Iker de Dios')">Iker de Dios</div>
+        <div class="nombre-btn" onclick="mostrar('paula', 'Paula Gutiérrez')">Paula Gutiérrez</div>
+        <div class="nombre-btn" onclick="mostrar('pedro', 'Pedro Jiménez')">Pedro Jiménez</div>
+        <div class="nombre-btn" onclick="mostrar('virginia', 'Virginia Delgado')">Virginia Delgado</div>
+        <div class="nombre-btn" onclick="mostrar('celia', 'Celia García')">Celia García</div>
+        <div class="nombre-btn" onclick="mostrar('irene', 'Irene Rodríguez')">Irene Rodríguez</div>
+        <div class="nombre-btn" onclick="mostrar('andres', 'Andrés García')">Andrés García</div>
+        <div class="nombre-btn" onclick="mostrar('izan', 'IzAn')">IzAn</div>
     </div>
 
     <div class="volver" id="volver" onclick="volver()">Volver</div>
 
-    <!-- TARJETA -->
     <div class="tarjeta" id="tarjeta">
         <div class="nombre" id="nombreAmigo"></div>
         <div class="contador" id="contador"></div>
         <div class="frase" id="textoFrase"></div>
         <div class="btn-sig" id="btnSig" onclick="siguiente()">Siguiente</div>
     </div>
-	
+    
     <script>
         // Frases de cada amigo
         const frases = {
@@ -266,19 +236,16 @@
         let actual = 0;
         let amigoActual = "";
 
-        // Mostrar tarjeta
-        function mostrar(nombre) {
-            amigoActual = nombre;
+        // Mostrar tarjeta con el nombre estilizado correctamente
+        function mostrar(clave, nombreCompleto) {
+            amigoActual = clave;
             actual = 0;
 
             document.getElementById("listaNombres").style.display = "none";
             document.getElementById("volver").style.display = "block";
-
             document.getElementById("tarjeta").style.display = "block";
 
-            // Capitalizar correctamente el nombre
-            document.getElementById("nombreAmigo").textContent =
-                nombre.charAt(0).toUpperCase() + nombre.slice(1);
+            document.getElementById("nombreAmigo").textContent = nombreCompleto;
 
             mostrarFrase();
         }
@@ -302,14 +269,14 @@
             }
         }
 
-        // Volver
+        // Volver a la lista de nombres
         function volver() {
             document.getElementById("listaNombres").style.display = "block";
             document.getElementById("volver").style.display = "none";
             document.getElementById("tarjeta").style.display = "none";
         }
 
-        // Primera frase solo 1 vez
+        // Controlar la visualización única de la primera frase
         if (localStorage.getItem("primeraFraseVisto")) {
             document.getElementById("primeraFrase").style.display = "none";
         } else {
