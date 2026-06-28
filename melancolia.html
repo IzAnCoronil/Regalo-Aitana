@@ -7,103 +7,185 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Estilos específicos para la atmósfera de Melancolía */
+        /* --- BARRA DE SCROLL PERSONALIZADA (ESTÉTICA PREMIUM) --- */
+        /* Para navegadores basados en Webkit (Chrome, Safari, Edge, Opera) */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19; /* Combina con el fondo más oscuro */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(123, 44, 191, 0.4); /* Color morado translúcido */
+            border-radius: 10px;
+            border: 2px solid #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(157, 78, 221, 0.7); /* Brillo más intenso al pasar el cursor */
+        }
+
+        /* Para Firefox */
+        html {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(123, 44, 191, 0.4) #0b0f19;
+            scroll-behavior: smooth;
+        }
+
+        /* --- ESTILOS DE LA ATMÓSFERA DE MELANCOLÍA --- */
         body {
-            background: linear-gradient(135deg, #1f2933, #3b4252);
-            color: #e5e7eb;
+            background: radial-gradient(circle at top, #1e2638, #0b0f19);
+            color: #f3f4f6;
             min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto; /* Permite scroll vertical si el contenido lo requiere */
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px 10px;
         }
 
         header h1 {
-            color: #e5e7eb;
-            margin-bottom: 10px;
+            font-size: 2.8em;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #ffffff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
         }
 
         header p {
             color: #9ca3af;
+            font-size: 1.1em;
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        /* CONTENEDOR EFECTO VIDRIO (GLASSMORPHISM) */
         .contenedor {
-            background: #111827;
-            padding: 40px;
-            margin: 30px auto 80px; /* Margen inferior para que no lo tape el botón flotante */
-            border-radius: 20px;
-            max-width: 750px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 50px 40px;
+            margin: 40px auto 120px; /* Margen inferior amplio para evitar que se solape con el botón guardar */
+            border-radius: 24px;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
             text-align: center;
             box-sizing: border-box;
+            max-height: 80vh; /* Evita que la tarjeta sea más grande que la pantalla */
+            overflow-y: auto;  /* Si el texto dentro de la tarjeta es enorme, crea scroll interno estético */
         }
 
         /* Animación suave para la transición de frases */
         .frase-animada {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeInBlur 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInBlur {
+            from { opacity: 0; filter: blur(4px); transform: translateY(8px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
         }
 
         .frase {
-            font-size: 1.5em;
-            color: #e5e7eb;
-            margin-bottom: 15px;
-            font-weight: 500;
-            line-height: 1.4;
+            font-size: 1.65em;
+            color: #f9fafb;
+            margin-bottom: 20px;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: -0.3px;
         }
 
         .autor {
             font-size: 1.05em;
             color: #9ca3af;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             font-style: italic;
+            letter-spacing: 0.5px;
         }
 
-        /* BOTONES INTERNOS */
+        /* BOTÓN PRINCIPAL */
         .contenedor button {
             display: inline-block;
-            padding: 16px 28px;
-            background: #7b2cbf;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, #7b2cbf, #5a189a);
             color: white;
             border: none;
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            font-size: 1.15em;
+            font-size: 1.05em;
+            letter-spacing: 0.2px;
+            box-shadow: 0 4px 15px rgba(123, 44, 191, 0.3);
+            transition: all 0.25s ease;
             min-width: 180px;
         }
 
         .contenedor button:hover {
-            background: #6a1b9a;
-            transform: scale(1.04);
+            background: linear-gradient(135deg, #9d4edd, #7b2cbf);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 44, 191, 0.5);
         }
 
-        /* BOTÓN FLOTANTE GUARDAR */
+        .contenedor button:active {
+            transform: translateY(0);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR PREMIUM */
         .boton-guardar {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #7b2cbf;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            padding: 14px 22px;
+            padding: 12px 24px;
             border-radius: 50px;
-            font-size: 1.05em;
+            font-size: 0.95em;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: 0.2s;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 99;
         }
 
         .boton-guardar:hover {
-            background: #6a1b9a;
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(123, 44, 191, 0.4);
+            background: #ffffff;
+            color: #111827;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Navegación básica */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(11, 15, 25, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        nav a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 0.95em;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #ffffff;
         }
     </style>
 </head>
@@ -140,26 +222,26 @@
 
     <script>
     const frasesMelancoliaOriginal = [
-        { texto: "Siente que hay días en los que el corazón recuerda cosas que la mente ya había olvidado.", autor: "Mario Benedetti" },
-        { texto: "Piensa que hay silencios que pesan más que cualquier palabra rota.", autor: "Pablo Neruda" },
-        { texto: "Cree que la melancolía es ese lugar donde se sientan los recuerdos a mirar el tiempo pasar.", autor: "Julio Cortázar" },
-        { texto: "Siente que a veces el alma se queda mirando por la ventana de un recuerdo que ya no vuelve.", autor: "Rainer Maria Rilke" },
-        { texto: "Piensa que hay noches en las que el pasado se sienta al borde de la cama.", autor: "Alejandra Pizarnik" },
-        { texto: "Cree que la tristeza suave es solo amor que no encontró dónde quedarse.", autor: "Sabines" },
-        { texto: "Siente que algunas canciones duelen porque recuerdan cosas que nunca llegaron a pasar.", autor: "IzAn" },
-        { texto: "Piensa que hay abrazos que se quedaron a medio camino entre el deseo y el miedo.", autor: "Mario Benedetti" },
-        { texto: "Cree que la melancolía no es querer volver, es no saber cómo seguir.", autor: "Pablo Neruda" },
-        { texto: "Siente que hay fotos que ya no existen, pero siguen colgadas en la memoria.", autor: "Julio Cortázar" },
-        { texto: "Piensa que a veces el corazón se sienta en el suelo y mira cómo se va el día.", autor: "Rainer Maria Rilke" },
-        { texto: "Cree que la nostalgia es un idioma que solo entienden los que han perdido algo que amaban.", autor: "Alejandra Pizarnik" },
-        { texto: "Siente que hay lugares que ya no pisa, pero que siguen caminando dentro de él.", autor: "Sabines" },
-        { texto: "Piensa que la melancolía es un hilo que une lo que fue con lo que nunca será.", autor: "IzAn" },
-        { texto: "Cree que hay tardes que se quedan atrapadas en una luz que ya no existe.", autor: "Mario Benedetti" },
-        { texto: "Siente que el tiempo no borra, solo difumina los bordes del recuerdo.", autor: "Pablo Neruda" },
-        { texto: "Piensa que hay nombres que ya no dice, pero que aún se le escapan en los pensamientos.", autor: "Julio Cortázar" },
-        { texto: "Cree que la melancolía es el eco de todo lo que no supo cómo despedirse.", autor: "Rainer Maria Rilke" },
-        { texto: "Siente que hay días en los que el corazón solo quiere sentarse a mirar lo que ya no es.", autor: "Alejandra Pizarnik" },
-        { texto: "Piensa que la tristeza suave es una forma de recordar sin hacer ruido.", autor: "Sabines" }
+        { texto: "Hay días en los que el corazón recuerda cosas que la mente ya había olvidado.", autor: "Mario Benedetti" },
+        { texto: "Hay silencios que pesan más que cualquier palabra rota.", autor: "Pablo Neruda" },
+        { texto: "La melancolía es ese lugar donde se sientan los recuerdos a mirar el tiempo pasar.", autor: "Julio Cortázar" },
+        { texto: "A veces el alma se queda mirando por la ventana de un recuerdo que ya no vuelve.", autor: "Rainer Maria Rilke" },
+        { texto: "Hay noches en las que el pasado se sienta al borde de la cama.", autor: "Alejandra Pizarnik" },
+        { texto: "La tristeza suave es solo amor que no encontró dónde quedarse.", autor: "Sabines" },
+        { texto: "Algunas canciones duelen porque recuerdan cosas que nunca llegaron a pasar.", autor: "IzAn" },
+        { texto: "Hay abrazos que se quedaron a medio camino entre el deseo y el miedo.", autor: "Mario Benedetti" },
+        { texto: "La melancolía no es querer volver, es no saber cómo seguir.", autor: "Pablo Neruda" },
+        { texto: "Hay fotos que ya no existen, pero siguen colgadas en la memoria.", autor: "Julio Cortázar" },
+        { texto: "A veces el corazón se sienta en el suelo y mira cómo se va el día.", autor: "Rainer Maria Rilke" },
+        { texto: "La nostalgia es un idioma que solo entienden los que han perdido algo que amaban.", autor: "Alejandra Pizarnik" },
+        { texto: "Hay lugares que ya no se pisan, pero que siguen caminando dentro de uno.", autor: "Sabines" },
+        { texto: "La melancolía es un hilo que une lo que fue con lo que nunca será.", autor: "IzAn" },
+        { texto: "Hay tardes que se quedan atrapadas en una luz que ya no existe.", autor: "Mario Benedetti" },
+        { texto: "El tiempo no borra, solo difumina los bordes del recuerdo.", autor: "Pablo Neruda" },
+        { texto: "Hay nombres que ya no se dicen, pero que aún se escapan en los pensamientos.", autor: "Julio Cortázar" },
+        { texto: "La melancolía es el eco de todo lo que no supo cómo despedirse.", autor: "Rainer Maria Rilke" },
+        { texto: "Hay días en los que el corazón solo quiere sentarse a mirar lo que ya no es.", autor: "Alejandra Pizarnik" },
+        { texto: "La tristeza suave es una forma de recordar sin hacer ruido.", autor: "Sabines" }
     ];
 
     let frasesUsuario = JSON.parse(localStorage.getItem("melancolia")) || [];
@@ -172,7 +254,7 @@
     function aplicarAnimacion() {
         const elemento = document.getElementById("bloqueTexto");
         elemento.classList.remove("frase-animada");
-        void elemento.offsetWidth; // Forzar reinicio de la animación CSS
+        void elemento.offsetWidth; 
         elemento.classList.add("frase-animada");
     }
 
@@ -212,7 +294,7 @@
 
         do {
             indice = Math.floor(Math.random() * frasesMelancolia.length);
-            intentes++;
+            intentos++; 
         } while (frasesMelancolia[indice].autor === ultimoAutorMelancolia && intentos < 10 && frasesMelancolia.length > 1);
 
         const frase = frasesMelancolia[indice];
@@ -247,7 +329,6 @@
         }
     }
 
-    // Cambiado window.onload por DOMContentLoaded para consistencia con el proyecto
     document.addEventListener("DOMContentLoaded", function() {
         mostrarPrimeraFraseMelancolia();
     });
