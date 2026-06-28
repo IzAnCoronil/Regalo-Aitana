@@ -8,11 +8,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        /* Optimización de Scroll y Vista */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             background: linear-gradient(135deg, #fffbe0, #ffffff);
             color: #3a3a3a;
+            min-height: 100vh;
+            /* Control de scroll nativo y estabilidad horizontal */
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* NAV - Estructura unificada */
@@ -133,6 +143,20 @@
             transform: scale(1.05);
             background: #ff7a1f;
         }
+
+        /* Ajustes responsivos móviles */
+        @media (max-width: 600px) {
+            nav {
+                gap: 15px;
+                padding: 10px;
+            }
+            nav a {
+                font-size: 0.9em;
+            }
+            header {
+                padding-top: 160px;
+            }
+        }
     </style>
 </head>
 
@@ -169,9 +193,7 @@
     // 1. FRASES ORIGINALES (200)
     // -----------------------------
     const frasesAlegriaOriginal = [
-        // FRASE FIJA (TUYA)
         { texto: "Sigue dando guerra con su sonrisa, que al final acabará derrotando a la tristeza.", autor: "IzAn" },
-        // TUS FRASES
         { texto: "Cuando sonríes, hasta el mal humor pide vacaciones.", autor: "IzAn" },
         { texto: "Tienes una alegría tan contagiosa que debería venir con mascarilla obligatoria.", autor: "IzAn" },
         { texto: "Iluminas tanto que el sol se pone celoso.", autor: "IzAn" },
@@ -191,8 +213,6 @@
         { texto: "Tu alegría es tan fuerte que convierte cualquier día normal en un capítulo bonito.", autor: "IzAn" },
         { texto: "A veces sonríes tan sincero que hasta el silencio se siente acompañado.", autor: "IzAn" },
         { texto: "Tienes una forma de alegrarse que hace que la vida quiera imitarla.", autor: "IzAn" },
-
-        // HUMOR ELEGANTE
         { texto: "Piensa que la mejor forma de empezar el día es con una sonrisa, aunque sea pequeña.", autor: "Oscar Wilde" },
         { texto: "Cree que la risa es el paraguas perfecto para los días nublados.", autor: "Mark Twain" },
         { texto: "Siente que la alegría es un acto de rebeldía contra la rutina.", autor: "Charles Chaplin" },
@@ -202,8 +222,6 @@
         { texto: "Piensa que la felicidad no hace ruido, pero se nota en los detalles.", autor: "Mafalda" },
         { texto: "Cree que la alegría es un idioma que todos entienden, incluso en silencio.", autor: "Quino" },
         { texto: "Siente que reír con alguien es la forma más sencilla de hacerle sitio en tu vida.", autor: "Terry Pratchett" },
-
-        // ALEGRÍA TIERNA
         { texto: "Siente que hay días que se salvan solo porque alguien sonrió a tiempo.", autor: "Mario Benedetti" },
         { texto: "Piensa que la felicidad no siempre es grande, a veces cabe en un gesto pequeño.", autor: "Pablo Neruda" },
         { texto: "Cree que la alegría verdadera no grita, simplemente se queda.", autor: "Julio Cortázar" },
@@ -409,7 +427,7 @@
         const yaExiste = favoritos.some(f => f.frase === frase);
         
         if (!yaExiste) {
-            favoritos.push({ frase, autor });
+            favorites = favoritos.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
@@ -420,45 +438,6 @@
     window.onload = function() {
         mostrarPrimeraFrase();
     };
-        function nuevaFraseUniversal(idFrase, idAutor, mazoFrases) {
-    if (!primeraMostrada) {
-        // Si tienes una función inicial para la primera frase, la llamas aquí
-        mostrarPrimeraFrase(); 
-        return;
-    }
-
-    const fraseElemento = document.getElementById(idFrase);
-    const autorElemento = document.getElementById(idAutor);
-
-    // Si ya no quedan frases en el mazo, muestra el mensaje de cierre
-    if (mazoFrases.length === 0) {
-        fraseElemento.textContent = "Ya no hay más frases si quieres más sólo tienes que pedirlas";
-        autorElemento.textContent = "";
-        aplicarAnimacion(); // Quita esta línea si no usas animación en esa pantalla
-        return;
-    }
-
-    let indice;
-    let intentos = 0;
-
-    // Selecciona un índice aleatorio evitando repetir autor consecutivamente si es posible
-    do {
-        indice = Math.floor(Math.random() * mazoFrases.length);
-        intentos++;
-    } while (mazoFrases[indice].autor === ultimoAutor && intentos < 10 && mazoFrases.length > 1);
-
-    const frase = mazoFrases[indice];
-
-    // Renderiza la frase y el autor en el HTML
-    fraseElemento.textContent = frase.texto;
-    autorElemento.textContent = "— " + frase.autor;
-
-    // Actualiza el último autor mostrado y elimina la frase del mazo para que no se repita
-    ultimoAutor = frase.autor;
-    mazoFrases.splice(indice, 1);
-    
-    aplicarAnimacion(); // Quita esta línea si no usas animación en esa pantalla
-}
     </script>
 
 </body>
