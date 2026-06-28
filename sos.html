@@ -3,31 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>SOS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css">
 
     <style>
-        /* Fondo suave */
+        /* Ajustes de scroll global y rendimiento móvil */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background: linear-gradient(135deg, #fff9d9, #ffffff);
             color: #4a4a4a;
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Scroll fluido nativo en iOS */
         }
 
-        /* NAV */
+        /* NAV: Con scroll horizontal responsivo para que no se corten los links en pantallas pequeñas */
         nav {
             background: #ffe08a;
             padding: 12px 20px;
             position: fixed;
             top: 0;
-            width: 100%;
+            left: 0;
+            right: 0;
             display: flex;
-            justify-content: center;
-            gap: 35px;
+            justify-content: flex-start;
+            gap: 25px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        /* Oculta la barra de scroll en móviles para mantener la estética limpia */
+        nav::-webkit-scrollbar {
+            display: none;
         }
 
         nav a {
@@ -36,17 +53,19 @@
             font-weight: 600;
             font-size: 1.05em;
             transition: 0.25s ease;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent;
         }
 
         nav a:hover {
             color: #8a6500;
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
         /* HEADER */
         header {
             text-align: center;
-            padding: 110px 20px 20px; /* Ajustado por el menú fijo */
+            padding: 120px 20px 20px; /* Ajustado el padding superior por la barra fija */
         }
 
         header h1 {
@@ -65,11 +84,12 @@
             padding: 20px;
             max-width: 900px;
             margin: 0 auto 60px;
+            overscroll-behavior: contain; /* Controla el comportamiento elástico del scroll */
         }
 
         .bloque {
             background: #ffffff;
-            padding: 40px;
+            padding: 40px 25px;
             border-radius: 20px;
             margin-bottom: 35px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
@@ -123,7 +143,7 @@
 
         @keyframes respirar {
             0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(243, 140, 66, 0.3); }
-            40%, 60% { transform: scale(1.35); box-shadow: 0 0 35px rgba(243, 140, 66, 0.6); }
+            40%, 60% { transform: scale(1.25); box-shadow: 0 0 35px rgba(243, 140, 66, 0.6); }
         }
 
         @keyframes cambiarTexto {
@@ -131,6 +151,31 @@
             40% { content: "Mantén"; }
             60%, 80% { content: "Exhala"; }
             100% { content: "Inhala"; }
+        }
+
+        /* Media Queries para pantallas táctiles y móviles */
+        @media (max-width: 600px) {
+            nav {
+                justify-content: flex-start;
+                gap: 20px;
+                padding: 12px 15px;
+            }
+            header {
+                padding-top: 95px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            .bloque {
+                padding: 25px 15px;
+            }
+            .frase-unica {
+                font-size: 1.3em;
+            }
+            #respirar {
+                width: 150px;
+                height: 150px;
+            }
         }
     </style>
 </head>
