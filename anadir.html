@@ -8,12 +8,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
+        /* Optimización de Scroll y Vista */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             background: linear-gradient(135deg, #f3e8ff, #ffffff);
             color: #3a3a3a;
             min-height: 100vh;
+            /* Control de scroll nativo y estabilidad horizontal */
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* NAV - Estructura unificada y protegida contra desbordamientos */
@@ -149,6 +158,24 @@
             display: block;
             color: #c0392b;
             background: #fceae9;
+        }
+
+        /* Ajustes responsivos móviles */
+        @media (max-width: 600px) {
+            nav {
+                gap: 15px;
+                padding: 10px;
+            }
+            nav a {
+                font-size: 0.9em;
+            }
+            header {
+                padding-top: 160px;
+            }
+            .contenedor {
+                padding: 20px;
+                margin: 0 15px 40px;
+            }
         }
     </style>
 </head>
