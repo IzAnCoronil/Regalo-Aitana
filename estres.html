@@ -3,91 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <title>Estrés</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* Estilos específicos y armónicos para la sección de Estrés */
+        /* Optimización de Scroll y Vista Global */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
             background: linear-gradient(135deg, #eaf2ef, #ffffff); /* Fondo verde menta muy suave y relajante */
+            color: #3a3a3a;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* NAV - Barra unificada con scroll horizontal limpio */
+        nav {
+            background: #ffe08a;
+            padding: 14px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: flex-start;
+            gap: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav a {
+            color: #5a3e00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        nav a:hover {
+            color: #8a6200;
+            transform: scale(1.03);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 140px 20px 20px;
+            color: #3d5a4c;
         }
 
         header h1 {
+            font-size: 2.6em;
             color: #3d5a4c; /* Tono verde oscuro armónico */
+            margin: 0 0 10px 0;
+            font-weight: 600;
         }
 
         header p {
             color: #52796f;
+            font-size: 1.1em;
+            margin: 0;
+            opacity: 0.9;
         }
 
+        /* CONTENEDOR PRINCIPAL */
         .contenedor {
             background: white;
             padding: 40px;
-            margin: 20px auto 60px;
-            border-radius: 20px;
+            margin: 20px auto 80px;
+            border-radius: 24px;
             max-width: 750px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             text-align: center;
             box-sizing: border-box;
+            min-height: 280px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease;
         }
 
         .frase {
-            font-size: 1.4em;
+            font-size: 1.45em;
             color: #2c2c2c;
-            margin-bottom: 15px;
+            margin: 15px 0;
             font-weight: 500;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .autor {
             font-size: 1.05em;
-            color: #7a7a7a;
-            margin-bottom: 30px;
+            color: #757575;
+            margin: 0 0 30px 0;
             font-style: italic;
         }
 
+        /* BOTONES PRINCIPALES */
         button {
             display: inline-block;
-            padding: 14px 28px;
+            padding: 14px 36px;
             background: #6b9080;
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 50px;
             font-weight: 600;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.25s ease;
+            margin: 10px;
             font-size: 1.1em;
-            min-width: 180px;
+            box-shadow: 0 4px 14px rgba(107, 144, 128, 0.3);
+            -webkit-tap-highlight-color: transparent;
         }
 
         button:hover {
             background: #4f6d60;
-            transform: scale(1.04);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 144, 128, 0.4);
         }
 
+        button:active {
+            transform: translateY(1px);
+        }
+
+        /* BOTÓN FLOTANTE GUARDAR */
         .boton-guardar {
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: #6b9080;
-            color: white;
-            padding: 14px 22px;
+            background: #ffffff;
+            color: #ff5252;
+            padding: 12px 24px;
             border-radius: 50px;
-            font-size: 1.05em;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(107, 144, 128, 0.3);
-            transition: 0.2s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 82, 82, 0.15);
+            transition: all 0.25s ease;
             z-index: 99;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .boton-guardar:hover {
-            background: #4f6d60;
-            transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(107, 144, 128, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 82, 82, 0.18);
+            background: #fff5f5;
+        }
+
+        /* Ajustes Responsivos */
+        @media (max-width: 768px) {
+            nav {
+                gap: 20px;
+                padding: 14px 15px;
+            }
+            header {
+                padding-top: 110px;
+            }
+            header h1 {
+                font-size: 2.1em;
+            }
+            .contenedor {
+                margin: 15px 15px 100px;
+                padding: 35px 20px;
+                min-height: 250px;
+            }
+            .frase {
+                font-size: 1.25em;
+            }
+            button {
+                width: 100%;
+                max-width: 290px;
+            }
+            .boton-guardar {
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
         }
     </style>
 </head>
@@ -109,10 +224,9 @@
         <p>Frases para cuando tu cabeza va más rápido que tu día.</p>
     </header>
 
-    <div class="contenedor">
+    <div class="contenedor" id="tarjetaContenedor">
         <p id="fraseEstres" class="frase"></p>
         <p id="autorEstres" class="autor"></p>
-
         <button onclick="nuevaFraseEstres()">Otra frase</button>
     </div>
 
@@ -136,7 +250,7 @@
         { texto: "No tienes que entenderlo todo a la primera, tú no eres una máquina.", autor: "IzAn" },
         { texto: "Tu valor no baja porque un día no te dé la vida.", autor: "IzAn" },
         { texto: "Estás haciendo más de lo que crees, aunque tu mente no te lo reconozca.", autor: "IzAn" },
-        { texto: "No estás sola en esto, aunque tu estrés te haga sentir lo contrario.", autor: "IzAn" },
+        { texto: "No estás sola in esto, aunque tu estrés te haga sentir lo contrario.", autor: "IzAn" },
         { texto: "Tu esfuerzo vale, incluso cuando nadie lo ve.", autor: "IzAn" },
         { texto: "A veces te bloqueas, pero eso no borra todo lo que ya has conseguido.", autor: "IzAn" },
         { texto: "No tienes que ser perfecta, solo constante, y eso ya lo eres.", autor: "IzAn" },
@@ -231,7 +345,6 @@
         { texto: "Toma las cosas una por una; el desorden del mundo exterior se calma ordenando el mundo interior.", autor: "Anónimo" }
     ];
 
-    // Cargar frases añadidas por el usuario desde anadir.html
     let frasesUsuario = JSON.parse(localStorage.getItem("estres")) || [];
     let frasesEstres = frasesEstresOriginal.concat(frasesUsuario);
 
@@ -270,21 +383,34 @@
             return;
         }
 
-        let indice;
-        let intentos = 0;
+        const contenedor = document.getElementById("tarjetaContenedor");
+        contenedor.style.opacity = 0;
 
-        do {
-            indice = Math.floor(Math.random() * frasesEstres.length);
-            intentos++;
-        } while (frasesEstres[indice].autor === ultimoAutor && intentos < 10 && frasesEstres.length > 1);
+        setTimeout(() => {
+            let indice;
+            let intentos = 0;
 
-        const frase = frasesEstres[indice];
+            do {
+                indice = Math.floor(Math.random() * frasesEstres.length);
+                intentos++;
+            } while (frasesEstres[indice].autor === ultimoAutor && intentos < 10 && frasesEstres.length > 1);
 
-        document.getElementById("fraseEstres").textContent = frase.texto;
-        document.getElementById("autorEstres").textContent = "— " + frase.autor;
+            const frase = frasesEstres[indice];
 
-        ultimoAutor = frase.autor;
-        frasesEstres.splice(indice, 1);
+            document.getElementById("fraseEstres").textContent = frase.texto;
+            document.getElementById("autorEstres").textContent = "— " + frase.autor;
+
+            ultimoAutor = frase.autor;
+            frasesEstres.splice(indice, 1);
+            
+            contenedor.style.opacity = 1;
+
+            // Scroll suave calculando dinámicamente el centro del contenedor
+            const yOffset = -100; 
+            const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: yPosition, behavior: "smooth" });
+
+        }, 250);
     }
 
     function guardarFavorito(idFrase, idAutor) {
@@ -301,7 +427,6 @@
         const yaExiste = favoritos.some(f => f.frase === frase);
 
         if (!yaExiste) {
-            // CORREGIDO: se cambió 'favorites.push' por 'favoritos.push'
             favoritos.push({ frase, autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
@@ -312,6 +437,7 @@
 
     window.onload = function() {
         mostrarPrimeraFrase();
+        window.scrollTo({ top: 0 });
     };
     </script>
 
