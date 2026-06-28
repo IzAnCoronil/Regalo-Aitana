@@ -4,10 +4,92 @@
     <meta charset="UTF-8">
     <title>Inicio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* ESTILOS DE LAS PANTALLAS DE BIENVENIDA Y USO (EXCLUSIVOS DE INICIO) */
+        /* ESTILOS GENERALES DE LA WEB */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #dfe9f7, #ffffff);
+            color: #2c3e50;
+        }
+        /* NAV */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+        }
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+        header h1 {
+            font-size: 2.6em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        header p {
+            color: #4b5c6b;
+            font-size: 1.1em;
+        }
+        /* CONTENEDOR PRINCIPAL */
+        .contenedor {
+            background: white;
+            padding: 40px;
+            margin: 30px auto 60px;
+            border-radius: 20px;
+            max-width: 900px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .contenedor h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        .contenedor p {
+            color: #4b5c6b;
+            margin-bottom: 30px;
+        }
+        /* BOTONES GRANDES */
+        .boton {
+            display: inline-block;
+            padding: 18px 28px;
+            background: #ff8c42;
+            color: white;
+            border-radius: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+            margin: 12px;
+            font-size: 1.2em;
+            min-width: 180px;
+        }
+        .boton:hover {
+            background: #ff7a1f;
+            transform: scale(1.08);
+        }
+
+        /* ESTILOS DE LAS PANTALLAS DE BIENVENIDA Y USO */
         .capa-bienvenida {
             position: fixed;
             top: 0;
@@ -23,32 +105,28 @@
             padding: 30px;
             box-sizing: border-box;
             z-index: 2000;
-            overflow-y: auto; /* ARREGLADO: Activa el scroll vertical si el texto no cabe */
+            overflow-y: auto; /* CORRECCIÓN: Permite hacer scroll vertical si el contenido supera la pantalla */
         }
-        
         .cuadro-texto {
             max-width: 700px;
             background: white;
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin: auto; /* ARREGLADO: Mantiene el centrado correcto al hacer scroll */
+            margin: auto; /* CORRECCIÓN: Evita cortes visuales y mantiene el centrado correcto al desplazar */
         }
-        
         .cuadro-texto h2 {
             color: #5a3e00;
             font-size: 1.8em;
             margin-top: 0;
             margin-bottom: 20px;
         }
-        
         .cuadro-texto p {
             font-size: 1.1em;
             line-height: 1.6;
             color: #4a4a4a;
             margin-bottom: 0;
         }
-        
         .btn-interactivo {
             margin-top: 30px;
             padding: 14px 24px;
@@ -61,15 +139,9 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        
         .btn-interactivo:hover {
             background: #ff7a1f;
             transform: scale(1.05);
-        }
-
-        /* Bloqueamos el contenido web inicialmente por CSS para evitar parpadeos */
-        #contenido-web {
-            display: none;
         }
     </style>
 </head>
@@ -126,23 +198,24 @@
     </div>
 
     <script>
-        // Comprobación inmediata al cargar el DOM para gestionar la visualización de pantallas
-        document.addEventListener("DOMContentLoaded", function() {
-            if (localStorage.getItem("webVisitada") === "true") {
-                document.getElementById("contenido-web").style.display = "block";
-            } else {
-                document.getElementById("bienvenida").style.display = "flex";
-            }
-        });
+        // Comprobación inmediata antes de que carguen las imágenes o estilos pesados
+        if (localStorage.getItem("webVisitada") !== "true") {
+            // Es la primera vez: ocultamos la web y mostramos la bienvenida
+            document.getElementById("contenido-web").style.display = "none";
+            document.getElementById("bienvenida").style.display = "flex";
+        }
 
+        // Pasar de Bienvenida a Instrucciones de Uso
         function cerrarBienvenida() {
             document.getElementById("bienvenida").style.display = "none";
             document.getElementById("uso").style.display = "flex";
         }
 
+        // Finalizar introducción y guardar el estado para siempre
         function cerrarUso() {
             document.getElementById("uso").style.display = "none";
             document.getElementById("contenido-web").style.display = "block";
+            // Guardamos el token en el dispositivo
             localStorage.setItem("webVisitada", "true");
         }
     </script>
