@@ -62,12 +62,12 @@
             font-size: 1.1em;
         }
         
-        /* --- Sección Premium (Adaptada a la gama original) --- */
+        /* --- Sección Premium --- */
         .seccion-premium {
-            background: #4da3ff; /* Cambiado a azul para unificar con el Nav original */
+            background: #4da3ff;
             color: white;
             max-width: 840px;
-            margin: 140px auto -80px; /* Ajustado el margen superior para no pisar el nav fixed */
+            margin: 140px auto -80px;
             padding: 20px 30px;
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(77, 163, 255, 0.25);
@@ -226,7 +226,7 @@
             transform: scale(1.02);
         }
         
-        /* --- Sección de Guardar Canción (Adaptada a la Plantilla) --- */
+        /* --- Sección de Guardar Canción --- */
         .guardar-cancion {
             margin-top: 25px;
             display: flex;
@@ -248,7 +248,7 @@
             box-shadow: 0 0 8px rgba(77, 163, 255, 0.15);
         }
         #cancionGuardada {
-            color: #2ec4b6; /* Unificado con el color verde azulado de completados */
+            color: #2ec4b6;
             font-weight: 600;
             margin-top: 5px;
         }
@@ -311,7 +311,7 @@
         /* --- Estilos de Adaptabilidad Móvil --- */
         @media (max-width: 768px) {
             header {
-                padding: 180px 20px 20px; /* Añadido espacio extra por la barra superior en móviles */
+                padding: 180px 20px 20px;
             }
             .seccion-premium { 
                 margin: 70px 15px -40px;
@@ -397,16 +397,138 @@
         <div class="calendario-grid" id="gridCalendario"></div>
     </section>
 
-</body>
-</html>
-
     <script>
-        // Array de ejemplo vacío para las misiones
-        const misionesLista = ["Misión ejemplo 1", "Misión ejemplo 2", "Misión ejemplo 3"];
+        // Diccionario de festivos en España con sus retos temáticos dedicados (Formato: "Mes_Dia", donde Enero es 0 y Diciembre es 11)
+        const festivosEspana = {
+            "0_1": "✨ ¡Año Nuevo! Escoge la primera canción que quieres escuchar para decretar que este sea un año increíble y lleno de éxitos.",
+            "0_5": "👑 ¡Noche de Reyes! Una canción mágica, de fantasía o de una película infantil que te devuelva la ilusión de cuando eras niño.",
+            "0_6": "🎁 ¡Día de Reyes! Una canción que haya sido un absoluto 'regazo' musical para tus oídos cuando la descubriste.",
+            "3_23": "🌹 ¡Sant Jordi / Día del Libro! Una canción que tenga una letra tan poética y bonita que parezca sacada de una novela literaria.",
+            "4_1": "🛠️ ¡Día del Trabajador! Una canción enérgica sobre el esfuerzo, la rutina diaria o sobre estar motivado para cumplir tus metas.",
+            "5_21": "🎵 ¡Día de la Música! Hazle honores al día compartiendo la canción que consideres una obra de arte insuperable en producción.",
+            "6_25": "⛪ ¡Santiago Apóstol! Una canción inspiradora y rítmica ideal para hacer un largo viaje por carretera o caminar.",
+            "7_15": "🎉 ¡Asunción de la Virgen! Una canción mítica e infaltable de las verbenas o fiestas de pueblo de tu zona en verano.",
+            "9_12": "🇪🇸 ¡Fiesta Nacional de España! Una canción legendaria del pop, rock o indie en español de las últimas décadas.",
+            "10_31": "🎃 ¡Noche de Halloween! Una canción misteriosa, oscura, tétrica o que pertenezca a la banda sonora de una película de terror.",
+            "11_1": "🕯️ ¡Día de Todos los Santos! Una canción profunda, nostálgica o emotiva que dediques al recuerdo de alguien que ya no está.",
+            "11_6": "📜 ¡Día de la Constitución! Una canción con un potente mensaje social que hable sobre la libertad, la justicia o los derechos humanos.",
+            "11_8": "🕊️ ¡Día de la Inmaculada! Una canción coral o balada acústica que destaque por tener unas armonías vocales limpias y perfectas.",
+            "11_24": "🎄 ¡Nochebuena! Tu villancico o canción navideña favorita de todos los tiempos para ambientar la cena familiar.",
+            "11_25": "🎅 ¡Navidad! El villancico moderno o la canción pop navideña que secretamente no soportas o que te encanta cantar a gritos.",
+            "11_31": "🍇 ¡Fin de Año! Una canción súper bailable y fiestera que resuma la energía con la que quieres despedir los últimos minutos de este año."
+        };
+
+        // Lista consecutiva de 365 misiones musicales variadas
+        const misionesLista = [
+            "Tu canción favorita del momento", "Una canción que te recuerde a tu infancia", "Una canción con un color en el título",
+            "Una canción para cantar a todo pulmón en el coche", "Una canción que te ponga de buen humor al instante", "Una canción de tu artista favorito",
+            "Una canción que te sepa a verano", "Una canción que descubriste gracias a un amigo", "Una canción instrumental ideal para concentrarse",
+            "Una canción que tenga una coreografía famosa", "Una canción que salió el año en que naciste", "Una canción que te recuerde a un viaje especial",
+            "Una canción de un género musical que no suelas escuchar", "Una canción para escuchar en un día lluvioso", "Una canción con un gran solo de guitarra",
+            "Una canción que aparezca en tu película favorita", "Una canción que te dé motivación para entrenar", "Una canción con más de 20 años que te encante",
+            "Una canción de un artista de tu país", "Una canción que consideres una obra maestra oculta", "Una canción con una letra que te haga pensar",
+            "Una canción que te recuerde a una persona especial", "Una canción para relajarse antes de dormir", "Una canción que tenga un videoclip increíble",
+            "Una canción que use un instrumento poco común", "Una canción que sea un 'placer culposo'", "Una canción que suene genial en directo (Live)",
+            "Una canción con un ritmo muy pegadizo", "Una canción que te ponga nostálgico", "Una versión (cover) mejor que la original",
+            "Una canción con un número en su título", "Una canción que te recuerde a tu mejor amigo", "Una canción que hable sobre el espacio o las estrellas",
+            "Una canción que tenga un silbido pegadizo", "Una canción con la que te sientas identificado hoy", "Una canción de una serie de televisión",
+            "Una canción para bailar solo en tu habitación", "Una canción que tenga un cambio de ritmo inesperado", "Una canción de un artista que tenga menos de 20 años",
+            "Una canción que te ayude a calmar la ansiedad", "Una canción cuyo título empiece por la primera letra de tu nombre", "Una canción de un grupo que ya se haya separado",
+            "Una canción que tenga un sample musical de otra canción antigua", "Una canción para una cena tranquila", "Una canción que tenga un bajo espectacular",
+            "Una canción acústica muy íntima", "Una canción que sea muy larga (más de 6 minutos)", "Una canción que te dé ganas de cambiar el mundo",
+            "Una canción que te recuerde a una época escolar", "Una canción de un artista que use un pseudónimo", "Una canción alegre con una letra triste",
+            "Una canción que asocies con la naturaleza", "Una canción que tenga aplausos en el ritmo", "Una canción que te haga reír o sonreír por su letra",
+            "Una canción de música electrónica que te mueva", "Una canción de hip-hop con rimas increíbles", "Una canción de un artista que use sombrero",
+            "Una canción inspirada en un libro", "Una canción que tenga el nombre de una ciudad en el título", "Una canción interpretada por un dúo perfecto",
+            "Una canción ideal para un viaje por carretera", "Una canción que te haga sentir poderoso/a", "Una canción de un videojuego",
+            "Una canción grabada antes de 1980", "Una canción que tenga piano como instrumento principal", "Una canción que escuches cuando necesitas desahogarte",
+            "Una canción que te recuerde a una tarde de domingo", "Una canción con un título de una sola palabra", "Una canción que tenga videoclip animado",
+            "Una canción de un artista que descubriste este año", "Una canción para caminar por la calle sintiéndote el protagonista", "Una canción que tenga un grito épico",
+            "Una canción que use sintetizadores retro", "Una canción que hable sobre el tiempo", "Una canción que use sonidos de la naturaleza (lluvia, pájaros...)",
+            "Una canción de un artista independiente", "Una canción para cocinar relajado", "Una canción con un estribillo súper explosivo",
+            "Una canción de indie rock", "Una canción que tenga un ritmo lento pero pesado", "Una canción de jazz que te transporte a otra época",
+            "Una canción que hable de un nuevo comienzo", "Una canción que asocies con el otoño", "Una canción interpretada en un idioma que no entiendas",
+            "Una canción que te haga sentir melancolía del futuro", "Una canción de tu infancia que volviste a descubrir hace poco", "Una canción con coros masivos épicos",
+            "Una canción de un artista fallecido que dejó un gran legado", "Una canción que use efectos de voz creativos", "Una canción que te recuerde a tus padres",
+            "Una canción perfecta para el amanecer", "Una canción que tenga un fade-out clásico al final", "Una canción con un ritmo tropical",
+            "Una canción de una obra de teatro musical", "Una canción pop perfecta de tres minutos", "Una canción con instrumentos de viento metal poderosos",
+            "Una canción inspirada en el espacio", "Una canción de una banda sonora de anime o dibujos animados", "Una canción para desconectar del teléfono móvil",
+            "Una canción sobre la amistad verdadera", "Una canción con líneas de guitarra funk pegadizas", "Una canción que te recuerde el mar o la playa",
+            "Una canción que tenga un título larguísimo", "Una canción para escuchar con auriculares a oscuras", "Una canción sobre superar un obstáculo",
+            "Una canción de un álbum que consideres perfecto de principio a fin", "Una canción que tenga el nombre de un animal", "Una canción de rock clásico incombustible",
+            "Una canción que use la guitarra acústica como motor", "Una canción que te recuerde a tu mascota", "Una canción que use campanas en su percusión",
+            "Una canción sobre madurar o crecer", "Una canción con una atmósfera de ensueño (Dream pop)", "Una canción para un día de playa",
+            "Una canción con un ritmo de batería inolvidable", "Una canción que te dé escalofríos por la voz del cantante", "Una canción de un artista infravalorado",
+            "Una canción que pones cuando estás feliz y quieres más energía", "Una canción que use arreglos de cuerda (violines, chelos...)", "Una canción de fiesta sin rodeos",
+            "Una canción sobre la libertad de expresión", "Una canción con un silbido inolvidable", "Una canción que te haga pensar en el invierno",
+            "Una canción de Lo-Fi para relajarse del todo", "Una canción que tenga un nombre de mujer en el título", "Una canción que tenga un nombre de hombre en el título",
+            "Una canción que te haga bailar aunque estés sentado/a", "Una canción con arreglos de viento madera (flauta, clarinete...)", "Una canción inspirada en una historia real",
+            "Una canción que suene de fondo en tu cafetería ideal", "Una canción de R&B suave", "Una canción para motivarte un lunes por la mañana",
+            "Una canción que use loops ingeniosos", "Una canción sobre viajar al pasado", "Una canción que asocies con tu hogar",
+            "Una canción de metal o punk con mucha distorsión", "Una canción de un cantautor que cuente una historia detallada", "Una canción sobre la Luna",
+            "Una canción que empiece directamente con la voz, sin introducción", "Una canción que termine de golpe, de manera abrupta", "Una canción que suene a misterio o detectives",
+            "Una canción de pop psicodélico", "Una canción que te haga sentir flotando", "Una canción que asocies con la primavera",
+            "Una canción de un artista escandinavo", "Una canción de un artista latinoamericano emblemático", "Una canción con un coro infantil",
+            "Una canción grabada en una toma en directo en el estudio", "Una canción que use elementos de música clásica", "Una canción para correr o hacer cardio",
+            "Una canción que te recuerde a un festival o concierto", "Una canción de un grupo que lleve activo más de 30 años", "Una canción sobre el destino",
+            "Una canción que ponga todo el mundo pero a ti te siga encantando", "Una canción que tenga un breakbeat potente", "Una canción para ver el atardecer",
+            "Una canción que hable del fuego o el calor", "Una canción que hable sobre el hielo o el frío", "Una canción con una línea de bajo distorsionada",
+            "Una canción que te enseñara alguien de tu familia", "Una canción de un cortometraje", "Una canción con una producción impecable y limpia",
+            "Una canción que suene como el futuro lejano", "Una canción que te haga sentir nostálgico por los años 90", "Una canción que te haga sentir nostálgico por los 2000",
+            "Una canción de folk tradicional moderna", "Una canción para leer un libro", "Una canción que te suba la autoestima al instante",
+            "Una canción que tenga preguntas en su letra", "Una canción de un artista francés", "Una canción con ritmos de sintetizador ochentero brillante",
+            "Una canción sobre las segundas oportunidades", "Una canción que te haga pensar en una noche urbana", "Una canción con un ritmo de palmas constante",
+            "Una canción de reggaetón antiguo clásica", "Una canción con un solo de sintetizador loco", "Una canción que use samples de diálogos de películas",
+            "Una canción que hable sobre las mentiras", "Una canción sobre la verdad absoluta", "Una canción que sea un poema musicalizado",
+            "Una canción de un artista de Asia", "Una canción de un artista de África", "Una canción de un artista de Oceanía",
+            "Una canción instrumental de guitarra española", "Una canción pesada para sacar frustración", "Una canción de un álbum conceptual",
+            "Una canción para un día de nieve", "Una canción que te haga recordar tu primer concierto", "Una canción de un grupo con nombre divertido",
+            "Una canción que hable sobre la suerte", "Una canción que use guitarra con efecto 'wah-wah'", "Una canción sobre los sueños y el subconsciente",
+            "Una canción con una intro que dure más de un minuto", "Una canción pop super pegadiza europea (no británica)", "Una canción sobre la distancia",
+            "Una canción sobre volver a casa", "Una canción que tenga sonidos de coches o tráfico", "Una canción grabada al aire libre",
+            "Una canción sobre resistir ante las dificultades", "Una canción que asocies con un aroma en especial", "Una canción con cambios armónicos brillantes",
+            "Una canción que use una caja de ritmos clásica (como la TR-808)", "Una canción que hable sobre el dinero", "Una canción que te inspire arte o pintura",
+            "Una canción que use texturas de sonido ambientales (Ambient)", "Una canción de garage rock sucio y energético", "Una canción que ponga de fondo en un desfile de moda",
+            "Una canción sobre secretos ocultos", "Una canción que tenga el título en dos idiomas", "Una canción de un artista canadiense",
+            "Una canción con ritmo ska para saltar", "Una canción que use pandereta de forma muy notable", "Una canción melódica sobre el desierto",
+            "Una canción que hable del sol", "Una canción que hable de la lluvia", "Una canción con un final súper caótico",
+            "Una canción para mirar por la ventana del autobús", "Una canción que te haga sentir en una película de ciencia ficción", "Una canción de pop alternativo",
+            "Una canción que hable sobre la electricidad o energía", "Una canción sobre el reflejo en el espejo", "Una canción grabada en baja fidelidad a propósito (Lo-fi rock)",
+            "Una canción de surf rock con mucha reverberación", "Una canción sobre mitología o leyendas antiguos", "Una canción con un solo de batería corto pero técnico",
+            "Una canción con un estribillo de una sola palabra repetida", "Una canción de synthwave para conducir de noche", "Una canción que asocies con la madrugadas",
+            "Una canción que use un órgano Hammond", "Una canción que hable sobre puentes", "Una canción de folk barroco elegante",
+            "Una canción que te haga sentir calma absoluta", "Una canción sobre mapas o geografía", "Una canción con una letra surrealista o abstracta",
+            "Una canción que use campanas tubulares", "Una canción que use aplausos grabados en grupo", "Una canción sobre trenes o estaciones",
+            "Una canción de Europop noventera", "Una canción que asocies con tu celebración de cumpleaños", "Una canción que use acordes menores oscuros",
+            "Una canción que use acordes mayores súper brillantes", "Una canción de disco music setentera para quemar la pista", "Una canción sobre sombras",
+            "Una canción con un riff de guitarra ultra reconocible", "Una canción de post-punk", "Una canción con una producción minimalista (pocas pistas)",
+            "Una canción que use el silencio como recurso musical", "Una canción de un artista de Italia", "Una canción que hable sobre la velocidad",
+            "Una canción con una sección de vientos funk", "Una canción de folk acústico americano", "Una canción que use distorsión en la voz",
+            "Una canción sobre recuerdos que se desvanecen", "Una canción de trip-hop británico", "Una canción con una estructura no unconventional (sin estribillo claro)",
+            "Una canción pop con influencias de música folk tradicional", "Una canción sobre la constancia y la paciencia", "Una canción con una outro instrumental hermosa",
+            "Una canción sobre horizontes lejanos", "Una canción que tenga un eco marcado en las voces", "Una canción que suene pesada pero calmada a la vez",
+            "Una canción de un artista de Australia", "Una canción sobre islas o el aislamiento", "Una canción con una percusión latina rica",
+            "Una canción pop que mereció ser número uno mundial", "Una canción de britpop noventero", "Una canción que hable de estrellas fugaces",
+            "Una canción con un arpegio de guitarra hipnotizante", "Una canción que use samples de noticias o radio reales", "Una canción de soul clásico reconfortante",
+            "Una canción para un día en la montaña", "Una canción que te inspire a escribir o crear algo", "Una canción con un tempo que acelera al final",
+            "Una canción sobre ciudades olvidadas", "Una canción de un artista de Portugal", "Una canción con un fraseo vocal increíblemente rápido",
+            "Una canción que use un ukelele alegre", "Una canción que hable sobre tormentas eléctricas", "Una canción sobre el oro o tesoros escondidos",
+            "Una canción de rock alternativo de los 90", "Una canción pop moderna hiper-procesada", "Una canción con un Groove de bajo irresistible",
+            "Una canción sobre la lealtad", "Una canción que tenga sonido de campanas de iglesia", "Una canción de dream pop flotante",
+            "Una canción sobre la juventud eterna", "Una canción para caminar por el campo", "Una canción que te recuerde a un profesor o mentor",
+            "Una canción de blues antiguo con guitarra acústica y armónica", "Una canción pop francesa elegante", "Una canción que use un sitar o sonidos orientales",
+            "Una canción sobre nubes o el cielo despejado", "Una canción para ordenar tu cuarto a máxima velocidad", "Una canción con una interpretación vocal desgarradora",
+            "Una canción sobre laberintos", "Una canción que use arpa como instrumento principal", "Una canción con un ritmo de marcha militar o épico",
+            "Una canción sobre el fin del mundo tratado con humor", "Una canción de surf pop playero", "Una canción que hable sobre barcos o el océano profundo",
+            "Una canción de electroswing divertida", "Una canción sobre volar", "Una canción que hable de castillos o la época medieval",
+            "Una canción pop con un mensaje profundamente político", "Una canción de math rock con ritmos matemáticos complejos", "Una canción sobre imanes o atracción",
+            "Una canción que te haga recordar un juego de la infancia", "Una canción grabada en una sola toma acústica en directo", "Una canción de rock de garaje directo",
+            "Una canción sobre la gravedad o el espacio exterior", "Una canción con un clímax instrumental arrollador", "Una canción para despedir el día antes de medianoche"
+        ];
         
         const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         const diasPorMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; 
-        let mesActualIndex = 5; 
+        let mesActualIndex = 5; // Junio por defecto
         let diaSeleccionadoGlobal = 28; 
         const anioActual = 2026;
 
@@ -418,13 +540,21 @@
             return contador + dia;
         }
 
-        const diaAnioInicioRetos = calcularDiaDelAnio(5, 28); 
+        const diaAnioInicioRetos = calcularDiaDelAnio(5, 28); // 28 de Junio
 
         function obtenerMisionExacta(mes, dia) {
+            // Comprobación prioritaria: ¿Es un festivo personalizado?
+            const claveFestivo = `${mes}_${dia}`;
+            if (festivosEspana[claveFestivo]) {
+                return festivosEspana[claveFestivo];
+            }
+
+            // Si no es festivo, se calcula el reto correlativo del año
             if (misionesLista.length === 0) return "Añade tus misiones al código.";
             const diaAnioActual = calcularDiaDelAnio(mes, dia);
             let diferencia = diaAnioActual - diaAnioInicioRetos;
             if (diferencia < 0) diferencia = 365 + diferencia;
+            
             return misionesLista[diferencia % misionesLista.length];
         }
 
