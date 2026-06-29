@@ -175,7 +175,15 @@
             box-shadow: 0 6px 20px rgba(123, 44, 191, 0.45);
         }
 
-        .contenedor button:active {
+        .contenedor button:disabled {
+            background: #23232f;
+            color: #4b5563;
+            box-shadow: none;
+            cursor: not-allowed;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .contenedor button:active:not(:disabled) {
             transform: translateY(1px);
         }
 
@@ -239,9 +247,13 @@
             button.boton-guardar {
                 width: auto;
                 bottom: 20px;
-                right: 20px;
+                right: 50%;
+                transform: translateX(50%);
                 padding: 10px 20px;
                 font-size: 0.95em;
+            }
+            button.boton-guardar:hover {
+                transform: translateX(50%) scale(1.02);
             }
         }
     </style>
@@ -264,16 +276,16 @@
         <p>Frases que duelen suave, como un recuerdo que se queda a medias.</p>
     </header>
 
-    <div class="contenedor">
+    <div class="contenedor" id="tarjetaContenedor">
         <div id="bloqueTexto">
-            <p id="fraseMelancolia" class="frase"></p>
+            <p id="fraseMelancolia" class="frase">Iniciando tus recuerdos...</p>
             <p id="autorMelancolia" class="autor"></p>
         </div>
 
-        <button onclick="nuevaFraseMelancolia()">Otra frase</button>
+        <button id="btnSiguiente" onclick="nuevaFraseMelancolia()">Otra frase</button>
     </div>
 
-    <button class="boton-guardar" onclick="guardarFavorito('fraseMelancolia','autorMelancolia')">
+    <button id="btnGuardar" class="boton-guardar" onclick="guardarFavorito('fraseMelancolia','autorMelancolia')">
         ❤️ Guardar
     </button>
 
@@ -295,90 +307,181 @@
         { texto: "La melancolía es un hilo que une lo que fue con lo que nunca será.", autor: "IzAn" },
         { texto: "Hay tardes que se quedan atrapadas en una luz que ya no existe.", autor: "Mario Benedetti" },
         { texto: "El tiempo no borra, solo difumina los bordes del recuerdo.", autor: "Pablo Neruda" },
-        { texto: "Hay names que ya no se dicen, pero que aún se escapan en los pensamientos.", autor: "Julio Cortázar" },
+        { texto: "Hay nombres que ya no se dicen, pero que aún se escapan en los pensamientos.", autor: "Julio Cortázar" },
         { texto: "La melancolía es el eco de todo lo que no supo cómo despedirse.", autor: "Rainer Maria Rilke" },
         { texto: "Hay días en los que el corazón solo quiere sentarse a mirar lo que ya no es.", autor: "Alejandra Pizarnik" },
         { texto: "La tristeza suave es una forma de recordar sin hacer ruido.", autor: "Sabines" }
     ];
 
-    let frasesUsuario = JSON.parse(localStorage.getItem("melancolia")) || [];
-    frasesUsuario = frasesUsuario.filter(f => f && f.texto && f.autor);
-    let frasesMelancolia = frasesMelancoliaOriginal.concat(frasesUsuario);
-
+    // Variables globales de entorno y estado
+    let todasLasFrases = [];
+    let frasesMelancolia = [];
     let ultimoAutorMelancolia = null;
-    let primeraMostrada = false;
+    let fraseActualMostrada = null; 
 
+    /**
+     * Sincroniza las colecciones locales y aplica exclusión por descarte permanente
+     */
+    function inicializarDatos() {
+        let frasesUsuarioRaw = JSON.parse(localStorage.getItem("melancolia")) || [];
+        let frasesUsuarioLimpias = frasesUsuarioRaw.filter(item => 
+            item && typeof item === 'object' && item.texto && item.autor
+        );
+
+        todasLasFrases = [...frasesMelancoliaOriginal, ...frasesUsuarioLimpias];
+
+        // Lectura del historial permanente de exclusión
+        let vistas = JSON.parse(localStorage.getItem("melancolia_vistas")) || [];
+
+        // Filtro estricto para eliminar las frases ya consumidas definitivamente
+        frasesMelancolia = todasLasFrases.filter(frase => 
+            !vistas.some(v => v.texto.trim() === frase.texto.trim() && v.autor.trim() === frase.autor.trim())
+        );
+    }
+
+    /**
+     * Lanza la animación controlando el reflow del DOM mediante lectura de propiedades
+     */
     function aplicarAnimacion() {
         const elemento = document.getElementById("bloqueTexto");
+        if (!elemento) return;
+        
         elemento.classList.remove("frase-animada");
         void elemento.offsetWidth; 
         elemento.classList.add("frase-animada");
     }
 
+    /**
+     * Transfiere una frase de manera irreversible al almacén definitivo de descartes
+     */
+    function registrarFraseVista(frase) {
+        if (!frase) return;
+        let vistas = JSON.parse(localStorage.getItem("melancolia_vistas")) || [];
+        if (!vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)) {
+            vistas.push(frase);
+            localStorage.setItem("melancolia_vistas", JSON.stringify(vistas));
+        }
+    }
+
+    /**
+     * Maneja de manera segura las actualizaciones de renderizado en el árbol DOM
+     */
+    function pintarEnPantalla(texto, autor, esMensajeFinal = false) {
+        const txtEl = document.getElementById("fraseMelancolia");
+        const autEl = document.getElementById("autorMelancolia");
+        const btnNext = document.getElementById("btnSiguiente");
+        const btnSave = document.getElementById("btnGuardar");
+
+        if (txtEl) txtEl.textContent = texto;
+        if (autEl) autEl.textContent = esMensajeFinal ? "" : "— " + autor;
+
+        if (esMensajeFinal) {
+            if (btnNext) {
+                btnNext.disabled = true;
+                btnNext.textContent = "Fin del trayecto";
+            }
+            if (btnSave) btnSave.style.display = "none";
+        } else {
+            if (btnSave) btnSave.style.display = "flex";
+        }
+        aplicarAnimacion();
+    }
+
+    /**
+     * Carga y asegura el renderizado de la primera frase sin alterar la pila ante recargas
+     */
     function mostrarPrimeraFraseMelancolia() {
+        inicializarDatos();
+
         if (frasesMelancolia.length === 0) {
-            document.getElementById("fraseMelancolia").textContent = "Añade frases para comenzar.";
-            document.getElementById("autorMelancolia").textContent = "";
+            mostrarMensajeFinal();
             return;
         }
-        
-        const primera = frasesMelancolia[0];
-        document.getElementById("fraseMelancolia").textContent = primera.texto;
-        document.getElementById("autorMelancolia").textContent = "— " + primera.autor;
-        
-        ultimoAutorMelancolia = primera.autor;
-        frasesMelancolia.splice(0, 1);
-        primeraMostrada = true;
-        aplicarAnimacion();
+
+        // Muestra la primera entrada disponible respetando los re-frescos de F5
+        let seleccionada = frasesMelancolia[0];
+
+        fraseActualMostrada = seleccionada; // Resguardado en el limbo temporal
+        ultimoAutorMelancolia = seleccionada.autor;
+        pintarEnPantalla(seleccionada.texto, seleccionada.autor);
     }
 
+    /**
+     * Elimina permanentemente la frase anterior y selecciona un nuevo nodo aleatorio sin repetición de autor directo
+     */
     function nuevaFraseMelancolia() {
-        if (!primeraMostrada) {
-            mostrarPrimeraFraseMelancolia();
-            return;
+        // Al pulsar el botón, quemamos de forma definitiva en localStorage la frase que estaba visible
+        if (fraseActualMostrada) {
+            registrarFraseVista(fraseActualMostrada);
         }
+
+        // Re-sincronizar arrays para trabajar sobre la lista limpia actualizada
+        inicializarDatos();
 
         if (frasesMelancolia.length === 0) {
-            document.getElementById("fraseMelancolia").textContent =
-                "Hoy ya no hay más frases, pero tu melancolía sigue escribiendo las suyas en silencio.";
-            document.getElementById("autorMelancolia").textContent = "";
-            aplicarAnimacion();
+            mostrarMensajeFinal();
             return;
         }
 
-        let indice;
+        let elegidoIdx = -1;
         let intentos = 0;
+        const maxIntentos = 15;
 
-        do {
-            indice = Math.floor(Math.random() * frasesMelancolia.length);
-            intentos++; 
-        } while (frasesMelancolia[indice].autor === ultimoAutorMelancolia && intentos < 10 && frasesMelancolia.length > 1);
+        while (intentos < maxIntentos) {
+            let randomIdx = Math.floor(Math.random() * frasesMelancolia.length);
+            let candidata = frasesMelancolia[randomIdx];
 
-        const frase = frasesMelancolia[indice];
+            if (candidata.autor !== ultimoAutorMelancolia || frasesMelancolia.length === 1) {
+                elegidoIdx = randomIdx;
+                break;
+            }
+            intentos++;
+        }
 
-        document.getElementById("fraseMelancolia").textContent = frase.texto;
-        document.getElementById("autorMelancolia").textContent = "— " + frase.autor;
+        if (elegidoIdx === -1) elegidoIdx = 0;
 
-        ultimoAutorMelancolia = frase.autor;
-        frasesMelancolia.splice(indice, 1);
-        aplicarAnimacion();
+        const fraseFinal = frasesMelancolia[elegidoIdx];
+        fraseActualMostrada = fraseFinal; // Asignación de la nueva frase en ventana al limbo
+        ultimoAutorMelancolia = fraseFinal.autor;
+
+        pintarEnPantalla(fraseFinal.texto, fraseFinal.autor);
+
+        // Desplazamiento sutil con scroll inteligente adaptado
+        const contenedor = document.getElementById("tarjetaContenedor");
+        if (contenedor) {
+            const yOffset = -100; 
+            const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: yPosition, behavior: "smooth" });
+        }
     }
 
+    /**
+     * Renderiza el estado terminal cuando no quedan frases libres
+     */
+    function mostrarMensajeFinal() {
+        fraseActualMostrada = null;
+        pintarEnPantalla("Hoy ya no hay más frases, pero tu melancolía sigue escribiendo las suyas en silencio. ❤️", "", true);
+    }
+
+    /**
+     * Agrega elementos a la colección cruzada de Favoritos de la app general
+     */
     function guardarFavorito(idFrase, idAutor) {
-        const frase = document.getElementById(idFrase).textContent;
-        let autor = document.getElementById(idAutor).textContent;
+        const txtEl = document.getElementById(idFrase);
+        const autEl = document.getElementById(idAutor);
+        
+        if (!txtEl || !autEl) return;
 
-        if (!frase || frase.includes("Hoy ya no hay más frases") || frase === "Añade frases para comenzar.") {
-            return;
-        }
+        const frase = txtEl.textContent.trim();
+        let autor = autEl.textContent.trim().replace(/^—\s*/, "");
 
-        autor = autor.replace("— ", "");
+        if (!frase || frase.startsWith("Hoy ya no hay más frases") || frase.startsWith("Iniciando tus recuerdos")) return;
 
         let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-        const yaExiste = favoritos.some(f => f.frase === frase);
-
+        const yaExiste = favoritos.some(f => f.frase.trim() === frase);
+        
         if (!yaExiste) {
-            favoritos.push({ frase, autor });
+            favoritos.push({ frase: frase, autor: autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
@@ -386,8 +489,10 @@
         }
     }
 
+    // Inicialización al vuelo del ciclo de vida
     document.addEventListener("DOMContentLoaded", function() {
         mostrarPrimeraFraseMelancolia();
+        window.scrollTo({ top: 0 });
     });
     </script>
 
