@@ -321,7 +321,7 @@
         { texto: "El camino más largo comienza con un solo paso.", autor: "Lao Tsé" },
         { texto: "No hay nada imposible para quien se atreve.", autor: "Alejandro Magno" },
         { texto: "La energía y la persistencia conquistan todas las cosas.", autor: "Benjamin Franklin" },
-        { xtexto: "La calma es un superpoder.", autor: "Eckhart Tolle" },
+        { texto: "La calma es un superpoder.", autor: "Eckhart Tolle" },
         { texto: "Tu presente no tiene que definir tu futuro.", autor: "Tony Robbins" },
         { texto: "Las dificultades preparan a menudo a personas comunes para destinos extraordinarios.", autor: "C. S. Lewis" },
         { texto: "Todo gran sueño comienza con un soñador.", autor: "Harriet Tubman" },
@@ -378,10 +378,10 @@
         // Fusión completa
         todasLasFrases = [...frasesAlegriaOriginal, ...frasesUsuarioLimpias];
 
-        // Lectura de descartes históricos
-        let vistas = JSON.parse(localStorage.getItem("alegria_vistas")) || [];
+        // CAMBIO CRÍTICO: Ahora usamos sessionStorage para que no se queden bloqueadas al recargar
+        let vistas = JSON.parse(sessionStorage.getItem("alegria_vistas")) || [];
 
-        // Filtrado de no repetición permanente
+        // Filtrado de no repetición de sesión activa
         frasesAlegria = todasLasFrases.filter(frase => 
             !vistas.some(v => v.texto.trim() === frase.texto.trim() && v.autor.trim() === frase.autor.trim())
         );
@@ -400,13 +400,14 @@
     }
 
     /**
-     * Guarda la frase visualizada inmediatamente en memoria local y sesión activa
+     * Guarda la frase visualizada inmediatamente en memoria de sesión activa
      */
     function registrarFraseVista(frase) {
-        let vistas = JSON.parse(localStorage.getItem("alegria_vistas")) || [];
+        // CAMBIO CRÍTICO: Guardamos en sessionStorage en lugar de localStorage
+        let vistas = JSON.parse(sessionStorage.getItem("alegria_vistas")) || [];
         if (!vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)) {
             vistas.push(frase);
-            localStorage.setItem("alegria_vistas", JSON.stringify(vistas));
+            sessionStorage.setItem("alegria_vistas", JSON.stringify(vistas));
         }
         // Remover del array en ejecución de la sesión activa
         frasesAlegria = frasesAlegria.filter(f => f.texto !== frase.texto || f.autor !== frase.autor);
@@ -437,7 +438,7 @@
     }
 
     /**
-     * Busca y presenta la frase inicial requerida por el flujo
+     * Busca y presents la frase inicial requerida por el flujo
      */
     function mostrarPrimeraFrase() {
         inicializarDatos();
