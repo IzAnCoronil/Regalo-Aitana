@@ -73,7 +73,7 @@
             margin-top: 0;
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        /* CONTENEDOR PRINCIPAL Y CARRUSEL */
         .lista {
             padding: 20px;
             max-width: 800px;
@@ -114,8 +114,24 @@
             font-style: italic;
         }
 
+        /* Animación para el cambio de frases del carrusel */
+        .frase-animada {
+            animation: fadeInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* BOTONES */
-        .borrar {
+        .borrar, .siguiente-btn {
             background: #fff0f2;
             color: #ff4f7a;
             border: 1px solid #ffccd5;
@@ -127,11 +143,28 @@
             transition: 0.2s;
         }
 
-        .borrar:hover {
+        .borrar:hover, .siguiente-btn:hover {
             background: #ff4f7a;
             color: white;
             border-color: #ff4f7a;
             transform: scale(1.03);
+        }
+
+        .seccion-carrusel {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            margin-bottom: 40px;
+            border-top: 5px solid #ffe08a;
+        }
+
+        .seccion-titulo {
+            font-size: 1.4em;
+            color: #7d2d40;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
         .borrarTodo {
@@ -158,7 +191,7 @@
 
         .vacio {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 20px;
             font-size: 1.25em;
             color: #a04e60;
             background: white;
@@ -174,6 +207,7 @@
                 gap: 20px;
                 overflow-x: auto; /* Scroll horizontal si los enlaces no caben */
                 padding: 15px 10px;
+                -webkit-overflow-scrolling: touch;
             }
             
             nav a {
@@ -192,7 +226,7 @@
                 padding: 10px 15px 140px;
             }
 
-            .item {
+            .item, .seccion-carrusel {
                 padding: 20px 15px;
                 margin-bottom: 20px;
             }
@@ -234,23 +268,193 @@
         <p>Tus frases guardadas con cariño</p>
     </header>
 
-    <div class="lista" id="listaFavoritos"></div>
+    <div class="lista">
+        <div class="seccion-carrusel">
+            <h2 class="seccion-titulo">Bienestar Emocional ✨</h2>
+            <div id="contenedorTextoCarrusel">
+                <p class="frase" id="carruselTexto">Cargando tu espacio seguro...</p>
+                <p class="autor" id="carruselAutor"></p>
+            </div>
+            <button class="siguiente-btn" id="btnSiguienteFrase" onclick="nuevaFraseAnsiedad()">Nueva frase de apoyo</button>
+        </div>
 
-    <div class="borrarTodo" onclick="borrarTodos()">🗑️ Borrar todo</div>
+        <h2 class="seccion-titulo">Mis Frases Guardadas</h2>
+        <div id="listaFavoritos"></div>
+    </div>
+
+    <div class="borrarTodo" id="botonBorrarTodo" onclick="borrarTodos()">🗑️ Borrar todo</div>
 
     <script>
+        // ==========================================
+        // LÓGICA 1: GESTIÓN DEL CARRUSEL INTELIGENTE
+        // ==========================================
+        
+        // Base de datos estática original
+        const frasesAnsiedadOriginal = [
+            { texto: "Mi niña, has podido superar momentos difíciles antes y este también pasará.", autor: "IzAn" },
+            { texto: "No tienes que controlar tus pensamientos. Solo tienes que dejar de permitir que ellos te controlen a ti.", autor: "Dan Millman" },
+            { texto: "Esta tormenta en tu mente eventualmente se quedará sin lluvia.", autor: "Anónimo" },
+            { texto: "Respirar profundamente es el acto de recordar que estás a salvo aquí y ahora.", autor: "IzAn" },
+            { texto: "Tu ansiedad no define tu fuerza, la forma en la que la afrontas sí.", autor: "Anónimo" },
+            { texto: "No estás perdiendo el control, simplemente estás procesando algo difícil. Date tiempo.", autor: "Psic. Bienestar" }
+        ];
+
+        let todasLasFrases = [];   // Pool global unificado
+        let frasesAnsiedad = [];    // Pool activo en memoria para la sesión
+        let ultimoAutor = null;     // Rastreador anti-repetición consecutiva
+
+        /**
+         * Inicializa, limpia y filtra los datos aplicando el descarte estricto histórico
+         */
+        function inicializarDatosCarrusel() {
+            // Recuperar y filtrar el array dinámico de frases del usuario
+            let frasesUsuarioRaw = JSON.parse(localStorage.getItem("ansiedad")) || [];
+            let frasesUsuarioLimpias = frasesUsuarioRaw.filter(item => 
+                item && typeof item === 'object' && item.texto && item.autor
+            );
+
+            // Fusionar arrays
+            todasLasFrases = [...frasesAnsiedadOriginal, ...frasesUsuarioLimpias];
+
+            // Recuperar historial de vistas
+            let vistas = JSON.parse(localStorage.getItem("ansiedad_vistas")) || [];
+
+            // Filtrar de forma estricta: excluir todo lo que ya esté en "ansiedad_vistas"
+            frasesAnsiedad = todasLasFrases.filter(frase => 
+                !vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)
+            );
+        }
+
+        /**
+         * Fuerza el reflujo del DOM para reiniciar limpiamente la animación de CSS
+         */
+        function aplicarAnimacion() {
+            const elemento = document.getElementById("contenedorTextoCarrusel");
+            if (!elemento) return;
+            elemento.classList.remove("frase-animada");
+            void elemento.offsetWidth; // Forzado de reflujo (reflow)
+            elemento.classList.add("frase-animada");
+        }
+
+        /**
+         * Guarda de inmediato en el historial de vistas y elimina del pool actual
+         */
+        function registrarFraseComoVista(frase) {
+            let vistas = JSON.parse(localStorage.getItem("ansiedad_vistas")) || [];
+            if (!vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)) {
+                vistas.push(frase);
+                localStorage.setItem("ansiedad_vistas", JSON.stringify(vistas));
+            }
+            // Eliminar de la sesión activa
+            frasesAnsiedad = frasesAnsiedad.filter(f => f.texto !== frase.texto || f.autor !== frase.autor);
+        }
+
+        /**
+         * Renderiza el contenido del carrusel en pantalla de manera limpia
+         */
+        function renderizarCarrusel(texto, autor, esMensajeFinal = false) {
+            const txtEl = document.getElementById("carruselTexto");
+            const autEl = document.getElementById("carruselAutor");
+            const btnNext = document.getElementById("btnSiguienteFrase");
+
+            if (txtEl) txtEl.innerText = texto;
+            if (autEl) autEl.innerText = esMensajeFinal ? "" : `— ${autor}`;
+            
+            if (esMensajeFinal && btnNext) {
+                btnNext.disabled = true;
+                btnNext.style.opacity = "0.5";
+            }
+            aplicarAnimacion();
+        }
+
+        /**
+         * Busca la frase inicial fija o muestra la primera que se encuentre libre
+         */
+        function mostrarPrimeraFrase() {
+            inicializarDatosCarrusel();
+
+            if (frasesAnsiedad.length === 0) {
+                mostrarMensajeFinalCarrusel();
+                return;
+            }
+
+            // Criterio específico: Autor "IzAn" y frase que empiece con "Mi niña, has podido superar"
+            const indiceFijo = frasesAnsiedad.findIndex(f => 
+                f.autor === "IzAn" && f.texto.startsWith("Mi niña, has podido superar")
+            );
+
+            let seleccionada;
+            if (indiceFijo !== -1) {
+                seleccionada = frasesAnsiedad[indiceFijo];
+            } else {
+                seleccionada = frasesAnsiedad[0];
+            }
+
+            ultimoAutor = seleccionada.autor;
+            registrarFraseComoVista(seleccionada);
+            renderizarCarrusel(seleccionada.texto, seleccionada.autor);
+        }
+
+        /**
+         * Cambia de frase aleatoriamente evitando autores consecutivos de forma inteligente
+         */
+        function nuevaFraseAnsiedad() {
+            if (frasesAnsiedad.length === 0) {
+                mostrarMensajeFinalCarrusel();
+                return;
+            }
+
+            let indiceElegido = -1;
+            let intentos = 0;
+            const maxIntentos = 15;
+
+            while (intentos < maxIntentos) {
+                let randomIdx = Math.floor(Math.random() * frasesAnsiedad.length);
+                let candidata = frasesAnsiedad[randomIdx];
+
+                if (candidata.autor !== ultimoAutor || frasesAnsiedad.length === 1) {
+                    indiceElegido = randomIdx;
+                    break;
+                }
+                intentos++;
+            }
+
+            // Fallback por si quedan pocas opciones y se agotan los intentos seguros
+            if (indiceElegido === -1) indiceElegido = 0;
+
+            const fraseFinal = frasesAnsiedad[indiceElegido];
+            ultimoAutor = fraseFinal.autor;
+
+            registrarFraseComoVista(fraseFinal);
+            renderizarCarrusel(fraseFinal.texto, fraseFinal.autor);
+        }
+
+        function mostrarMensajeFinalCarrusel() {
+            renderizarCarrusel("Has completado todas las frases disponibles de esta sección. ¡Eres muy fuerte! ❤️", "", true);
+        }
+
+
+        // ==========================================
+        // LÓGICA 2: INTERFAZ DE FRASES FAVORITAS
+        // ==========================================
+
+        /**
+         * Pinta dinámicamente las tarjetas de favoritos limpiando strings y formateando
+         */
         function cargarFavoritos() {
             const contenedor = document.getElementById("listaFavoritos");
+            const btnBorrarTodo = document.getElementById("botonBorrarTodo");
+            if (!contenedor) return;
+            
             contenedor.innerHTML = "";
-
             let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
             if (favoritos.length === 0) {
                 contenedor.innerHTML = '<p class="vacio">Aún no has guardado ninguna frase con amor ❤️</p>';
-                document.querySelector(".borrarTodo").style.display = "none";
+                if (btnBorrarTodo) btnBorrarTodo.style.display = "none";
                 return;
             } else {
-                document.querySelector(".borrarTodo").style.display = "block";
+                if (btnBorrarTodo) btnBorrarTodo.style.display = "block";
             }
 
             favoritos.forEach((item, index) => {
@@ -258,14 +462,16 @@
                     const div = document.createElement("div");
                     div.className = "item";
 
+                    // Limpieza rigurosa de dobles comillas tipográficas duplicadas al inicio y final
                     let fraseLimpia = item.frase.trim();
-                    if (fraseLimpia.startsWith("“") && fraseLimpia.endsWith("”")) {
-                        fraseLimpia = fraseLimpia.substring(1, fraseLimpia.length - 1);
-                    }
+                    fraseLimpia = fraseLimpia.replace(/^[“""'‘]|[”""'’]$/g, "");
+
+                    // Formateo del autor eliminando guiones duplicados previos
+                    let autorLimpio = item.autor.trim().replace(/^[—\-_]\s*/, "");
 
                     div.innerHTML = `
                         <p class="frase">“${fraseLimpia}”</p>
-                        <p class="autor">— ${item.autor.replace("— ", "")}</p>
+                        <p class="autor">— ${autorLimpio}</p>
                         <button class="borrar" onclick="borrarUno(${index})">Eliminar de favoritos</button>
                     `;
 
@@ -274,28 +480,36 @@
             });
         }
 
+        /**
+         * Elimina un favorito específico ajustando el scroll levemente
+         */
         function borrarUno(indice) {
             let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
             favoritos.splice(indice, 1);
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            
             cargarFavoritos();
             
-            // Ajuste de scroll: Al eliminar una frase, la pantalla se reajusta suavemente
-            window.scrollBy({ top: -50, behavior: "smooth" });
+            // Ajuste de scroll suave reactivo tras la eliminación
+            window.scrollBy({ top: -40, behavior: "smooth" });
         }
 
+        /**
+         * Elimina por completo la clave favoritos tras confirmación del usuario
+         */
         function borrarTodos() {
             if (confirm("¿Estás seguro de que deseas eliminar todas tus frases favoritas?")) {
                 localStorage.removeItem("favoritos");
                 cargarFavoritos();
                 
-                // Hace un scroll automático hacia la parte superior al limpiar todo
+                // Desplazamiento limpio e inmediato hacia arriba
                 window.scrollTo({ top: 0, behavior: "smooth" });
             }
         }
 
-        // Asegura que al entrar a la sección la ventana se posicione al inicio de manera limpia
+        // CONTROL DE CARGA INICIAL UNIFICADO
         window.onload = function() {
+            mostrarPrimeraFrase();
             cargarFavoritos();
             window.scrollTo({ top: 0 });
         };
