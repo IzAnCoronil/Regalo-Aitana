@@ -51,7 +51,7 @@
             left: 0;
             right: 0;
             display: flex;
-            justify-content: center;
+            justify(content: center;
             gap: 25px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
@@ -278,7 +278,7 @@
         ❤️ Guardar
     </button>
 
-    <script>
+   <script>
         const frasesMotivacionOriginal = [
             { texto: "Bueno, ahora tienes dudas pero nada que no puedas soportar porque eres la chica más fuerte que conozco.", autor: "IzAn" },
             { texto: "Sé que ahora te cuesta verlo, pero tú siempre sales adelante, incluso cuando nadie lo sabe.", autor: "IzAn" },
@@ -444,7 +444,10 @@
         ];
 
         let frasesUsuario = JSON.parse(localStorage.getItem("Motivacion")) || [];
-        let frasesMotivacion = frasesMotivacionOriginal.concat(frasesUsuario);
+        let todasLasFrases = frasesMotivacionOriginal.concat(frasesUsuario);
+        
+        let frasesVistas = JSON.parse(localStorage.getItem("vistas_motivacion")) || [];
+        let frasesDisponibles = todasLasFrases.filter(f => !frasesVistas.includes(f.texto));
         let ultimoAutor = null;
 
         function aplicarAnimacion() {
@@ -454,11 +457,24 @@
             elemento.classList.add("frase-animada");
         }
 
+        function manejarFinDeFrases() {
+            document.getElementById("fraseMotivacion").textContent = "Has completado todo el camino. No quedan más frases nuevas.";
+            document.getElementById("autorMotivacion").textContent = "";
+            
+            // Buscamos el botón principal y lo deshabilitamos estéticamente
+            const boton = document.querySelector(".contenedor button");
+            if (boton) {
+                boton.disabled = true;
+                boton.style.opacity = "0.4";
+                boton.style.cursor = "not-allowed";
+                boton.textContent = "Fin de las frases";
+            }
+            aplicarAnimacion();
+        }
+
         function nuevaFraseMotivacion() {
-            if (frasesMotivacion.length === 0) {
-                document.getElementById("fraseMotivacion").textContent = "Ya no hay más frases si quieres más sólo tienes que pedirlas";
-                document.getElementById("autorMotivacion").textContent = "";
-                aplicarAnimacion();
+            if (frasesDisponibles.length === 0) {
+                manejarFinDeFrases();
                 return;
             }
 
@@ -466,21 +482,25 @@
             let intentos = 0;
 
             do {
-                indice = Math.floor(Math.random() * frasesMotivacion.length);
+                indice = Math.floor(Math.random() * frasesDisponibles.length);
                 intentos++;
             } while (
-                frasesMotivacion[indice].autor === ultimoAutor &&
+                frasesDisponibles[indice].autor === ultimoAutor &&
                 intentos < 10 && 
-                frasesMotivacion.length > 1
+                frasesDisponibles.length > 1
             );
 
-            const frase = frasesMotivacion[indice];
+            const frase = frasesDisponibles[indice];
 
             document.getElementById("fraseMotivacion").textContent = frase.texto;
             document.getElementById("autorMotivacion").textContent = "— " + frase.autor;
 
             ultimoAutor = frase.autor;
-            frasesMotivacion.splice(indice, 1);
+
+            frasesVistas.push(frase.texto);
+            localStorage.setItem("vistas_motivacion", JSON.stringify(frasesVistas));
+
+            frasesDisponibles.splice(indice, 1);
             aplicarAnimacion();
         }
 
@@ -488,7 +508,7 @@
             const frase = document.getElementById(idFrase).textContent;
             let autor = document.getElementById(idAutor).textContent;
 
-            if (!frase || frase === "Ya no hay más frases si quieres más sólo tienes que pedirlas" || frase === "Añade frases para comenzar.") {
+            if (!frase || frase.startsWith("Has completado") || frase === "Añade frases para comenzar.") {
                 return; 
             }
 
@@ -499,7 +519,7 @@
             const yaExiste = favoritos.some(f => f.frase === frase);
             if (!yaExiste) {
                 favoritos.push({ frase, autor }); 
-                localStorage.setItem("favoritos", JSON.stringify(favoritos)); /* Corregido: antes decía 'favorites' y fallaba */
+                localStorage.setItem("favoritos", JSON.stringify(favoritos));
                 alert("¡Frase guardada en tus favoritos! ❤️");
             } else {
                 alert("Esta frase ya está en tus favoritos.");
@@ -507,25 +527,35 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            if (frasesMotivacion.length === 0) {
+            if (todasLasFrases.length === 0) {
                 document.getElementById("fraseMotivacion").textContent = "Añade frases para comenzar.";
                 return;
             }
 
-            let indiceInicial = frasesMotivacion.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Bueno, ahora tienes dudas"));
+            if (frasesDisponibles.length === 0) {
+                manejarFinDeFrases();
+                return;
+            }
 
-            if (indiceInicial === -1) indiceInicial = 0;
+            let indiceInicial = frasesDisponibles.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Bueno, ahora tienes dudas"));
 
-            const primera = frasesMotivacion[indiceInicial];
+            if (indiceInicial === -1) {
+                indiceInicial = Math.floor(Math.random() * frasesDisponibles.length);
+            }
+
+            const primera = frasesDisponibles[indiceInicial];
 
             document.getElementById("fraseMotivacion").textContent = primera.texto;
             document.getElementById("autorMotivacion").textContent = "— " + primera.autor;
 
             ultimoAutor = primera.autor;
-            frasesMotivacion.splice(indiceInicial, 1);
+
+            frasesVistas.push(primera.texto);
+            localStorage.setItem("vistas_motivacion", JSON.stringify(frasesVistas));
+            
+            frasesDisponibles.splice(indiceInicial, 1);
             aplicarAnimacion();
         });
     </script>
-
 </body>
 </html>
