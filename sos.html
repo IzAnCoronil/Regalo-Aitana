@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>SOS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         /* Ajustes de scroll global y rendimiento móvil */
@@ -13,19 +14,21 @@
         }
 
         body {
-            background: linear-gradient(135deg, #fff9d9, #ffffff);
-            color: #4a4a4a;
+            /* Cambio radical a un fondo oscuro y relajante (cielo nocturno) */
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            color: #f1f5f9;
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
             overflow-y: auto;
             overflow-x: hidden;
-            -webkit-overflow-scrolling: touch; /* Scroll fluido nativo en iOS */
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV: Con scroll horizontal responsivo para que no se corten los links en pantallas pequeñas */
+        /* NAV: Se mantiene la estructura exacta pero adaptada al nuevo estilo visual */
         nav {
-            background: #ffe08a;
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px); /* Efecto cristal esmerilado moderno */
             padding: 12px 20px;
             position: fixed;
             top: 0;
@@ -34,106 +37,121 @@
             display: flex;
             justify-content: flex-start;
             gap: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             z-index: 100;
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
             scroll-behavior: smooth;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        /* Oculta la barra de scroll en móviles para mantener la estética limpia */
+        /* Oculta la barra de scroll en móviles */
         nav::-webkit-scrollbar {
             display: none;
         }
 
         nav a {
-            color: #5a3e00;
+            color: #94a3b8;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
-            transition: 0.25s ease;
+            transition: 0.3s ease;
             display: inline-block;
             -webkit-tap-highlight-color: transparent;
         }
 
         nav a:hover {
-            color: #8a6500;
-            transform: scale(1.05);
+            color: #38bdf8; /* Azul neón brillante al pasar el cursor */
+            transform: translateY(-2px);
         }
 
         /* HEADER */
         header {
             text-align: center;
-            padding: 120px 20px 20px; /* Ajustado el padding superior por la barra fija */
+            padding: 140px 20px 20px;
         }
 
         header h1 {
-            color: #5a3e00;
+            color: #f8fafc;
             margin-bottom: 8px;
-            font-size: 2.2em;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
 
         header p {
-            color: #7c5c16;
+            color: #94a3b8;
             font-size: 1.1em;
+            font-weight: 300;
         }
 
         /* CONTENIDO */
         .contenido {
             padding: 20px;
-            max-width: 900px;
+            max-width: 750px;
             margin: 0 auto 60px;
-            overscroll-behavior: contain; /* Controla el comportamiento elástico del scroll */
+            overscroll-behavior: contain;
         }
 
+        /* Tarjetas flotantes estilo traslúcido */
         .bloque {
-            background: #ffffff;
-            padding: 40px 25px;
-            border-radius: 20px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            padding: 40px 30px;
+            border-radius: 24px;
             margin-bottom: 35px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             text-align: center;
         }
 
         .mensaje {
-            font-size: 1.15em;
-            line-height: 1.6;
-            color: #4a4a4a;
-            margin-bottom: 18px;
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #cbd5e1;
+            font-weight: 300;
         }
 
+        /* Tu frase destacada con un gradiente de luz */
         .frase-unica {
-            font-size: 1.6em;
+            font-size: 1.7em;
             font-weight: 600;
-            color: #b06200;
-            margin: 30px 0;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 35px 0;
             line-height: 1.5;
+            padding: 0 10px;
         }
 
         .mensaje-final {
-            font-weight: 600;
-            color: #b06200;
-            border-top: 1px dashed #ffe08a;
-            padding-top: 20px;
-            margin-top: 25px;
+            font-weight: 400;
+            font-size: 0.95em;
+            color: #64748b;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 25px;
+            margin-top: 30px;
+            letter-spacing: 0.5px;
         }
 
-        /* RESPIRACIÓN */
+        /* BOLA DE RELAJACIÓN (Mantiene la animación pero cambia su paleta a tonos auroras/relajantes) */
         #respirar {
-            width: 180px;
-            height: 180px;
+            width: 190px;
+            height: 190px;
             margin: 40px auto;
-            background: radial-gradient(circle, #ffb37e, #ff8c42);
+            background: radial-gradient(circle, #818cf8, #4338ca);
             border-radius: 50%;
-            box-shadow: 0 0 20px rgba(243, 140, 66, 0.4);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
             animation: respirar 8s infinite ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #ffffff;
             font-weight: 600;
-            font-size: 1.2em;
+            font-size: 1.25em;
+            letter-spacing: 1px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Texto animado dentro del círculo */
@@ -142,8 +160,16 @@
         }
 
         @keyframes respirar {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(243, 140, 66, 0.3); }
-            40%, 60% { transform: scale(1.25); box-shadow: 0 0 35px rgba(243, 140, 66, 0.6); }
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); 
+                background: radial-gradient(circle, #818cf8, #4338ca);
+            }
+            40%, 60% { 
+                transform: scale(1.3); 
+                box-shadow: 0 0 50px rgba(56, 189, 248, 0.5); 
+                background: radial-gradient(circle, #38bdf8, #1d4ed8);
+            }
         }
 
         @keyframes cambiarTexto {
@@ -153,7 +179,7 @@
             100% { content: "Inhala"; }
         }
 
-        /* Media Queries para pantallas táctiles y móviles */
+        /* Ajustes Mobile */
         @media (max-width: 600px) {
             nav {
                 justify-content: flex-start;
@@ -161,20 +187,20 @@
                 padding: 12px 15px;
             }
             header {
-                padding-top: 95px;
+                padding-top: 110px;
             }
             header h1 {
-                font-size: 1.8em;
+                font-size: 2.1em;
             }
             .bloque {
-                padding: 25px 15px;
+                padding: 30px 20px;
             }
             .frase-unica {
-                font-size: 1.3em;
+                font-size: 1.4em;
             }
             #respirar {
-                width: 150px;
-                height: 150px;
+                width: 160px;
+                height: 160px;
             }
         }
     </style>
@@ -194,42 +220,42 @@
 
     <header>
         <h1>SOS</h1>
-        <p>Para cuando el mundo pese demasiado.</p>
+        <p>Un espacio seguro cuando las cosas se complican.</p>
     </header>
 
     <section class="contenido">
 
         <div class="bloque">
             <p class="mensaje">
-                Si has llegado aquí es porque algo te duele, te pesa o te asusta.<br>
-                Y aunque no pueda estar a tu lado físicamente en este instante, quiero que recuerdes algo:
+                Si sientes que el peso es demasiado grande justo ahora, detente un segundo.<br>
+                Aunque no comparta tu mismo espacio físico, quiero recordarte firmemente algo:
             </p>
 
             <p class="frase-unica">
-                “Has podido con tormentas más grandes, y esta no va a ser la excepción.  
-                Tómate tu tiempo, que yo te espero aquí.”
+                “Tu fuerza ya ha superado noches más oscuras que esta, y esta no será la excepción. 
+                Haz una pausa, no hay prisa, yo me quedo aquí contigo.”
             </p>
 
             <p class="mensaje">
-                No estás sola. No estás solo.<br>
-                Respira con calma. Estoy contigo en esto, acompañándote paso a paso.
+                No caminas a solas por esto.<br>
+                Suelta el control por un momento, despeja tu mente y vayamos paso a paso.
             </p>
 
             <p class="mensaje-final">
-                Ya no hay más frases; si quieres más, solo tienes que pedirlas.
+                Las palabras terminan aquí. Si necesitas un refugio nuevo, búscame siempre que quieras.
             </p>
         </div>
 
         <div class="bloque">
-            <h2 style="color:#5a3e00; font-weight:600; margin-bottom:10px;">Respira conmigo</h2>
-            <p class="mensaje" style="color:#7a7a7a; font-size:1em;">Sigue el ritmo del círculo para estabilizar el pulso.</p>
+            <h2 style="color:#f8fafc; font-weight:600; margin-bottom:10px; font-size: 1.4em;">Sincroniza tu respiración</h2>
+            <p class="mensaje" style="color:#94a3b8; font-size:0.95em; margin-bottom: 25px;">Sigue visualmente el ritmo para calmar los pensamientos.</p>
 
             <div id="respirar">
                 <span>Inhala</span>
             </div>
 
-            <p class="mensaje" style="font-weight:500;">
-                Inhala cuando crezca. Sostén un momento. Exhala cuando baje.
+            <p class="mensaje" style="font-weight:400; color: #38bdf8; margin-top: 25px;">
+                Inhala mientras se expande. Sostén el aire. Exhala cuando vuelva a su tamaño original.
             </p>
         </div>
 
