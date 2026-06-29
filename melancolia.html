@@ -3,59 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>Melancolía</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <style>
         /* --- BARRA DE SCROLL PERSONALIZADA (ESTÉTICA PREMIUM) --- */
-        /* Para navegadores basados en Webkit (Chrome, Safari, Edge, Opera) */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0b0f19; /* Combina con el fondo más oscuro */
+            background: #0b0f19; 
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(123, 44, 191, 0.4); /* Color morado translúcido */
+            background: rgba(123, 44, 191, 0.35); /* Morado melancólico translúcido */
             border-radius: 10px;
             border: 2px solid #0b0f19;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(157, 78, 221, 0.7); /* Brillo más intenso al pasar el cursor */
+            background: rgba(157, 78, 221, 0.6); 
         }
 
-        /* Para Firefox */
         html {
             scrollbar-width: thin;
-            scrollbar-color: rgba(123, 44, 191, 0.4) #0b0f19;
+            scrollbar-color: rgba(123, 44, 191, 0.35) #0b0f19;
             scroll-behavior: smooth;
         }
 
         /* --- ESTILOS DE LA ATMÓSFERA DE MELANCOLÍA --- */
         body {
-            background: radial-gradient(circle at top, #1e2638, #0b0f19);
+            background: radial-gradient(circle at top, #1a2236, #0b0f19); /* Fondo profundo nocturno */
             color: #f3f4f6;
             min-height: 100vh;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow-y: auto; /* Permite scroll vertical si el contenido lo requiere */
+            overflow-y: auto; 
+        }
+
+        /* NAV - Consistente y limpio */
+        nav {
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 14px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+        }
+
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+            transform: scale(1.05);
         }
 
         header {
             text-align: center;
-            padding: 40px 20px 10px;
+            padding: 140px 20px 10px;
         }
 
         header h1 {
-            font-size: 2.8em;
+            font-size: 3em;
             font-weight: 700;
             letter-spacing: -1px;
             background: linear-gradient(to right, #ffffff, #9ca3af);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            margin: 0 0 12px 0;
         }
 
         header p {
@@ -67,125 +105,144 @@
             line-height: 1.6;
         }
 
-        /* CONTENEDOR EFECTO VIDRIO (GLASSMORPHISM) */
+        /* CONTENEDOR EFECTO VIDRIO OPACO (GLASSMORPHISM) */
         .contenedor {
-            background: rgba(17, 24, 39, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(17, 24, 39, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 50px 40px;
-            margin: 40px auto 120px; /* Margen inferior amplio para evitar que se solape con el botón guardar */
+            margin: 40px auto 120px; 
             border-radius: 24px;
             max-width: 700px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
             text-align: center;
             box-sizing: border-box;
-            max-height: 80vh; /* Evita que la tarjeta sea más grande que la pantalla */
-            overflow-y: auto;  /* Si el texto dentro de la tarjeta es enorme, crea scroll interno estético */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
         /* Animación suave para la transición de frases */
         .frase-animada {
-            animation: fadeInBlur 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeInBlur 0.55s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes fadeInBlur {
-            from { opacity: 0; filter: blur(4px); transform: translateY(8px); }
+            from { opacity: 0; filter: blur(5px); transform: translateY(6px); }
             to { opacity: 1; filter: blur(0); transform: translateY(0); }
         }
 
         .frase {
             font-size: 1.65em;
             color: #f9fafb;
-            margin-bottom: 20px;
+            margin: 10px 0;
             font-weight: 400;
-            line-height: 1.5;
+            line-height: 1.6;
             letter-spacing: -0.3px;
         }
 
         .autor {
             font-size: 1.05em;
             color: #9ca3af;
-            margin-bottom: 40px;
+            margin: 0 0 35px 0;
             font-style: italic;
             letter-spacing: 0.5px;
         }
 
-        /* BOTÓN PRINCIPAL */
+        /* BOTÓN PRINCIPAL MORADO */
         .contenedor button {
             display: inline-block;
-            padding: 14px 36px;
+            padding: 14px 38px;
             background: linear-gradient(135deg, #7b2cbf, #5a189a);
             color: white;
             border: none;
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 1.05em;
+            font-size: 1.1em;
             letter-spacing: 0.2px;
-            box-shadow: 0 4px 15px rgba(123, 44, 191, 0.3);
-            transition: all 0.25s ease;
-            min-width: 180px;
+            box-shadow: 0 4px 15px rgba(123, 44, 191, 0.25);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .contenedor button:hover {
-            background: linear-gradient(135deg, #9d4edd, #7b2cbf);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(123, 44, 191, 0.5);
+            box-shadow: 0 6px 20px rgba(123, 44, 191, 0.45);
         }
 
         .contenedor button:active {
-            transform: translateY(0);
+            transform: translateY(1px);
         }
 
         /* BOTÓN FLOTANTE GUARDAR PREMIUM */
-        .boton-guardar {
+        button.boton-guardar {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: white;
             padding: 12px 24px;
             border-radius: 50px;
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            margin: 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 99;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .boton-guardar:hover {
+        button.boton-guardar:hover {
             background: #ffffff;
-            color: #111827;
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            color: #0b0f19;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(123, 44, 191, 0.3);
         }
         
-        /* Navegación básica */
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            background: rgba(11, 15, 25, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        nav a {
-            color: #9ca3af;
-            text-decoration: none;
-            font-size: 0.95em;
-            transition: color 0.2s;
-        }
-        nav a:hover {
-            color: #ffffff;
+        /* Ajustes de adaptación móvil */
+        @media (max-width: 768px) {
+            nav {
+                justify-content: flex-start;
+                gap: 20px;
+                padding: 14px 15px;
+            }
+            header {
+                padding-top: 110px;
+            }
+            header h1 {
+                font-size: 2.3em;
+            }
+            .contenedor {
+                margin: 20px 15px 100px;
+                padding: 40px 20px;
+            }
+            .frase {
+                font-size: 1.35em;
+            }
+            .contenedor button {
+                width: 100%;
+                max-width: 320px;
+            }
+            button.boton-guardar {
+                width: auto;
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 0.95em;
+            }
         }
     </style>
 </head>
@@ -216,9 +273,9 @@
         <button onclick="nuevaFraseMelancolia()">Otra frase</button>
     </div>
 
-    <div class="boton-guardar" onclick="guardarFavorito('fraseMelancolia','autorMelancolia')">
+    <button class="boton-guardar" onclick="guardarFavorito('fraseMelancolia','autorMelancolia')">
         ❤️ Guardar
-    </div>
+    </button>
 
     <script>
     const frasesMelancoliaOriginal = [
@@ -238,7 +295,7 @@
         { texto: "La melancolía es un hilo que une lo que fue con lo que nunca será.", autor: "IzAn" },
         { texto: "Hay tardes que se quedan atrapadas en una luz que ya no existe.", autor: "Mario Benedetti" },
         { texto: "El tiempo no borra, solo difumina los bordes del recuerdo.", autor: "Pablo Neruda" },
-        { texto: "Hay nombres que ya no se dicen, pero que aún se escapan en los pensamientos.", autor: "Julio Cortázar" },
+        { texto: "Hay names que ya no se dicen, pero que aún se escapan en los pensamientos.", autor: "Julio Cortázar" },
         { texto: "La melancolía es el eco de todo lo que no supo cómo despedirse.", autor: "Rainer Maria Rilke" },
         { texto: "Hay días en los que el corazón solo quiere sentarse a mirar lo que ya no es.", autor: "Alejandra Pizarnik" },
         { texto: "La tristeza suave es una forma de recordar sin hacer ruido.", autor: "Sabines" }
