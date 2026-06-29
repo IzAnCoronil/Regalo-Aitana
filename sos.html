@@ -14,7 +14,6 @@
         }
 
         body {
-            /* Cambio radical a un fondo oscuro y relajante (cielo nocturno) */
             background: linear-gradient(135deg, #0f172a, #1e1b4b);
             color: #f1f5f9;
             margin: 0;
@@ -25,45 +24,32 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV: Se mantiene la estructura exacta pero adaptada al nuevo estilo visual */
+        /* NAV: IDÉNTICO AL DE TU PRIMERA PÁGINA */
         nav {
-            background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px); /* Efecto cristal esmerilado moderno */
+            background: #4da3ff;
             padding: 12px 20px;
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
+            width: 100%;
             display: flex;
-            justify-content: flex-start;
-            gap: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            justify-content: center;
+            gap: 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
             z-index: 100;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Oculta la barra de scroll en móviles */
-        nav::-webkit-scrollbar {
-            display: none;
+            box-sizing: border-box;
         }
 
         nav a {
-            color: #94a3b8;
+            color: white;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
-            transition: 0.3s ease;
-            display: inline-block;
-            -webkit-tap-highlight-color: transparent;
+            transition: 0.2s;
         }
 
         nav a:hover {
-            color: #38bdf8; /* Azul neón brillante al pasar el cursor */
-            transform: translateY(-2px);
+            color: #e8f4ff;
+            transform: scale(1.08);
         }
 
         /* HEADER */
@@ -113,7 +99,7 @@
             font-weight: 300;
         }
 
-        /* Tu frase destacada con un gradiente de luz */
+        /* Frase destacada con un gradiente de luz */
         .frase-unica {
             font-size: 1.7em;
             font-weight: 600;
@@ -135,7 +121,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* BOLA DE RELAJACIÓN (Mantiene la animación pero cambia su paleta a tonos auroras/relajantes) */
+        /* BOLA DE RELAJACIÓN */
         #respirar {
             width: 190px;
             height: 190px;
@@ -182,12 +168,13 @@
         /* Ajustes Mobile */
         @media (max-width: 600px) {
             nav {
-                justify-content: flex-start;
-                gap: 20px;
-                padding: 12px 15px;
+                justify-content: center;
+                gap: 15px;
+                padding: 12px 10px;
+                flex-wrap: wrap; /* Permite que los enlaces bajen si no caben en pantallas muy pequeñas */
             }
             header {
-                padding-top: 110px;
+                padding-top: 160px; /* Más espacio superior en móvil para no chocar con el nav expandido */
             }
             header h1 {
                 font-size: 2.1em;
@@ -209,13 +196,13 @@
 <body>
 
     <nav>
-        <a href="index.html">Inicio</a>
+        <a href="Index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
         <a href="Love.html">Favoritos</a>
         <a href="album.html">Álbum</a>
-        <a href="frasesamigos.html">Frases de amigos</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
     </nav>
 
     <header>
