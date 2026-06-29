@@ -99,7 +99,12 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            transition: opacity 0.25s ease;
+        }
+
+        /* Bloque interno con opacidad para la transición suave */
+        #bloqueTexto {
+            transition: opacity 0.2s ease;
+            width: 100%;
         }
 
         .frase {
@@ -141,11 +146,18 @@
             box-shadow: 0 6px 20px rgba(107, 144, 128, 0.4);
         }
 
-        button:active {
+        button:disabled {
+            background: #cccccc;
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        button:active:not(:disabled) {
             transform: translateY(1px);
         }
 
-        /* BOTÓN FLOTANTE GUARDAR (Estilos aislados para evitar conflictos) */
+        /* BOTÓN FLOTANTE GUARDAR */
         button.boton-guardar {
             position: fixed;
             bottom: 25px;
@@ -202,9 +214,13 @@
             button.boton-guardar {
                 width: auto;
                 bottom: 20px;
-                right: 20px;
+                right: 50%;
+                transform: translateX(50%);
                 padding: 10px 20px;
                 font-size: 0.95em;
+            }
+            button.boton-guardar:hover {
+                transform: translateX(50%) scale(1.02);
             }
         }
     </style>
@@ -228,18 +244,20 @@
     </header>
 
     <div class="contenedor" id="tarjetaContenedor">
-        <p id="fraseEstres" class="frase"></p>
-        <p id="autorEstres" class="autor"></p>
-        <button onclick="nuevaFraseEstres()">Otra frase</button>
+        <div id="bloqueTexto">
+            <p id="fraseEstres" class="frase">Despejando la mente...</p>
+            <p id="autorEstres" class="autor"></p>
+        </div>
+        <button id="btnSiguiente" onclick="nuevaFraseEstres()">Otra frase</button>
     </div>
 
-    <button class="boton-guardar" onclick="guardarFavorito('fraseEstres','autorEstres')">
+    <button id="btnGuardar" class="boton-guardar" onclick="guardarFavorito('fraseEstres','autorEstres')">
         ❤️ Guardar
     </button>
 
     <script>
     const frasesEstresOriginal = [
-        // FRASE FIJA
+        // FRASE FIJA INICIAL
         { texto: "Tú no estás fallando, solo estás cargando más de lo que cualquiera admitiría, y aun así sigues.", autor: "IzAn" },
 
         // TUS FRASES (IzAn)
@@ -253,8 +271,8 @@
         { texto: "No tienes que entenderlo todo a la primera, tú no eres una máquina.", autor: "IzAn" },
         { texto: "Tu valor no baja porque un día no te dé la vida.", autor: "IzAn" },
         { texto: "Estás haciendo más de lo que crees, aunque tu mente no te lo reconozca.", autor: "IzAn" },
-        { texto: "No estás sola in esto, aunque tu estrés te haga sentir lo contrario.", autor: "IzAn" },
-        { texto: "Tu esfuerzo vale, incluso cuando nadie lo see.", autor: "IzAn" },
+        { texto: "No estás sola en esto, aunque tu estrés te haga sentir lo contrario.", autor: "IzAn" },
+        { texto: "Tu esfuerzo vale, incluso cuando nadie lo ve.", autor: "IzAn" },
         { texto: "A veces te bloqueas, pero eso no borra todo lo que ya has conseguido.", autor: "IzAn" },
         { texto: "No tienes que ser perfecta, solo constante, y eso ya lo eres.", autor: "IzAn" },
         { texto: "Tu cabeza no está saturada porque seas débil, sino porque llevas demasiado tiempo siendo fuerte.", autor: "IzAn" },
@@ -348,88 +366,176 @@
         { texto: "Toma las cosas una por una; el desorden del mundo exterior se calma ordenando el mundo interior.", autor: "Anónimo" }
     ];
 
-    let frasesUsuario = JSON.parse(localStorage.getItem("estres")) || [];
-    let frasesEstres = frasesEstresOriginal.concat(frasesUsuario);
-
+    // Estados de ejecución globales
+    let todasLasFrases = [];
+    let frasesEstres = [];
     let ultimoAutor = null;
-    let primeraMostrada = false;
+    let fraseActualMostrada = null; 
 
-    function mostrarPrimeraFrase() {
-        if (frasesEstres.length === 0) {
-            document.getElementById("fraseEstres").textContent = "Añade frases para comenzar.";
-            document.getElementById("autorEstres").textContent = "";
-            return;
-        }
+    /**
+     * Une las colecciones, limpia entradas del usuario y filtra descartes consumidos en sesiones previas
+     */
+    function inicializarDatos() {
+        let frasesUsuarioRaw = JSON.parse(localStorage.getItem("estres")) || [];
+        let frasesUsuarioLimpias = frasesUsuarioRaw.filter(item => 
+            item && typeof item === 'object' && item.texto && item.autor
+        );
 
-        let indiceInicial = frasesEstres.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Tú no estás fallando"));
-        if (indiceInicial === -1) indiceInicial = 0;
+        todasLasFrases = [...frasesEstresOriginal, ...frasesUsuarioLimpias];
 
-        const primera = frasesEstres[indiceInicial];
-        document.getElementById("fraseEstres").textContent = primera.texto;
-        document.getElementById("autorEstres").textContent = "— " + primera.autor;
-        
-        ultimoAutor = primera.autor;
-        frasesEstres.splice(indiceInicial, 1);
-        primeraMostrada = true;
+        // Lectura del historial permanente de exclusión
+        let vistas = JSON.parse(localStorage.getItem("estres_vistas")) || [];
+
+        // Filtro estricto de exclusión permanente
+        frasesEstres = todasLasFrases.filter(frase => 
+            !vistas.some(v => v.texto.trim() === frase.texto.trim() && v.autor.trim() === frase.autor.trim())
+        );
     }
 
-    function nuevaFraseEstres() {
-        if (!primeraMostrada) {
-            mostrarPrimeraFrase();
-            return;
+    /**
+     * Agrega de forma permanente un objeto frase al array de descartes en localStorage
+     */
+    function registrarFraseVista(frase) {
+        if (!frase) return;
+        let vistas = JSON.parse(localStorage.getItem("estres_vistas")) || [];
+        if (!vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)) {
+            vistas.push(frase);
+            localStorage.setItem("estres_vistas", JSON.stringify(vistas));
         }
+    }
+
+    /**
+     * Renderiza en pantalla el texto y autor de manera reactiva y segura
+     */
+    function pintarEnPantalla(texto, autor, esMensajeFinal = false) {
+        const txtEl = document.getElementById("fraseEstres");
+        const autEl = document.getElementById("autorEstres");
+        const btnNext = document.getElementById("btnSiguiente");
+        const btnSave = document.getElementById("btnGuardar");
+
+        if (txtEl) txtEl.textContent = texto;
+        if (autEl) autEl.textContent = esMensajeFinal ? "" : "— " + autor;
+
+        if (esMensajeFinal) {
+            if (btnNext) {
+                btnNext.disabled = true;
+                btnNext.textContent = "Fin del trayecto";
+            }
+            if (btnSave) btnSave.style.display = "none";
+        } else {
+            if (btnSave) btnSave.style.display = "flex";
+        }
+    }
+
+    /**
+     * Muestra la frase inicial (fija) sin quemarla de la pila para resguardar recargas fortuitas
+     */
+    function mostrarPrimeraFrase() {
+        inicializarDatos();
 
         if (frasesEstres.length === 0) {
-            document.getElementById("fraseEstres").textContent =
-                "Hoy ya no hay más frases, pero tú sigues teniendo la fuerza para continuar.";
-            document.getElementById("autorEstres").textContent = "";
+            mostrarMensajeFinal();
             return;
         }
 
-        const contenedor = document.getElementById("tarjetaContenedor");
-        contenedor.style.opacity = 0;
+        // Buscamos la frase fija inicial de IzAn
+        let elegidoIdx = frasesEstres.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Tú no estás fallando"));
+        
+        // Si ya fue descartada en otra sesión, sacamos el primer elemento disponible de la lista viva
+        if (elegidoIdx === -1) elegidoIdx = 0;
+
+        let seleccionada = frasesEstres[elegidoIdx];
+        fraseActualMostrada = seleccionada; // La guardamos en el limbo
+        ultimoAutor = seleccionada.autor;
+        
+        pintarEnPantalla(seleccionada.texto, seleccionada.autor);
+    }
+
+    /**
+     * Consume la frase visible y salta a un nodo aleatorio controlando repetición directa de autores
+     */
+    function nuevaFraseEstres() {
+        // Al interactuar con el botón, enviamos al registro definitivo la frase que estaba en pantalla
+        if (fraseActualMostrada) {
+            registrarFraseVista(fraseActualMostrada);
+        }
+
+        // Re-sincronizar arrays para trabajar sobre la lista limpia actualizada
+        inicializarDatos();
+
+        if (frasesEstres.length === 0) {
+            mostrarMensajeFinal();
+            return;
+        }
+
+        const contenedorTexto = document.getElementById("bloqueTexto");
+        if (contenedorTexto) contenedorTexto.style.opacity = 0;
 
         setTimeout(() => {
-            let indice;
+            let elegidoIdx = -1;
             let intentos = 0;
+            const maxIntentos = 15;
 
-            do {
-                indice = Math.floor(Math.random() * frasesEstres.length);
+            while (intentos < maxIntentos) {
+                let randomIdx = Math.floor(Math.random() * frasesEstres.length);
+                let candidata = frasesEstres[randomIdx];
+
+                if (candidata.autor !== ultimoAutor || frasesEstres.length === 1) {
+                    elegidoIdx = randomIdx;
+                    break;
+                }
                 intentos++;
-            } while (frasesEstres[indice].autor === ultimoAutor && intentos < 10 && frasesEstres.length > 1);
+            }
 
-            const frase = frasesEstres[indice];
+            if (elegidoIdx === -1) elegidoIdx = 0;
 
-            document.getElementById("fraseEstres").textContent = frase.texto;
-            document.getElementById("autorEstres").textContent = "— " + frase.autor;
+            const fraseFinal = frasesEstres[elegidoIdx];
+            fraseActualMostrada = fraseFinal; // Se actualiza la apuntada en pantalla al limbo
+            ultimoAutor = fraseFinal.autor;
 
-            ultimoAutor = frase.autor;
-            frasesEstres.splice(indice, 1);
+            pintarEnPantalla(fraseFinal.texto, fraseFinal.autor);
             
-            contenedor.style.opacity = 1;
+            if (contenedorTexto) contenedorTexto.style.opacity = 1;
 
-            const yOffset = -100; 
-            const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
-            window.scrollTo({ top: yPosition, behavior: "smooth" });
-
+            // Desplazamiento de scroll adaptado inteligente
+            const contenedorTarj = document.getElementById("tarjetaContenedor");
+            if (contenedorTarj) {
+                const yOffset = -100; 
+                const yPosition = contenedorTarj.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: yPosition, behavior: "smooth" });
+            }
         }, 250);
     }
 
+    /**
+     * Renderiza el estado de fin de las frases de forma elegante
+     */
+    function mostrarMensajeFinal() {
+        fraseActualMostrada = null;
+        pintarEnPantalla("Hoy ya no hay más frases, pero tú sigues teniendo la fuerza para continuar. ❤️", "", true);
+        const contenedorTexto = document.getElementById("bloqueTexto");
+        if (contenedorTexto) contenedorTexto.style.opacity = 1;
+    }
+
+    /**
+     * Guarda la frase visible dentro del repositorio unificado de Favoritos de la plataforma
+     */
     function guardarFavorito(idFrase, idAutor) {
-        const frase = document.getElementById(idFrase).textContent;
-        let autor = document.getElementById(idAutor).textContent;
+        const txtEl = document.getElementById(idFrase);
+        const autEl = document.getElementById(idAutor);
+        
+        if (!txtEl || !autEl) return;
 
-        if (!frase || frase.includes("Hoy ya no hay más frases") || frase === "Añade frases para comenzar.") {
-            return;
-        }
+        const frase = txtEl.textContent.trim();
+        let autor = autEl.textContent.trim().replace(/^—\s*/, "");
 
-        autor = autor.replace("— ", "");
+        if (!frase || frase.startsWith("Hoy ya no hay más frases") || frase.startsWith("Despejando la mente")) return;
 
         let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-        const yaExiste = favoritos.some(f => f.frase === frase);
-
+        const yaExiste = favoritos.some(f => f.frase.trim() === frase);
+        
         if (!yaExiste) {
-            favoritos.push({ frase, autor });
+            favoritos.push({ frase: frase, autor: autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
@@ -437,6 +543,7 @@
         }
     }
 
+    // Inicialización al vuelo en el ciclo de carga
     window.onload = function() {
         mostrarPrimeraFrase();
         window.scrollTo({ top: 0 });
