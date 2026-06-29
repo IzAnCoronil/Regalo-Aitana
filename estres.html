@@ -24,18 +24,18 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV - Barra unificada con scroll horizontal limpio */
+        /* NAV - Barra unificada con colores relajantes y scroll horizontal limpio */
         nav {
-            background: #ffe08a;
+            background: #cce3de; /* Tono verde salvia pastel muy claro */
             padding: 14px 20px;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
             z-index: 100;
             overflow-x: auto;
             white-space: nowrap;
@@ -48,7 +48,7 @@
         }
 
         nav a {
-            color: #5a3e00;
+            color: #2b4c3f;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
@@ -58,8 +58,8 @@
         }
 
         nav a:hover {
-            color: #8a6200;
-            transform: scale(1.03);
+            color: #4f7766;
+            transform: scale(1.05);
         }
 
         /* HEADER */
@@ -70,15 +70,16 @@
         }
 
         header h1 {
-            font-size: 2.6em;
+            font-size: 2.8em;
             color: #3d5a4c; /* Tono verde oscuro armónico */
-            margin: 0 0 10px 0;
+            margin: 0 0 12px 0;
             font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
         header p {
             color: #52796f;
-            font-size: 1.1em;
+            font-size: 1.15em;
             margin: 0;
             opacity: 0.9;
         }
@@ -86,40 +87,40 @@
         /* CONTENEDOR PRINCIPAL */
         .contenedor {
             background: white;
-            padding: 40px;
-            margin: 20px auto 80px;
+            padding: 50px 40px;
+            margin: 30px auto 100px;
             border-radius: 24px;
             max-width: 750px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
             text-align: center;
             box-sizing: border-box;
-            min-height: 280px; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.3s ease;
+            gap: 15px;
+            transition: opacity 0.25s ease;
         }
 
         .frase {
-            font-size: 1.45em;
+            font-size: 1.5em;
             color: #2c2c2c;
-            margin: 15px 0;
-            font-weight: 500;
+            margin: 10px 0;
+            font-weight: 400;
             line-height: 1.6;
         }
 
         .autor {
             font-size: 1.05em;
             color: #757575;
-            margin: 0 0 30px 0;
+            margin: 0 0 20px 0;
             font-style: italic;
         }
 
         /* BOTONES PRINCIPALES */
         button {
             display: inline-block;
-            padding: 14px 36px;
+            padding: 14px 38px;
             background: #6b9080;
             color: white;
             border: none;
@@ -127,7 +128,7 @@
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             margin: 10px;
             font-size: 1.1em;
             box-shadow: 0 4px 14px rgba(107, 144, 128, 0.3);
@@ -144,8 +145,8 @@
             transform: translateY(1px);
         }
 
-        /* BOTÓN FLOTANTE GUARDAR */
-        .boton-guardar {
+        /* BOTÓN FLOTANTE GUARDAR (Estilos aislados para evitar conflictos) */
+        button.boton-guardar {
             position: fixed;
             bottom: 25px;
             right: 25px;
@@ -160,22 +161,23 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            margin: 0;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
             border: 1px solid rgba(255, 82, 82, 0.15);
-            transition: all 0.25s ease;
             z-index: 99;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .boton-guardar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 82, 82, 0.18);
+        button.boton-guardar:hover {
             background: #fff5f5;
+            color: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 82, 82, 0.15);
         }
 
         /* Ajustes Responsivos */
         @media (max-width: 768px) {
             nav {
+                justify-content: flex-start;
                 gap: 20px;
                 padding: 14px 15px;
             }
@@ -183,21 +185,22 @@
                 padding-top: 110px;
             }
             header h1 {
-                font-size: 2.1em;
+                font-size: 2.2em;
             }
             .contenedor {
                 margin: 15px 15px 100px;
-                padding: 35px 20px;
-                min-height: 250px;
+                padding: 40px 20px;
             }
             .frase {
-                font-size: 1.25em;
+                font-size: 1.3em;
             }
             button {
                 width: 100%;
-                max-width: 290px;
+                max-width: 320px;
+                margin: 8px 0;
             }
-            .boton-guardar {
+            button.boton-guardar {
+                width: auto;
                 bottom: 20px;
                 right: 20px;
                 padding: 10px 20px;
@@ -230,9 +233,9 @@
         <button onclick="nuevaFraseEstres()">Otra frase</button>
     </div>
 
-    <div class="boton-guardar" onclick="guardarFavorito('fraseEstres','autorEstres')">
+    <button class="boton-guardar" onclick="guardarFavorito('fraseEstres','autorEstres')">
         ❤️ Guardar
-    </div>
+    </button>
 
     <script>
     const frasesEstresOriginal = [
@@ -251,7 +254,7 @@
         { texto: "Tu valor no baja porque un día no te dé la vida.", autor: "IzAn" },
         { texto: "Estás haciendo más de lo que crees, aunque tu mente no te lo reconozca.", autor: "IzAn" },
         { texto: "No estás sola in esto, aunque tu estrés te haga sentir lo contrario.", autor: "IzAn" },
-        { texto: "Tu esfuerzo vale, incluso cuando nadie lo ve.", autor: "IzAn" },
+        { texto: "Tu esfuerzo vale, incluso cuando nadie lo see.", autor: "IzAn" },
         { texto: "A veces te bloqueas, pero eso no borra todo lo que ya has conseguido.", autor: "IzAn" },
         { texto: "No tienes que ser perfecta, solo constante, y eso ya lo eres.", autor: "IzAn" },
         { texto: "Tu cabeza no está saturada porque seas débil, sino porque llevas demasiado tiempo siendo fuerte.", autor: "IzAn" },
@@ -405,7 +408,6 @@
             
             contenedor.style.opacity = 1;
 
-            // Scroll suave calculando dinámicamente el centro del contenedor
             const yOffset = -100; 
             const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: yPosition, behavior: "smooth" });
