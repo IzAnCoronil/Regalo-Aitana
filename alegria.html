@@ -99,7 +99,6 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            transition: opacity 0.25s ease;
         }
 
         .frase {
@@ -115,6 +114,22 @@
             color: #757575;
             margin: 0 0 20px 0;
             font-style: italic;
+        }
+
+        /* Animación optimizada por Hardware y Reflujo del DOM */
+        .frase-animada {
+            animation: fadeInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* BOTONES PRINCIPALES */
@@ -143,6 +158,13 @@
 
         button:active {
             transform: translateY(1px);
+        }
+
+        button:disabled {
+            background: #cccccc;
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         /* BOTÓN FLOTANTE GUARDAR (Estilos aislados para evitar conflictos) */
@@ -202,9 +224,11 @@
             button.boton-guardar {
                 width: auto;
                 bottom: 20px;
-                right: 20px;
-                padding: 10px 20px;
-                font-size: 0.95em;
+                right: 50%;
+                transform: translateX(50%); /* Centrado adaptativo nativo para móviles */
+            }
+            button.boton-guardar:hover {
+                transform: translateX(50%) scale(1.02);
             }
         }
     </style>
@@ -228,12 +252,14 @@
     </header>
 
     <div class="contenedor" id="tarjetaContenedor">
-        <p id="fraseAlegria" class="frase"></p>
-        <p id="autorAlegria" class="autor"></p>
-        <button onclick="nuevaFraseAlegria()">Otra frase</button>
+        <div id="contenedorTextoCarrusel">
+            <p id="fraseAlegria" class="frase">Cargando destellos de alegría...</p>
+            <p id="autorAlegria" class="autor"></p>
+        </div>
+        <button id="btnSiguiente" onclick="nuevaFraseAlegria()">Otra frase</button>
     </div>
 
-    <button class="boton-guardar" onclick="guardarFavorito('fraseAlegria','autorAlegria')">
+    <button id="btnGuardar" class="boton-guardar" onclick="guardarFavorito('fraseAlegria','autorAlegria')">
         ❤️ Guardar
     </button>
 
@@ -305,70 +331,6 @@
         { texto: "La vida cambia muy rápido, de forma muy positiva, si la dejas.", autor: "Lindsey Vonn" },
         { texto: "La confianza llega cuando dejas de buscar la perfección.", autor: "Brené Brown" },
         { texto: "La tormenta hace que los árboles tengan raíces más profundas.", autor: "Dolly Parton" },
-        { texto: "Nada grande se ha conseguido jamás sin entusiasmo.", autor: "Ralph Waldo Emerson" },
-        { texto: "Las dificultades son cosas destinadas a despertar, no a desanimar.", autor: "William Ellery Channing" },
-        { texto: "Cada día es una nueva oportunidad para cambiar tu vida.", autor: "Anónimo" },
-        { texto: "La esperanza es poder ver que hay luz a pesar de toda la oscuridad.", autor: "Desmond Tutu" },
-        { texto: "No dejes que lo que no puedes hacer interfiera con lo que sí puedes hacer.", autor: "John Wooden" },
-        { texto: "El futuro depende de lo que hagas hoy.", autor: "Mahatma Gandhi" },
-        { texto: "La mente es todo; te conviertes en aquello que piensas.", autor: "Buda" },
-        { texto: "La felicidad es una dirección, no un lugar.", autor: "Sydney J. Harris" },
-        { texto: "Cuando ya no podemos cambiar una situación, tenemos el desafío de cambiarnos a nosotros mismos.", autor: "Viktor Frankl" },
-        { texto: "Lo mejor está por llegar.", autor: "Frank Sinatra" },
-        { texto: "El fracaso es simplemente la oportunidad de comenzar de nuevo con más inteligencia.", autor: "Henry Ford" },
-        { texto: "Nunca pierdas la fe en ti mismo.", autor: "William James" },
-        { texto: "Los obstáculos son esas cosas que ves cuando apartas la vista de tu meta.", autor: "Henry Ford" },
-        { texto: "Todo lo que necesitas ya está dentro de ti.", autor: "Rumi" },
-        { texto: "La paz comienza con una sonrisa.", autor: "Madre Teresa" },
-        { texto: "La verdadera fortaleza es mantenerte amable en tiempos difíciles.", autor: "Anónimo" },
-        { texto: "El éxito es no definitivo; el fracaso no es fatal.", autor: "Winston Churchill" },
-        { texto: "Las estrellas brillan más cuando la noche es más oscura.", autor: "Proverbio persa" },
-        { texto: "La vida siempre ofrece una segunda oportunidad llamada mañana.", autor: "Nicholas Sparks" },
-        { texto: "Respira. Es solo un mal día, no una mala vida.", autor: "Mary Engelbreit" },
-        { texto: "La valentía no siempre ruge; a veces es una voz tranquila que dice: mañana lo intentaré otra vez.", autor: "Mary Anne Radmacher" },
-        { texto: "Nunca subestimes el poder de un pequeño paso hacia adelante.", autor: "Anónimo" },
-        { texto: "Lo que hoy parece una montaña, mañana será parte del paisaje.", autor: "Anónimo" },
-        { texto: "Tu fuerza es mayor de lo que imaginas.", autor: "Harper Lee" },
-        { texto: "Incluso las grietas dejan pasar la luz.", autor: "Leonard Cohen" },
-        { texto: "No importa cuántas veces caigas, sino cuántas veces te levantes.", autor: "Nelson Mandela" },
-        { texto: "La serenidad llega cuando aceptas lo que no puedes controlar.", autor: "Reinhold Niebuhr" },
-        { texto: "Los momentos difíciles también pasan.", autor: "Robert H. Schuller" },
-        { texto: "Cada amanecer trae una nueva posibilidad.", autor: "Maya Angelou" },
-        { texto: "Tu historia aún se está escribiendo.", autor: "J. K. Rowling" },
-        { texto: "Las nubes pasan, el cielo permanece.", autor: "Ramana Maharshi" },
-        { texto: "La esperanza nunca abandona a quien decide seguir adelante.", autor: "Paulo Coelho" },
-        { texto: "Siempre hay flores para quien desea verlas.", autor: "Henri Matisse" },
-        { texto: "La vida encoge o se expande en proporción a tu valentía.", autor: "Anaïs Nin" },
-        { texto: "Nada puede apagar la luz que brilla desde dentro.", autor: "Maya Angelou" },
-        { texto: "La esperanza es el único bien común a todos los hombres.", autor: "Tales de Mileto" },
-        { texto: "Cada día es una pequeña vida.", autor: "Arthur Schopenhauer" },
-        { texto: "El alma fuerte ilumina incluso los días grises.", autor: "Emily Brontë" },
-        { texto: "No hay camino para la paz, la paz es el camino.", autor: "Mahatma Gandhi" },
-        { texto: "La perseverancia es la madre de la buena suerte.", autor: "Miguel de Cervantes" },
-        { texto: "Quien conserva la capacidad de ver la belleza nunca envejece.", autor: "Franz Kafka" },
-        { texto: "Las cosas mejores y más bellas no pueden verse ni tocarse, pero se sienten.", autor: "Helen Keller" },
-        { texto: "La libertad está en ser dueños de nuestra propia vida.", autor: "Platón" },
-        { texto: "El sufrimiento deja de ser sufrimiento cuando encuentra un sentido.", autor: "Viktor Frankl" },
-        { texto: "La fe da el primer paso aunque no veas toda la escalera.", autor: "Martin Luther King Jr." },
-        { texto: "La alegría es la forma más sencilla de gratitud.", autor: "Karl Barth" },
-        { texto: "Lo que eres habla tan fuerte que no puedo oír lo que dices.", autor: "Ralph Waldo Emerson" },
-        { texto: "La paciencia todo lo alcanza.", autor: "Santa Teresa de Jesús" },
-        { texto: "El optimismo es la fe que conduce al logro.", autor: "Helen Keller" },
-        { texto: "No permitas que el ruido de las opiniones ajenas silencie tu voz interior.", autor: "Steve Jobs" },
-        { texto: "Cada nuevo día es una página en blanco.", autor: "Edith Lovejoy Pierce" },
-        { texto: "La mayor gloria no es no caer nunca, sino levantarse siempre.", autor: "Confucio" },
-        { texto: "El coraje comienza cuando decides intentarlo.", autor: "Brené Brown" },
-        { texto: "Nunca sabes lo fuerte que eres hasta que ser fuerte es tu única opción.", autor: "Bob Marley" },
-        { texto: "Los obstáculos son oportunidades para crecer.", autor: "Oprah Winfrey" },
-        { texto: "La esperanza es un riesgo que hay que correr.", autor: "Georges Bernanos" },
-        { texto: "Todo aquello que enfrentas te transforma.", autor: "Carl Jung" },
-        { texto: "La felicidad no disminuye al compartirla.", autor: "Buda" },
-        { texto: "Haz de tu vida un sueño y de tu sueño una realidad.", autor: "Antoine de Saint-Exupéry" },
-        { texto: "No existe noche tan larga que impida salir al sol.", autor: "Proverbio oriental" },
-        { texto: "La bondad es una fuerza silenciosa.", autor: "León Tolstói" },
-        { texto: "Cada paso cuenta, incluso los más pequeños.", autor: "Aesopo" },
-        { texto: "Lo importante es no dejar de hacerse preguntas.", autor: "Albert Einstein" },
-        { texto: "La esperanza renace cuando menos la esperas.", autor: "Jules Verne" },
         { texto: "Nada es más poderoso que una mente decidida.", autor: "Mary Shelley" },
         { texto: "Las grandes dificultades preparan grandes destinos.", autor: "Alexandre Dumas" },
         { texto: "La vida encuentra siempre una manera.", autor: "Michael Crichton" },
@@ -399,78 +361,173 @@
         { texto: "Mañana puede ser mejor de lo que imaginas.", autor: "Emily Dickinson" }
     ];
 
-    let frasesUsuario = JSON.parse(localStorage.getItem("alegria")) || [];
-    let frasesAlegria = frasesAlegriaOriginal.concat(frasesUsuario);
-
+    // Variables globales de ejecución
+    let todasLasFrases = [];
+    let frasesAlegria = [];
     let ultimoAutorAlegria = null;
-    let primeraMostrada = false;
 
-    function mostrarPrimeraFrase() {
-        const primera = frasesAlegriaOriginal[0];
-        document.getElementById("fraseAlegria").textContent = primera.texto;
-        document.getElementById("autorAlegria").textContent = "— " + primera.autor;
+    /**
+     * Sincroniza, limpia y filtra universos de datos aplicando el descarte estricto
+     */
+    function inicializarDatos() {
+        let frasesUsuarioRaw = JSON.parse(localStorage.getItem("alegria")) || [];
+        let frasesUsuarioLimpias = frasesUsuarioRaw.filter(item => 
+            item && typeof item === 'object' && item.texto && item.autor
+        );
 
-        frasesAlegria = frasesAlegria.filter(f => f.texto !== primera.texto);
-        
-        ultimoAutorAlegria = primera.autor;
-        primeraMostrada = true;
+        // Fusión completa
+        todasLasFrases = [...frasesAlegriaOriginal, ...frasesUsuarioLimpias];
+
+        // Lectura de descartes históricos
+        let vistas = JSON.parse(localStorage.getItem("alegria_vistas")) || [];
+
+        // Filtrado de no repetición permanente
+        frasesAlegria = todasLasFrases.filter(frase => 
+            !vistas.some(v => v.texto.trim() === frase.texto.trim() && v.autor.trim() === frase.autor.trim())
+        );
     }
 
-    function nuevaFraseAlegria() {
-        if (!primeraMostrada) {
-            mostrarPrimeraFrase();
-            return;
+    /**
+     * Ejecuta el reinicio de clases CSS controlando el Reflow del navegador
+     */
+    function aplicarAnimacion() {
+        const contenedor = document.getElementById("contenedorTextoCarrusel");
+        if (!contenedor) return;
+
+        contenedor.classList.remove("frase-animada");
+        void contenedor.offsetWidth; // Forzar reflujo de renderizado
+        contenedor.classList.add("frase-animada");
+    }
+
+    /**
+     * Guarda la frase visualizada inmediatamente en memoria local y sesión activa
+     */
+    function registrarFraseVista(frase) {
+        let vistas = JSON.parse(localStorage.getItem("alegria_vistas")) || [];
+        if (!vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)) {
+            vistas.push(frase);
+            localStorage.setItem("alegria_vistas", JSON.stringify(vistas));
         }
+        // Remover del array en ejecución de la sesión activa
+        frasesAlegria = frasesAlegria.filter(f => f.texto !== frase.texto || f.autor !== frase.autor);
+    }
+
+    /**
+     * Actualiza la interfaz de usuario de manera segura
+     */
+    function pintarEnPantalla(texto, autor, esMensajeFinal = false) {
+        const txtEl = document.getElementById("fraseAlegria");
+        const autEl = document.getElementById("autorAlegria");
+        const btnNext = document.getElementById("btnSiguiente");
+        const btnSave = document.getElementById("btnGuardar");
+
+        if (txtEl) txtEl.textContent = texto;
+        if (autEl) autEl.textContent = esMensajeFinal ? "" : "— " + autor;
+
+        if (esMensajeFinal) {
+            if (btnNext) btnNext.disabled = true;
+            if (btnSave) btnSave.style.display = "none";
+        } else {
+            if (btnSave) btnSave.style.display = "flex";
+        }
+        aplicarAnimacion();
+    }
+
+    /**
+     * Busca y presenta la frase inicial requerida por el flujo
+     */
+    function mostrarPrimeraFrase() {
+        inicializarDatos();
 
         if (frasesAlegria.length === 0) {
-            document.getElementById("fraseAlegria").textContent =
-                "Hoy ya no hay más frases, pero tu sonrisa puede inventar las suyas propias.";
-            document.getElementById("autorAlegria").textContent = "";
+            mostrarMensajeFinal();
             return;
         }
 
+        // Buscar específicamente la frase fijada por diseño inicial
+        const indiceInicial = frasesAlegria.findIndex(f => 
+            f.autor === "IzAn" && f.texto.startsWith("Sigue dando guerra con su sonrisa")
+        );
+
+        let seleccionada;
+        if (indiceInicial !== -1) {
+            seleccionada = frasesAlegria[indiceInicial];
+        } else {
+            seleccionada = frasesAlegria[0];
+        }
+
+        ultimoAutorAlegria = seleccionada.autor;
+        registrarFraseVista(seleccionada);
+        pintarEnPantalla(seleccionada.texto, seleccionada.autor);
+    }
+
+    /**
+     * Selecciona aleatoriamente una nueva frase previniendo autores continuos
+     */
+    function nuevaFraseAlegria() {
+        if (frasesAlegria.length === 0) {
+            mostrarMensajeFinal();
+            return;
+        }
+
+        let elegidoIdx = -1;
+        let intentos = 0;
+        const maxIntentos = 15;
+
+        while (intentos < maxIntentos) {
+            let randomIdx = Math.floor(Math.random() * frasesAlegria.length);
+            let candidata = frasesAlegria[randomIdx];
+
+            if (candidata.autor !== ultimoAutorAlegria || frasesAlegria.length === 1) {
+                elegidoIdx = randomIdx;
+                break;
+            }
+            intentos++;
+        }
+
+        if (elegidoIdx === -1) elegidoIdx = 0;
+
+        const fraseFinal = frasesAlegria[elegidoIdx];
+        ultimoAutorAlegria = fraseFinal.autor;
+
+        registrarFraseVista(fraseFinal);
+        pintarEnPantalla(fraseFinal.texto, fraseFinal.autor);
+
+        // Desplazamiento dinámico y suave adaptado a la tarjeta contenedora
         const contenedor = document.getElementById("tarjetaContenedor");
-        contenedor.style.opacity = 0;
-
-        setTimeout(() => {
-            let indice;
-            let intentos = 0;
-
-            do {
-                indice = Math.floor(Math.random() * frasesAlegria.length);
-                intentos++;
-            } while (frasesAlegria[indice].autor === ultimoAutorAlegria && intentos < 10 && frasesAlegria.length > 1);
-
-            const frase = frasesAlegria[indice];
-
-            document.getElementById("fraseAlegria").textContent = frase.texto;
-            document.getElementById("autorAlegria").textContent = "— " + frase.autor;
-
-            ultimoAutorAlegria = frase.autor;
-            frasesAlegria.splice(indice, 1);
-            
-            contenedor.style.opacity = 1;
-
+        if (contenedor) {
             const yOffset = -100; 
             const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: yPosition, behavior: "smooth" });
-
-        }, 250);
+        }
     }
 
+    /**
+     * Cierre elegante del flujo de frases
+     */
+    function mostrarMensajeFinal() {
+        pintarEnPantalla("Has completado todas las frases disponibles de esta sección. ¡Eres muy fuerte! ❤️", "", true);
+    }
+
+    /**
+     * Gestión del almacenamiento en la colección global de favoritos sin duplicados
+     */
     function guardarFavorito(idFrase, idAutor) {
-        const frase = document.getElementById(idFrase).textContent;
-        let autor = document.getElementById(idAutor).textContent;
+        const txtEl = document.getElementById(idFrase);
+        const autEl = document.getElementById(idAutor);
+        
+        if (!txtEl || !autEl) return;
 
-        if (!frase || frase.includes("Hoy ya no hay más frases")) return;
+        const frase = txtEl.textContent.trim();
+        let autor = autEl.textContent.trim().replace(/^—\s*/, "");
 
-        autor = autor.replace("— ", "");
+        if (!frase || frase.startsWith("Has completado todas las frases")) return;
 
         let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-        const yaExiste = favoritos.some(f => f.frase === frase);
+        const yaExiste = favoritos.some(f => f.frase.trim() === frase);
         
         if (!yaExiste) {
-            favoritos.push({ frase, autor });
+            favoritos.push({ frase: frase, autor: autor });
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             alert("¡Frase guardada en tus favoritos! ❤️");
         } else {
@@ -478,6 +535,7 @@
         }
     }
 
+    // Vinculación de arranque limpio de ventana
     window.onload = function() {
         mostrarPrimeraFrase();
         window.scrollTo({ top: 0 });
