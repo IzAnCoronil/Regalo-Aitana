@@ -51,7 +51,7 @@
             left: 0;
             right: 0;
             display: flex;
-            justify(content: center;
+            justify-content: center;
             gap: 25px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
@@ -176,7 +176,14 @@
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
         }
 
-        .contenedor button:active {
+        .contenedor button:disabled {
+            background: #475569;
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .contenedor button:active:not(:disabled) {
             transform: translateY(1px);
         }
 
@@ -240,9 +247,11 @@
             button.boton-guardar {
                 width: auto;
                 bottom: 20px;
-                right: 20px;
-                padding: 10px 20px;
-                font-size: 0.95em;
+                right: 50%;
+                transform: translateX(50%); /* Centrado adaptativo nativo para móviles */
+            }
+            button.boton-guardar:hover {
+                transform: translateX(50%) scale(1.02);
             }
         }
     </style>
@@ -265,20 +274,20 @@
         <p>Palabras para cuando necesites un empujón.</p>
     </header>
 
-    <div class="contenedor">
+    <div class="contenedor" id="tarjetaContenedor">
         <div id="bloqueTexto">
-            <p id="fraseMotivacion" class="frase"></p>
+            <p id="fraseMotivacion" class="frase">Cargando chispas de energía...</p>
             <p id="autorMotivacion" class="autor"></p>
         </div>
 
-        <button onclick="nuevaFraseMotivacion()">Otra frase</button>
+        <button id="btnSiguiente" onclick="nuevaFraseMotivacion()">Otra frase</button>
     </div>
 
-    <button class="boton-guardar" onclick="guardarFavorito('fraseMotivacion','autorMotivacion')">
+    <button id="btnGuardar" class="boton-guardar" onclick="guardarFavorito('fraseMotivacion','autorMotivacion')">
         ❤️ Guardar
     </button>
 
-   <script>
+    <script>
         const frasesMotivacionOriginal = [
             { texto: "Bueno, ahora tienes dudas pero nada que no puedas soportar porque eres la chica más fuerte que conozco.", autor: "IzAn" },
             { texto: "Sé que ahora te cuesta verlo, pero tú siempre sales adelante, incluso cuando nadie lo sabe.", autor: "IzAn" },
@@ -393,7 +402,7 @@
             { texto: "Todos nuestros sueños pueden hacerse realidad si tenemos el coraje de perseguirlos.", autor: "Walt Disney" },
             { texto: "Lo que consigues al alcanzar tus metas no es tan importante como en lo que te conviertes.", autor: "Zig Ziglar" },
             { texto: "No cuentes los días, haz que los días cuenten.", autor: "Muhammad Ali" },
-            { texto: "La amistad mejora la felicidad y reduce la miseria.", autor: "Cicerón" },
+            { texto: "La friendship mejora la felicidad y reduce la miseria.", autor: "Cicerón" },
             { texto: "Donde hay amor, hay vida.", autor: "Mahatma Gandhi" },
             { texto: "Vive como si fueras a morir mañana. Aprende como si fueras a vivir para siempre.", autor: "Mahatma Gandhi" },
             { texto: "Nada es permanente excepto el cambio.", autor: "Heráclito" },
@@ -414,7 +423,7 @@
             { texto: "El éxito depende del esfuerzo.", autor: "Sófocles" },
             { texto: "La esperanza es el único bien común a todos los hombres.", autor: "Tales de Mileto" },
             { texto: "Nunca confundas una derrota con una derrota final.", autor: "F. Scott Fitzgerald" },
-            { texto: "La vitalidad se revela no solo en la capacidad de persistir, sino en la de volver a empezar.", autor: "F. Scott Fitzgerald" },
+            { texto: "La vitalidad se reveals no solo en la capacidad de persistir, sino en la de volver a empezar.", autor: "F. Scott Fitzgerald" },
             { texto: "Todo lo que somos es el resultado de lo que hemos pensado.", autor: "Buda" },
             { texto: "Tres cosas no pueden ocultarse mucho tiempo: el sol, la luna y la verdad.", autor: "Buda" },
             { texto: "El hombre que mueve montañas comienza llevando pequeñas piedras.", autor: "Confucio" },
@@ -443,82 +452,182 @@
             { texto: "Las estrellas brillan más intensamente contra la noche más oscura.", autor: "Fyodor Dostoyevski" }
         ];
 
-        let frasesUsuario = JSON.parse(localStorage.getItem("Motivacion")) || [];
-        let todasLasFrases = frasesMotivacionOriginal.concat(frasesUsuario);
-        
-        let frasesVistas = JSON.parse(localStorage.getItem("vistas_motivacion")) || [];
-        let frasesDisponibles = todasLasFrases.filter(f => !frasesVistas.includes(f.texto));
+        // Estados globales de control continuo
+        let todasLasFrases = [];
+        let frasesMotivacion = [];
         let ultimoAutor = null;
+        let fraseActualMostrada = null; // Guardado temporal de lo que se ve en pantalla
 
+        /**
+         * Inicializa, limpia y filtra el set de datos cruzando exclusiones
+         */
+        function inicializarDatos() {
+            let frasesUsuarioRaw = JSON.parse(localStorage.getItem("Motivacion")) || [];
+            let frasesUsuarioLimpias = frasesUsuarioRaw.filter(item => 
+                item && typeof item === 'object' && item.texto && item.autor
+            );
+
+            todasLasFrases = [...frasesMotivacionOriginal, ...frasesUsuarioLimpias];
+
+            // Leemos del localStorage permanente de descartes
+            let vistas = JSON.parse(localStorage.getItem("motivacion_vistas")) || [];
+
+            // Filtrar eliminando de verdad las guardadas como vistas
+            frasesMotivacion = todasLasFrases.filter(frase => 
+                !vistas.some(v => v.texto.trim() === frase.texto.trim() && v.autor.trim() === frase.autor.trim())
+            );
+        }
+
+        /**
+         * Maneja el re-renderizado de clases CSS controlando el layout recalculado
+         */
         function aplicarAnimacion() {
             const elemento = document.getElementById("bloqueTexto");
+            if (!elemento) return;
             elemento.classList.remove("frase-animada");
             void elemento.offsetWidth; 
             elemento.classList.add("frase-animada");
         }
 
-        function manejarFinDeFrases() {
-            document.getElementById("fraseMotivacion").textContent = "Has completado todo el camino. No quedan más frases nuevas.";
-            document.getElementById("autorMotivacion").textContent = "";
-            
-            // Buscamos el botón principal y lo deshabilitamos estéticamente
-            const boton = document.querySelector(".contenedor button");
-            if (boton) {
-                boton.disabled = true;
-                boton.style.opacity = "0.4";
-                boton.style.cursor = "not-allowed";
-                boton.textContent = "Fin de las frases";
+        /**
+         * Almacena las frases procesadas en el histórico permanente
+         */
+        function registrarFraseVista(frase) {
+            if (!frase) return;
+            let vistas = JSON.parse(localStorage.getItem("motivacion_vistas")) || [];
+            if (!vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)) {
+                vistas.push(frase);
+                localStorage.setItem("motivacion_vistas", JSON.stringify(vistas));
+            }
+        }
+
+        /**
+         * Modifica el DOM de manera segura y controlada
+         */
+        function pintarEnPantalla(texto, autor, esMensajeFinal = false) {
+            const txtEl = document.getElementById("fraseMotivacion");
+            const autEl = document.getElementById("autorMotivacion");
+            const btnNext = document.getElementById("btnSiguiente");
+            const btnSave = document.getElementById("btnGuardar");
+
+            if (txtEl) txtEl.textContent = texto;
+            if (autEl) autEl.textContent = esMensajeFinal ? "" : "— " + autor;
+
+            if (esMensajeFinal) {
+                if (btnNext) {
+                    btnNext.disabled = true;
+                    btnNext.textContent = "Fin de las frases";
+                }
+                if (btnSave) btnSave.style.display = "none";
+            } else {
+                if (btnSave) btnSave.style.display = "flex";
             }
             aplicarAnimacion();
         }
 
-        function nuevaFraseMotivacion() {
-            if (frasesDisponibles.length === 0) {
-                manejarFinDeFrases();
+        /**
+         * Ejecuta la primera muestra en pantalla protegiéndola de F5 accidentales
+         */
+        function mostrarPrimeraFrase() {
+            inicializarDatos();
+
+            if (frasesMotivacion.length === 0) {
+                mostrarMensajeFinal();
                 return;
             }
 
-            let indice;
-            let intentos = 0;
-
-            do {
-                indice = Math.floor(Math.random() * frasesDisponibles.length);
-                intentos++;
-            } while (
-                frasesDisponibles[indice].autor === ultimoAutor &&
-                intentos < 10 && 
-                frasesDisponibles.length > 1
+            // Buscar la frase fijada por el autor
+            let indiceInicial = frasesMotivacion.findIndex(f => 
+                f.autor === "IzAn" && f.texto.startsWith("Bueno, ahora tienes dudas")
             );
 
-            const frase = frasesDisponibles[indice];
-
-            document.getElementById("fraseMotivacion").textContent = frase.texto;
-            document.getElementById("autorMotivacion").textContent = "— " + frase.autor;
-
-            ultimoAutor = frase.autor;
-
-            frasesVistas.push(frase.texto);
-            localStorage.setItem("vistas_motivacion", JSON.stringify(frasesVistas));
-
-            frasesDisponibles.splice(indice, 1);
-            aplicarAnimacion();
-        }
-
-        function guardarFavorito(idFrase, idAutor) {
-            const frase = document.getElementById(idFrase).textContent;
-            let autor = document.getElementById(idAutor).textContent;
-
-            if (!frase || frase.startsWith("Has completado") || frase === "Añade frases para comenzar.") {
-                return; 
+            let seleccionada;
+            if (indiceInicial !== -1) {
+                seleccionada = frasesMotivacion[indiceInicial];
+            } else {
+                seleccionada = frasesMotivacion[0];
             }
 
-            autor = autor.replace("— ", ""); 
+            fraseActualMostrada = seleccionada; // Queda en el limbo temporal sin guardarse en vistas aún
+            ultimoAutor = seleccionada.autor;
+            pintarEnPantalla(seleccionada.texto, seleccionada.autor);
+        }
+
+        /**
+         * Descarta la frase actual y salta a la siguiente de manera aleatoria
+         */
+        function nuevaFraseMotivacion() {
+            // CORRECCIÓN CLAVE: Aquí es donde se quema de verdad la frase anterior al avanzar
+            if (fraseActualMostrada) {
+                registrarFraseVista(fraseActualMostrada);
+            }
+
+            inicializarDatos();
+
+            if (frasesMotivacion.length === 0) {
+                mostrarMensajeFinal();
+                return;
+            }
+
+            let elegidoIdx = -1;
+            let intentos = 0;
+            const maxIntentos = 15;
+
+            while (intentos < maxIntentos) {
+                let randomIdx = Math.floor(Math.random() * frasesMotivacion.length);
+                let candidata = frasesMotivacion[randomIdx];
+
+                if (candidata.autor !== ultimoAutor || frasesMotivacion.length === 1) {
+                    elegidoIdx = randomIdx;
+                    break;
+                }
+                intentos++;
+            }
+
+            if (elegidoIdx === -1) elegidoIdx = 0;
+
+            const fraseFinal = frasesMotivacion[elegidoIdx];
+            fraseActualMostrada = fraseFinal; // Nueva frase asignada al limbo en pantalla
+            ultimoAutor = fraseFinal.autor;
+
+            pintarEnPantalla(fraseFinal.texto, fraseFinal.autor);
+
+            // Ajuste suave de scroll para centrar la tarjeta
+            const contenedor = document.getElementById("tarjetaContenedor");
+            if (contenedor) {
+                const yOffset = -100; 
+                const yPosition = contenedor.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: yPosition, behavior: "smooth" });
+            }
+        }
+
+        /**
+         * Maneja el término de colecciones de manera limpia
+         */
+        function mostrarMensajeFinal() {
+            fraseActualMostrada = null;
+            pintarEnPantalla("Ya no hay más frases si quieres más sólo tienes que pedirlas. ❤️", "", true);
+        }
+
+        /**
+         * Guarda favoritos en la lista unificada local
+         */
+        function guardarFavorito(idFrase, idAutor) {
+            const txtEl = document.getElementById(idFrase);
+            const autEl = document.getElementById(idAutor);
+
+            if (!txtEl || !autEl) return;
+
+            const frase = txtEl.textContent.trim();
+            let autor = autEl.textContent.trim().replace(/^—\s*/, "");
+
+            if (!frase || frase.startsWith("Ya no hay más frases") || frase.startsWith("Cargando chispas")) return;
 
             let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+            const yaExiste = favoritos.some(f => f.frase.trim() === frase);
             
-            const yaExiste = favoritos.some(f => f.frase === frase);
             if (!yaExiste) {
-                favoritos.push({ frase, autor }); 
+                favoritos.push({ frase: frase, autor: autor });
                 localStorage.setItem("favoritos", JSON.stringify(favoritos));
                 alert("¡Frase guardada en tus favoritos! ❤️");
             } else {
@@ -526,36 +635,12 @@
             }
         }
 
+        // Evento de arranque global unificado
         document.addEventListener("DOMContentLoaded", function () {
-            if (todasLasFrases.length === 0) {
-                document.getElementById("fraseMotivacion").textContent = "Añade frases para comenzar.";
-                return;
-            }
-
-            if (frasesDisponibles.length === 0) {
-                manejarFinDeFrases();
-                return;
-            }
-
-            let indiceInicial = frasesDisponibles.findIndex(f => f.autor === "IzAn" && f.texto.startsWith("Bueno, ahora tienes dudas"));
-
-            if (indiceInicial === -1) {
-                indiceInicial = Math.floor(Math.random() * frasesDisponibles.length);
-            }
-
-            const primera = frasesDisponibles[indiceInicial];
-
-            document.getElementById("fraseMotivacion").textContent = primera.texto;
-            document.getElementById("autorMotivacion").textContent = "— " + primera.autor;
-
-            ultimoAutor = primera.autor;
-
-            frasesVistas.push(primera.texto);
-            localStorage.setItem("vistas_motivacion", JSON.stringify(frasesVistas));
-            
-            frasesDisponibles.splice(indiceInicial, 1);
-            aplicarAnimacion();
+            mostrarPrimeraFrase();
+            window.scrollTo({ top: 0 });
         });
     </script>
+
 </body>
 </html>
