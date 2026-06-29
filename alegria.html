@@ -365,6 +365,7 @@
     let todasLasFrases = [];
     let frasesAlegria = [];
     let ultimoAutorAlegria = null;
+    let fraseActualMostrada = null; // Guardar la frase que está en pantalla actualmente
 
     /**
      * Sincroniza, limpia y filtra universos de datos aplicando el descarte estricto
@@ -375,13 +376,12 @@
             item && typeof item === 'object' && item.texto && item.autor
         );
 
-        // Fusión completa
         todasLasFrases = [...frasesAlegriaOriginal, ...frasesUsuarioLimpias];
 
-        // CAMBIO CRÍTICO: Ahora usamos sessionStorage para que no se queden bloqueadas al recargar
-        let vistas = JSON.parse(sessionStorage.getItem("alegria_vistas")) || [];
+        // Usamos localStorage para persistencia real a largo plazo
+        let vistas = JSON.parse(localStorage.getItem("alegria_vistas")) || [];
 
-        // Filtrado de no repetición de sesión activa
+        // Filtrado de no repetición permanente
         frasesAlegria = todasLasFrases.filter(frase => 
             !vistas.some(v => v.texto.trim() === frase.texto.trim() && v.autor.trim() === frase.autor.trim())
         );
@@ -395,22 +395,20 @@
         if (!contenedor) return;
 
         contenedor.classList.remove("frase-animada");
-        void contenedor.offsetWidth; // Forzar reflujo de renderizado
+        void contenedor.offsetWidth; 
         contenedor.classList.add("frase-animada");
     }
 
     /**
-     * Guarda la frase visualizada inmediatamente en memoria de sesión activa
+     * Guarda de forma permanente las frases pasadas en el localStorage
      */
     function registrarFraseVista(frase) {
-        // CAMBIO CRÍTICO: Guardamos en sessionStorage en lugar de localStorage
-        let vistas = JSON.parse(sessionStorage.getItem("alegria_vistas")) || [];
+        if (!frase) return;
+        let vistas = JSON.parse(localStorage.getItem("alegria_vistas")) || [];
         if (!vistas.some(v => v.texto === frase.texto && v.autor === frase.autor)) {
             vistas.push(frase);
-            sessionStorage.setItem("alegria_vistas", JSON.stringify(vistas));
+            localStorage.setItem("alegria_vistas", JSON.stringify(vistas));
         }
-        // Remover del array en ejecución de la sesión activa
-        frasesAlegria = frasesAlegria.filter(f => f.texto !== frase.texto || f.autor !== frase.autor);
     }
 
     /**
@@ -438,7 +436,7 @@
     }
 
     /**
-     * Busca y presents la frase inicial requerida por el flujo
+     * Carga el estado inicial sin quemar la primera frase en el localStorage inmediatamente
      */
     function mostrarPrimeraFrase() {
         inicializarDatos();
@@ -448,7 +446,7 @@
             return;
         }
 
-        // Buscar específicamente la frase fijada por diseño inicial
+        // Buscar la frase estrella fijada
         const indiceInicial = frasesAlegria.findIndex(f => 
             f.autor === "IzAn" && f.texto.startsWith("Sigue dando guerra con su sonrisa")
         );
@@ -460,15 +458,23 @@
             seleccionada = frasesAlegria[0];
         }
 
+        fraseActualMostrada = seleccionada; // La guardamos en el limbo temporal
         ultimoAutorAlegria = seleccionada.autor;
-        registrarFraseVista(seleccionada);
         pintarEnPantalla(seleccionada.texto, seleccionada.autor);
     }
 
     /**
-     * Selecciona aleatoriamente una nueva frase previniendo autores continuos
+     * Selecciona aleatoriamente una nueva frase mandando la anterior al localStorage
      */
     function nuevaFraseAlegria() {
+        // CORRECCIÓN CLAVE: La frase que estaba en pantalla se descarta ahora de verdad
+        if (fraseActualMostrada) {
+            registrarFraseVista(fraseActualMostrada);
+        }
+
+        // Volvemos a leer datos limpios para actualizar el contador real de exclusiones
+        inicializarDatos();
+
         if (frasesAlegria.length === 0) {
             mostrarMensajeFinal();
             return;
@@ -492,12 +498,12 @@
         if (elegidoIdx === -1) elegidoIdx = 0;
 
         const fraseFinal = frasesAlegria[elegidoIdx];
+        fraseActualMostrada = fraseFinal; // Se actualiza la apuntada en pantalla
         ultimoAutorAlegria = fraseFinal.autor;
 
-        registrarFraseVista(fraseFinal);
         pintarEnPantalla(fraseFinal.texto, fraseFinal.autor);
 
-        // Desplazamiento dinámico y suave adaptado a la tarjeta contenedora
+        // Scroll dinámico adaptado
         const contenedor = document.getElementById("tarjetaContenedor");
         if (contenedor) {
             const yOffset = -100; 
@@ -510,6 +516,7 @@
      * Cierre elegante del flujo de frases
      */
     function mostrarMensajeFinal() {
+        fraseActualMostrada = null;
         pintarEnPantalla("Has completado todas las frases disponibles de esta sección. No quedan más frases nuevas. ❤️", "", true);
     }
 
