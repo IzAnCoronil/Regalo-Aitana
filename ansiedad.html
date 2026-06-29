@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Ansiedad</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         /* Optimización de Scroll y Vista General */
@@ -16,7 +16,8 @@
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
-            background: linear-gradient(135deg, #f3e8ff, #ffffff);
+            padding: 0;
+            background: linear-gradient(135deg, #f0e6ff, #f4f9ff);
             color: #3a3a3a;
             min-height: 100vh;
             overflow-y: auto;
@@ -24,19 +25,27 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV - Estructura unificada y adaptativa */
+        /* NAV - Estructura unificada, limpia y adaptativa */
         nav {
             background: #4da3ff;
-            padding: 12px 20px;
+            padding: 14px 20px;
             position: fixed;
             top: 0;
-            width: 100%;
+            left: 0;
+            right: 0;
             display: flex;
             justify-content: center;
-            gap: 35px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            gap: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
             box-sizing: border-box;
+        }
+
+        nav::-webkit-scrollbar {
+            display: none; /* Oculta barra en navegadores basados en Webkit */
         }
 
         nav a {
@@ -44,129 +53,173 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
-            transition: 0.2s;
+            transition: color 0.25s ease, transform 0.25s ease;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent;
         }
 
         nav a:hover {
             color: #e8f4ff;
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
         /* HEADER */
         header {
             text-align: center;
-            padding: 120px 20px 40px;
+            padding: 140px 20px 20px;
         }
 
         header h1 {
-            font-size: 2.6em;
+            font-size: 2.8em;
             color: #4a2d7f;
-            margin-bottom: 10px;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
         header p {
             color: #6a538f;
             font-size: 1.1em;
+            font-weight: 300;
+            margin: 0 auto;
+            max-width: 600px;
+            line-height: 1.5;
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        /* CONTENEDOR PRINCIPAL ESPACIADO */
         .contenedor {
             background: white;
-            padding: 40px;
-            margin: 30px auto 60px;
-            border-radius: 20px;
-            max-width: 900px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 50px 40px;
+            margin: 30px auto 120px;
+            border-radius: 24px;
+            max-width: 750px;
+            box-shadow: 0 10px 30px rgba(74, 45, 127, 0.06);
             text-align: center;
             box-sizing: border-box;
             width: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Animación suave para la transición de frases */
+        .frase-animada {
+            animation: fadeInBlur 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInBlur {
+            from { opacity: 0; filter: blur(5px); transform: translateY(6px); }
+            to { opacity: 1; filter: blur(0); transform: translateY(0); }
         }
 
         .frase {
-            font-size: 1.5em;
-            color: #3a3a3a;
-            margin-bottom: 15px;
+            font-size: 1.55em;
+            color: #2c2c2c;
+            margin: 10px 0;
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .autor {
             font-size: 1.05em;
             color: #7a7a7a;
-            margin-bottom: 30px;
+            margin: 0 0 35px 0;
             font-style: italic;
+            letter-spacing: 0.3px;
         }
 
         /* BOTONES GRANDES */
-        button {
+        .contenedor button {
             display: inline-block;
-            padding: 18px 28px;
+            padding: 15px 36px;
             background: #2ec4b6;
             color: white;
             border: none;
             border-radius: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            margin: 12px;
-            font-size: 1.2em;
-            min-width: 180px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: 1.1em;
+            min-width: 190px;
+            box-shadow: 0 4px 12px rgba(46, 196, 182, 0.2);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        button:hover {
+        .contenedor button:hover {
             background: #20a498;
-            transform: scale(1.08);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(46, 196, 182, 0.35);
+        }
+
+        .contenedor button:active {
+            transform: translateY(1px);
         }
 
         /* BOTÓN FLOTANTE GUARDAR */
-        .boton-guardar {
+        button.boton-guardar {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             background: #2ec4b6;
             color: white;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 1.1em;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
             font-weight: 600;
+            border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-            transition: 0.2s;
+            box-shadow: 0 8px 20px rgba(46, 196, 182, 0.3);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 101;
+            margin: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .boton-guardar:hover {
+        button.boton-guardar:hover {
             background: #20a498;
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(46, 196, 182, 0.45);
         }
 
         /* Ajustes responsivos móviles */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             nav {
-                gap: 15px;
-                padding: 10px;
-            }
-            nav a {
-                font-size: 0.9em;
+                justify-content: flex-start;
+                gap: 20px;
+                padding: 14px 15px;
             }
             header {
-                padding-top: 160px;
+                padding-top: 110px;
+            }
+            header h1 {
+                font-size: 2.2em;
             }
             .contenedor {
-                padding: 25px 20px;
-                width: 95%;
+                padding: 40px 20px;
+                margin-top: 20px;
+                margin-bottom: 100px;
+                width: 92%;
             }
             .frase {
-                font-size: 1.25em;
+                font-size: 1.3em;
             }
-            button {
-                padding: 14px 22px;
-                font-size: 1.1em;
+            .contenedor button {
                 width: 100%;
-                margin: 8px 0;
+                max-width: 320px;
+            }
+            button.boton-guardar {
+                width: auto;
+                bottom: 20px;
+                right: 20px;
+                padding: 10px 20px;
+                font-size: 0.95em;
             }
         }
     </style>
@@ -190,22 +243,21 @@
     </header>
 
     <div class="contenedor">
-        <p id="fraseAnsiedad" class="frase"></p>
-        <p id="autorAnsiedad" class="autor"></p>
+        <div id="bloqueTexto">
+            <p id="fraseAnsiedad" class="frase"></p>
+            <p id="autorAnsiedad" class="autor"></p>
+        </div>
 
         <button onclick="nuevaFraseAnsiedad()">Otra frase</button>
     </div>
 
-    <div class="boton-guardar" onclick="guardarFavorito('fraseAnsiedad','autorAnsiedad')">
+    <button class="boton-guardar" onclick="guardarFavorito('fraseAnsiedad','autorAnsiedad')">
         ❤️ Guardar
-    </div>
+    </button>
 
     <script>
     const frasesAnsiedadOriginal = [
-        // PRIMERA FRASE FIJA
         { texto: "Mi niña, has podido superar muchas cosas y aunque te parezca que no vas a salir de esta, recuerda que tú puedes con todo, y si algún día no puedes, aquí estamos para ayudarte y quererte.", autor: "IzAn" },
-
-        // TUS FRASES (IzAn)
         { texto: "A veces tu mente corre demasiado, pero tu corazón siempre sabe dónde frenar.", autor: "IzAn" },
         { texto: "No estás rota, solo cansada de ser fuerte incluso cuando nadie lo nota.", autor: "IzAn" },
         { texto: "Aunque tiemble tu interior, sigues avanzando, y eso ya es valentía.", autor: "IzAn" },
@@ -245,7 +297,6 @@
         { texto: "En medio de la dificultad reside la oportunidad.", autor: "Albert Einstein" },
         { texto: "La imaginación es más importante que el conocimiento.", autor: "Albert Einstein" },
         { texto: "Todo parece imposible hasta que se hace.", autor: "Nelson Mandela" },
-        { texto: "Siempre parece imposible hasta que se hace.", autor: "Nelson Mandela" },
         { texto: "Lo importante no es lo que te sucede, sino cómo reaccionas.", autor: "Epicteto" },
         { texto: "El alma se tiñe del color de sus pensamientos.", autor: "Marco Aurelio" },
         { texto: "La esperanza es el sueño del hombre despierto.", autor: "Aristóteles" },
@@ -308,7 +359,6 @@
         { texto: "Donde hay esperanza, hay vida.", autor: "Anne Frank" },
         { texto: "La educación es el arma más poderosa para cambiar el mundo.", autor: "Nelson Mandela" },
         { texto: "No hay pasión en jugar pequeño.", autor: "Nelson Mandela" },
-        { texto: "Siempre parece imposible hasta que se hace.", autor: "Nelson Mandela" },
         { texto: "Después de escalar una gran colina, uno encuentra muchas más.", autor: "Nelson Mandela" },
         { texto: "La valentía no es la ausencia de miedo, sino el triunfo sobre él.", autor: "Nelson Mandela" },
         { texto: "Nada puede apagar la luz que brilla desde dentro.", autor: "Maya Angelou" },
@@ -368,7 +418,7 @@
         { texto: "La puerta de la sabiduría nunca está cerrada.", autor: "Benjamin Franklin" },
         { texto: "La imaginación gobierna el mundo.", autor: "Napoleón Bonaparte" },
         { texto: "La victoria pertenece al más perseverante.", autor: "Napoleón Bonaparte" },
-        { texto: "La fortaleza de una person está en su voluntad.", autor: "Napoleón Bonaparte" },
+        { texto: "La fortaleza de una persona está en su voluntad.", autor: "Napoleón Bonaparte" },
         { texto: "La habilidad no significa nada sin oportunidad.", autor: "Napoleón Bonaparte" },
         { texto: "El coraje no es tener fuerza para seguir, es seguir cuando no tienes fuerza.", autor: "Napoleón Bonaparte" },
         { texto: "Lo único que debemos temer es al miedo mismo.", autor: "Franklin D. Roosevelt" },
@@ -379,14 +429,23 @@
     ];
 
     let frasesUsuario = JSON.parse(localStorage.getItem("ansiedad")) || [];
+    frasesUsuario = frasesUsuario.filter(f => f && f.texto && f.autor);
     let frasesAnsiedad = frasesAnsiedadOriginal.concat(frasesUsuario);
 
     let ultimaAutora = null;
     let primeraMostrada = false;
 
+    function aplicarAnimacion() {
+        const elemento = document.getElementById("bloqueTexto");
+        elemento.classList.remove("frase-animada");
+        void elemento.offsetWidth; 
+        elemento.classList.add("frase-animada");
+    }
+
     function mostrarPrimeraFrase() {
         if (frasesAnsiedad.length === 0) {
             document.getElementById("fraseAnsiedad").textContent = "Añade frases para comenzar.";
+            document.getElementById("autorAnsiedad").textContent = "";
             return;
         }
         
@@ -400,6 +459,7 @@
         ultimaAutora = primera.autor;
         frasesAnsiedad.splice(indiceInicial, 1);
         primeraMostrada = true;
+        aplicarAnimacion();
     }
 
     function nuevaFraseAnsiedad() {
@@ -412,6 +472,7 @@
             document.getElementById("fraseAnsiedad").textContent =
                 "Hoy ya no hay más frases, pero tú sigues teniendo la fuerza para continuar.";
             document.getElementById("autorAnsiedad").textContent = "";
+            aplicarAnimacion();
             return;
         }
 
@@ -420,7 +481,7 @@
 
         do {
             indice = Math.floor(Math.random() * frasesAnsiedad.length);
-            intentos++; // <- CORREGIDO AQUÍ (Antes decía intentas++)
+            intentos++; 
         } while (frasesAnsiedad[indice].autor === ultimaAutora && intentos < 10 && frasesAnsiedad.length > 1);
 
         const frase = frasesAnsiedad[indice];
@@ -430,6 +491,7 @@
 
         ultimaAutora = frase.autor;
         frasesAnsiedad.splice(indice, 1);
+        aplicarAnimacion();
     }
 
     function guardarFavorito(idFrase, idAutor) {
@@ -454,9 +516,9 @@
         }
     }
 
-    window.onload = function() {
+    document.addEventListener("DOMContentLoaded", function() {
         mostrarPrimeraFrase();
-    };
+    });
     </script>
 
 </body>
