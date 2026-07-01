@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        /* Ajustes de scroll global y rendimiento móvil */
         html {
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            color: #f1f5f9;
+            /* Cambio a una paleta de azul más suave y relajante */
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: #f8fafc;
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
@@ -25,7 +25,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV: Optimizado para scroll lateral táctil nativo y fluido */
+        /* NAV */
         nav {
             background: #4da3ff;
             padding: 14px 20px;
@@ -36,21 +36,18 @@
             display: flex;
             justify-content: flex-start;
             gap: 28px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             z-index: 1000;
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
             box-sizing: border-box;
         }
 
-        /* Oculta la barra de scroll visual en móviles para limpieza estética */
         nav::-webkit-scrollbar {
             display: none;
         }
 
-        /* Enlaces optimizados para el tamaño de toque del dedo (Tap Targets) */
         nav a {
             color: white;
             text-decoration: none;
@@ -59,7 +56,7 @@
             transition: transform 0.2s, color 0.2s;
             display: inline-block;
             padding: 4px 0;
-            -webkit-tap-highlight-color: transparent; /* Elimina el recuadro gris al pulsar en iOS */
+            -webkit-tap-highlight-color: transparent;
         }
 
         nav a:hover {
@@ -67,7 +64,7 @@
             transform: scale(1.05);
         }
 
-        /* HEADER: Adaptado para no quedar oculto bajo la barra fija */
+        /* HEADER */
         header {
             text-align: center;
             padding: 120px 24px 10px;
@@ -78,88 +75,141 @@
             margin-bottom: 8px;
             font-size: 2.4em;
             letter-spacing: 1px;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
         }
 
         header p {
-            color: #94a3b8;
+            color: #cbd5e1;
             font-size: 1.05em;
             font-weight: 300;
             margin-top: 5px;
         }
 
-        /* CONTENIDO RESPONSIVO */
+        /* CONTENIDO */
         .contenido {
             padding: 16px;
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto 50px;
-            overscroll-behavior: contain;
             box-sizing: border-box;
         }
 
-        /* Tarjetas flotantes estilo traslúcido optimizadas para pantallas pequeñas */
-        .bloque {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+        /* MENÚ DE SELECCIÓN (BOTONES PRINCIPALES) */
+        .menu-apartados {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn-apartado {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 24px;
+            border-radius: 16px;
+            color: #f8fafc;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s, transform 0.2s, border-color 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-apartado:hover, .btn-apartado:active {
+            background: rgba(77, 163, 255, 0.2);
+            border-color: #4da3ff;
+            transform: translateY(-2px);
+        }
+
+        /* CONTENEDOR DE JUEGO / PREGUNTAS */
+        .bloque-juego {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 30px 24px;
             border-radius: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.24);
-            text-align: left;
-            box-sizing: border-box;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            text-align: center;
+            display: none; /* Oculto al inicio */
         }
 
-        .bloque h2 {
-            color: #f8fafc;
-            font-weight: 600;
+        .bloque-juego h2 {
+            font-size: 1.4em;
+            color: #4da3ff;
             margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 1.45em;
-            border-bottom: 2px solid rgba(77, 163, 255, 0.25);
-            padding-bottom: 8px;
+            margin-bottom: 25px;
         }
 
-        /* Listas adaptadas para lectura móvil cómoda */
-        .lista-preguntas {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .lista-preguntas li {
-            font-size: 1.05em;
+        .pregunta-texto {
+            font-size: 1.15em;
             line-height: 1.6;
-            color: #cbd5e1;
+            margin-bottom: 25px;
             font-weight: 300;
-            margin-bottom: 18px;
-            padding-left: 14px;
-            border-left: 3px solid #38bdf8;
+            min-height: 60px;
         }
 
-        .lista-preguntas li:last-child {
-            margin-bottom: 0;
+        /* INPUT Y BOTONES INTERNOS */
+        .campo-respuesta {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 14px;
+            border-radius: 12px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            outline: none;
+            transition: border-color 0.3s;
         }
 
-        /* Ajustes específicos para pantallas muy pequeñas o teléfonos compactos */
+        .campo-respuesta:focus {
+            border-color: #4da3ff;
+        }
+
+        .btn-siguiente {
+            background: #4da3ff;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .btn-siguiente:hover {
+            background: #3b8ee6;
+        }
+
+        .btn-volver {
+            background: transparent;
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 25px;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+
+        .btn-volver:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        /* Ajustes de pantalla */
         @media (max-width: 480px) {
-            header {
-                padding-top: 105px;
-            }
-            header h1 {
-                font-size: 2em;
-            }
-            .bloque {
-                padding: 24px 18px;
-                border-radius: 16px;
-            }
-            .bloque h2 {
-                font-size: 1.3em;
-            }
-            .lista-preguntas li {
-                font-size: 1em;
-            }
+            header { padding-top: 105px; }
+            header h1 { font-size: 2em; }
+            .bloque-juego { padding: 24px 18px; }
+            .pregunta-texto { font-size: 1.05em; }
         }
     </style>
 </head>
@@ -167,42 +217,119 @@
 <body>
 
     <nav>
-        <a href="Index.html">Inicio</a>
+        <a href="index.html">Inicio</a>
         <a href="musica.html">Música</a>
         <a href="anadir.html">Añadir frases</a>
         <a href="sos.html">SOS</a>
         <a href="Love.html">Favoritos</a>
         <a href="album.html">Álbum</a>
-        <a href="Frasesamigos.html">Frases de amigos</a>
+        <a href="frasesamigos.html">Frases de amigos</a>
         <a href="pensamientos.html">Pensamientos</a>
     </nav>
 
     <header>
-        <h1>En desarrollo</h1>
-        <p>Un espacio en construcción para conectar contigo mismo.</p>
+        <h1 id="titulo-principal">En desarrollo</h1>
+        <p id="subtitulo-principal">Selecciona una categoría para reflexionar.</p>
     </header>
 
     <section class="contenido">
 
-        <div class="bloque">
-            <h2>Introspección</h2>
-            <ul class="lista-preguntas">
-                <li>Aquí puedes colocar tu primera pregunta o frase reflexiva...</li>
-                <li>Aquí va la segunda...</li>
-                <li>Y aquí otra más...</li>
-            </ul>
+        <div id="menu-apartados" class="menu-apartados">
+            <button class="btn-apartado" onclick="iniciarApartado('introspeccion')">Introspección</button>
+            <button class="btn-apartado" onclick="iniciarApartado('reflexivas')">Preguntas Reflexivas</button>
         </div>
 
-        <div class="bloque">
-            <h2>Preguntas Reflexivas</h2>
-            <ul class="lista-preguntas">
-                <li>Introduce aquí tu tanda de preguntas...</li>
-                <li>Segunda pregunta de este bloque...</li>
-                <li>Tercera pregunta de este bloque...</li>
-            </ul>
+        <div id="bloque-juego" class="bloque-juego">
+            <h2 id="titulo-apartado">Categoría</h2>
+            <p id="pregunta-actual" class="pregunta-texto">Cargando pregunta...</p>
+            
+            <input type="text" id="respuesta-user" class="campo-respuesta" placeholder="Escribe tu respuesta aquí..." autocomplete="off">
+            <br>
+            <button class="btn-siguiente" onclick="siguientePregunta()">Continuar</button>
+            <br>
+            <button class="btn-volver" onclick="regresarAlMenu()">Volver a categorías</button>
         </div>
 
     </section>
+
+    <script>
+        // --- AQUÍ RELLENAS TUS PREGUNTAS Y FRASES ---
+        const baseDePreguntas = {
+            introspeccion: [
+                "¿Qué es aquello que te ha hecho sonreír hoy?",
+                "Si pudieras hablar con tu versión de hace un año, ¿qué consejo le darías?",
+                "¿Qué aspecto de tu rutina actual te hace sentir más en paz?"
+            ],
+            reflexivas: [
+                "¿Qué significa para ti el éxito personal?",
+                "¿Consideras que aprendes más de los errores propios o de los aciertos?",
+                "¿Cómo defines un día verdaderamente bien aprovechado?"
+            ]
+        };
+
+        let preguntasActuales = [];
+        let indiceActual = 0;
+
+        // Inicia el flujo de preguntas del apartado seleccionado
+        function iniciarApartado(categoria) {
+            preguntasActuales = baseDePreguntas[categoria];
+            indiceActual = 0;
+
+            if (!preguntasActuales || preguntasActuales.length === 0) return;
+
+            // Ajustar títulos visuales
+            document.getElementById('titulo-apartado').innerText = categoria === 'introspeccion' ? 'Introspección' : 'Preguntas Reflexivas';
+            document.getElementById('titulo-principal').style.display = 'none';
+            document.getElementById('subtitulo-principal').style.display = 'none';
+
+            // Alternar pantallas
+            document.getElementById('menu-apartados').style.display = 'none';
+            document.getElementById('bloque-juego').style.display = 'block';
+
+            mostrarPregunta();
+        }
+
+        // Renderiza la pregunta en pantalla
+        function mostrarPregunta() {
+            if (indiceActual < preguntasActuales.length) {
+                document.getElementById('pregunta-actual').innerText = preguntasActuales[indiceActual];
+                const inputCampo = document.getElementById('respuesta-user');
+                inputCampo.value = '';
+                inputCampo.style.display = 'block';
+                inputCampo.focus();
+                document.querySelector('.btn-siguiente').style.display = 'inline-block';
+            } else {
+                // Mensaje al finalizar todas las preguntas
+                document.getElementById('pregunta-actual').innerText = "Has completado todas las preguntas de este bloque. Gracias por tu tiempo de reflexión.";
+                document.getElementById('respuesta-user').style.display = 'none';
+                document.querySelector('.btn-siguiente').style.display = 'none';
+            }
+        }
+
+        // Valida y pasa a la siguiente pregunta
+        function siguientePregunta() {
+            const respuesta = document.getElementById('respuesta-user').value.trim();
+            
+            // Avanza de todos modos opcionalmente, o puedes exigir texto
+            indiceActual++;
+            mostrarPregunta();
+        }
+
+        // Permite avanzar también pulsando la tecla Enter en el teclado móvil o pc
+        document.getElementById('respuesta-user').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                siguientePregunta();
+            }
+        });
+
+        // Regresa al menú inicial de selección
+        function regresarAlMenu() {
+            document.getElementById('titulo-principal').style.display = 'block';
+            document.getElementById('subtitulo-principal').style.display = 'block';
+            document.getElementById('menu-apartados').style.display = 'flex';
+            document.getElementById('bloque-juego').style.display = 'none';
+        }
+    </script>
 
 </body>
 </html>
