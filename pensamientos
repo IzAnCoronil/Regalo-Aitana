@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Pensamientos (Todavía no listo)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Ajustes de scroll global y rendimiento móvil */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* NAV: Idéntico al resto de tus páginas con scroll horizontal responsivo */
+        nav {
+            background: #4da3ff;
+            padding: 12px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: flex-start;
+            gap: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+        }
+
+        /* Oculta la barra de scroll en móviles */
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: 0.2s;
+            display: inline-block;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        nav a:hover {
+            color: #e8f4ff;
+            transform: scale(1.08);
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 140px 20px 20px;
+        }
+
+        header h1 {
+            color: #f8fafc;
+            margin-bottom: 8px;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        /* CONTENIDO */
+        .contenido {
+            padding: 20px;
+            max-width: 750px;
+            margin: 0 auto 60px;
+            overscroll-behavior: contain;
+        }
+
+        /* Tarjetas flotantes estilo traslúcido */
+        .bloque {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: left;
+        }
+
+        .bloque h2 {
+            color: #f8fafc;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+            border-bottom: 2px solid rgba(77, 163, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* Estilo para las listas de preguntas o frases */
+        .lista-preguntas {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .lista-preguntas li {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-weight: 300;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #38bdf8;
+        }
+
+        /* Ajustes Mobile */
+        @media (max-width: 600px) {
+            nav {
+                justify-content: flex-start;
+                gap: 20px;
+                padding: 12px 15px;
+            }
+            header {
+                padding-top: 110px;
+            }
+            header h1 {
+                font-size: 2.1em;
+            }
+            .bloque {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="Index.html">Inicio</a>
+        <a href="musica.html">Música</a>
+        <a href="anadir.html">Añadir frases</a>
+        <a href="sos.html">SOS</a>
+        <a href="Love.html">Favoritos</a>
+        <a href="album.html">Álbum</a>
+        <a href="Frasesamigos.html">Frases de amigos</a>
+        <a href="pensamientos.html">Pensamientos</a>
+    </nav>
+
+    <header>
+        <h1>Pensamientos</h1>
+        <p>Un lugar para conectar contigo mismo.</p>
+    </header>
+
+    <section class="contenido">
+
+        <div class="bloque">
+            <h2>Introspección</h2>
+            <ul class="lista-preguntas">
+                <li>Aquí puedes colocar tu primera pregunta o frase reflexiva...</li>
+                <li>Aquí va la segunda...</li>
+                <li>Y aquí otra más...</li>
+            </ul>
+        </div>
+
+        <div class="bloque">
+            <h2>Preguntas Reflexivas</h2>
+            <ul class="lista-preguntas">
+                <li>Introduce aquí tu tanda de preguntas...</li>
+                <li>Segunda pregunta de este bloque...</li>
+                <li>Tercera pregunta de este bloque...</li>
+            </ul>
+        </div>
+
+    </section>
+
+</body>
+</html>
