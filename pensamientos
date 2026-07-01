@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Pensamientos (Todavía no listo)</title>
+    <title>En desarrollo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -11,6 +11,7 @@
         /* Ajustes de scroll global y rendimiento móvil */
         html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -24,19 +25,19 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV: Idéntico al resto de tus páginas con scroll horizontal responsivo */
+        /* NAV: Optimizado para scroll lateral táctil nativo y fluido */
         nav {
             background: #4da3ff;
-            padding: 12px 20px;
+            padding: 14px 20px;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             display: flex;
             justify-content: flex-start;
-            gap: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            z-index: 100;
+            gap: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
@@ -44,64 +45,70 @@
             box-sizing: border-box;
         }
 
-        /* Oculta la barra de scroll en móviles */
+        /* Oculta la barra de scroll visual en móviles para limpieza estética */
         nav::-webkit-scrollbar {
             display: none;
         }
 
+        /* Enlaces optimizados para el tamaño de toque del dedo (Tap Targets) */
         nav a {
             color: white;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
-            transition: 0.2s;
+            transition: transform 0.2s, color 0.2s;
             display: inline-block;
-            -webkit-tap-highlight-color: transparent;
+            padding: 4px 0;
+            -webkit-tap-highlight-color: transparent; /* Elimina el recuadro gris al pulsar en iOS */
         }
 
         nav a:hover {
             color: #e8f4ff;
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
-        /* HEADER */
+        /* HEADER: Adaptado para no quedar oculto bajo la barra fija */
         header {
             text-align: center;
-            padding: 140px 20px 20px;
+            padding: 120px 24px 10px;
         }
 
         header h1 {
             color: #f8fafc;
             margin-bottom: 8px;
-            font-size: 2.5em;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            font-size: 2.4em;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
         }
 
         header p {
             color: #94a3b8;
-            font-size: 1.1em;
+            font-size: 1.05em;
             font-weight: 300;
+            margin-top: 5px;
         }
 
-        /* CONTENIDO */
+        /* CONTENIDO RESPONSIVO */
         .contenido {
-            padding: 20px;
-            max-width: 750px;
-            margin: 0 auto 60px;
+            padding: 16px;
+            max-width: 700px;
+            margin: 0 auto 50px;
             overscroll-behavior: contain;
+            box-sizing: border-box;
         }
 
-        /* Tarjetas flotantes estilo traslúcido */
+        /* Tarjetas flotantes estilo traslúcido optimizadas para pantallas pequeñas */
         .bloque {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(8px);
-            padding: 40px 30px;
-            border-radius: 24px;
-            margin-bottom: 35px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px 24px;
+            border-radius: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.24);
             text-align: left;
+            box-sizing: border-box;
         }
 
         .bloque h2 {
@@ -109,12 +116,12 @@
             font-weight: 600;
             margin-top: 0;
             margin-bottom: 20px;
-            font-size: 1.6em;
-            border-bottom: 2px solid rgba(77, 163, 255, 0.3);
-            padding-bottom: 10px;
+            font-size: 1.45em;
+            border-bottom: 2px solid rgba(77, 163, 255, 0.25);
+            padding-bottom: 8px;
         }
 
-        /* Estilo para las listas de preguntas o frases */
+        /* Listas adaptadas para lectura móvil cómoda */
         .lista-preguntas {
             list-style: none;
             padding: 0;
@@ -122,30 +129,36 @@
         }
 
         .lista-preguntas li {
-            font-size: 1.1em;
+            font-size: 1.05em;
             line-height: 1.6;
             color: #cbd5e1;
             font-weight: 300;
-            margin-bottom: 15px;
-            padding-left: 15px;
+            margin-bottom: 18px;
+            padding-left: 14px;
             border-left: 3px solid #38bdf8;
         }
 
-        /* Ajustes Mobile */
-        @media (max-width: 600px) {
-            nav {
-                justify-content: flex-start;
-                gap: 20px;
-                padding: 12px 15px;
-            }
+        .lista-preguntas li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Ajustes específicos para pantallas muy pequeñas o teléfonos compactos */
+        @media (max-width: 480px) {
             header {
-                padding-top: 110px;
+                padding-top: 105px;
             }
             header h1 {
-                font-size: 2.1em;
+                font-size: 2em;
             }
             .bloque {
-                padding: 30px 20px;
+                padding: 24px 18px;
+                border-radius: 16px;
+            }
+            .bloque h2 {
+                font-size: 1.3em;
+            }
+            .lista-preguntas li {
+                font-size: 1em;
             }
         }
     </style>
@@ -165,8 +178,8 @@
     </nav>
 
     <header>
-        <h1>Pensamientos</h1>
-        <p>Un lugar para conectar contigo mismo.</p>
+        <h1>En desarrollo</h1>
+        <p>Un espacio en construcción para conectar contigo mismo.</p>
     </header>
 
     <section class="contenido">
