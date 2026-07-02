@@ -252,84 +252,266 @@
 
     </section>
 
-    <script>
-        // --- AQUÍ RELLENAS TUS PREGUNTAS Y FRASES ---
-        const baseDePreguntas = {
-            introspeccion: [
-                "¿Qué es aquello que te ha hecho sonreír hoy?",
-                "Si pudieras hablar con tu versión de hace un año, ¿qué consejo le darías?",
-                "¿Qué aspecto de tu rutina actual te hace sentir más en paz?"
-            ],
-            reflexivas: [
-                "¿Qué significa para ti el éxito personal?",
-                "¿Consideras que aprendes más de los errores propios o de los aciertos?",
-                "¿Cómo defines un día verdaderamente bien aprovechado?"
-            ]
-        };
+   <script>
+    // =========================
+    // BASE DE PREGUNTAS
+    // =========================
+    const baseDePreguntas = {
+        introspeccion: [
+            "¿Qué emoción has sentido con más intensidad hoy?",
+            "¿Qué parte de ti sientes que necesita más atención?",
+            "¿Qué te hace sentir verdaderamente en calma?",
+            "¿Qué hábito te gustaría cambiar este mes?",
+            "¿Cuál ha sido una decisión que cambió tu vida?",
+            "¿Qué persona ha influido más en quien eres?",
+            "¿Qué valor consideras más importante?",
+            "¿Qué es lo que más temes perder?",
+            "¿Qué momento recuerdas con mayor felicidad?",
+            "¿Qué significa para ti sentirte libre?",
+            "¿Qué haces cuando necesitas desconectar?",
+            "¿Qué aspecto de tu personalidad te gusta más?",
+            "¿Qué aspecto de tu personalidad te gustaría mejorar?",
+            "¿Cuándo fue la última vez que te sorprendiste a ti mismo?",
+            "¿Qué pequeño logro te hace sentir orgulloso?",
+            "¿Qué sueño has dejado aparcado?",
+            "¿Qué actividad te hace perder la noción del tiempo?",
+            "¿Qué necesitas para sentirte seguro?",
+            "¿Qué situación te genera más estrés?",
+            "¿Qué haces bien pero pocas veces reconoces?",
+            "¿Qué has aprendido de tus errores recientes?",
+            "¿Qué persona te inspira y por qué?",
+            "¿Qué significa para ti el éxito?",
+            "¿Cómo reaccionas cuando algo no sale como esperabas?",
+            "¿Qué te gustaría aprender este año?",
+            "¿Qué pensamiento se repite con frecuencia en tu mente?",
+            "¿Qué lugar te transmite paz?",
+            "¿Qué cualidad admiras en los demás?",
+            "¿Qué te motiva a levantarte cada mañana?",
+            "¿Qué límites necesitas establecer?",
 
-        let preguntasActuales = [];
-        let indiceActual = 0;
+➡️ En el siguiente mensaje te enviaré la Parte 1B, que continúa desde aquí con las otras 30 preguntas de introspección (incluyendo las 10 relacionadas con el TEA).
 
-        // Inicia el flujo de preguntas del apartado seleccionado
-        function iniciarApartado(categoria) {
-            preguntasActuales = baseDePreguntas[categoria];
-            indiceActual = 0;
+1B
+            "¿Qué te impide avanzar hacia tus objetivos?",
+            "¿Qué agradeces hoy?",
+            "¿Qué momento difícil te hizo más fuerte?",
+            "¿Qué harías si no tuvieras miedo?",
+            "¿Qué significa cuidar de ti mismo?",
+            "¿Qué te hace sentir comprendido?",
+            "¿Qué conversación necesitas tener?",
+            "¿Qué emoción te cuesta expresar?",
+            "¿Qué recuerdo te gustaría revivir?",
+            "¿Qué aspecto de tu vida necesita equilibrio?",
+            "¿Qué te hace sentir auténtico?",
+            "¿Qué decisión llevas tiempo posponiendo?",
+            "¿Qué te gustaría que los demás entendieran de ti?",
+            "¿Qué te hace sentir orgulloso de quién eres?",
+            "¿Qué costumbre te ayuda a sentirte mejor?",
+            "¿Qué has descubierto sobre ti este último año?",
+            "¿Qué significa para ti la felicidad?",
+            "¿Qué te ayuda a recuperar la calma?",
+            "¿Qué parte de tu pasado aceptas hoy mejor que antes?",
+            "¿Qué quieres recordar siempre?",
 
-            if (!preguntasActuales || preguntasActuales.length === 0) return;
+            // ---------- Preguntas relacionadas con el TEA ----------
+            "¿Qué situaciones sociales te resultan más cómodas y por qué? (TEA)",
+            "¿Qué estímulos (ruidos, luces, olores o texturas) afectan más a tu bienestar? (TEA)",
+            "¿Cómo notas que necesitas descansar después de interactuar con otras personas? (TEA)",
+            "¿Qué rutinas te ayudan a sentir estabilidad y seguridad? (TEA)",
+            "¿Cómo expresas tus emociones cuando te cuesta ponerlas en palabras? (TEA)",
+            "¿Qué intereses especiales te hacen sentir plenamente tú mismo? (TEA)",
+            "¿Qué estrategias utilizas cuando sientes sobrecarga sensorial? (TEA)",
+            "¿Qué desearías que los demás comprendieran sobre tu forma de comunicarte? (TEA)",
+            "¿Cómo identificas cuándo necesitas tiempo para ti? (TEA)",
+            "¿Qué fortalezas crees que aporta tu manera única de percibir el mundo? (TEA)"
+        ],
 
-            // Ajustar títulos visuales
-            document.getElementById('titulo-apartado').innerText = categoria === 'introspeccion' ? 'Introspección' : 'Preguntas Reflexivas';
-            document.getElementById('titulo-principal').style.display = 'none';
-            document.getElementById('subtitulo-principal').style.display = 'none';
+        reflexivas: [
 
-            // Alternar pantallas
-            document.getElementById('menu-apartados').style.display = 'none';
-            document.getElementById('bloque-juego').style.display = 'block';
+Con esto termina la parte de introspección (60 preguntas) y empieza el apartado de reflexivas. En la Parte 2 irán las 50 preguntas reflexivas y el resto del JavaScript (let preguntasActuales, iniciarApartado(), mostrarPregunta(), etc.).
 
-            mostrarPregunta();
+La Parte 2 (50 preguntas reflexivas + todo el resto del JavaScript) también supera el límite máximo de un mensaje. Si la envío aquí, se cortará a mitad del código y quedará inutilizable.
+
+Hay que dividir la Parte 2 en:
+
+2A: Las 50 preguntas reflexivas.
+2B: El resto del JavaScript (let preguntasActuales, iniciarApartado(), mostrarPregunta(), siguientePregunta(), etc.).
+
+Es la única forma de que recibas el código completo sin que el chat lo recorte.
+
+2A
+        reflexivas: [
+            "¿Qué significa realmente vivir una buena vida?",
+            "¿Las personas cambian o simplemente muestran otra parte de sí mismas?",
+            "¿Qué pesa más: la intención o el resultado?",
+            "¿Qué define tu identidad?",
+            "¿Es posible conocer completamente a otra persona?",
+            "¿Qué es más importante: ser feliz o sentirte realizado?",
+            "¿Hasta qué punto controlamos nuestro destino?",
+            "¿Qué es el éxito sin compartirlo con alguien?",
+            "¿Qué diferencia hay entre existir y vivir?",
+            "¿Qué valor tiene el tiempo?",
+            "¿Cómo influye el miedo en nuestras decisiones?",
+            "¿Se puede perdonar sin olvidar?",
+            "¿Qué papel tiene el fracaso en el crecimiento personal?",
+            "¿Somos la misma persona que hace diez años?",
+            "¿Qué significa ser auténtico?",
+            "¿Es mejor arrepentirse de hacer algo o de no hacerlo?",
+            "¿Cómo afecta el pasado al presente?",
+            "¿Qué importancia tiene el silencio?",
+            "¿Qué es la confianza?",
+            "¿Cuándo sabes que una amistad es verdadera?",
+            "¿Qué nos enseña la soledad?",
+            "¿Qué significa amar a alguien?",
+            "¿Cómo influye el entorno en quienes somos?",
+            "¿Qué hace valiosa una experiencia?",
+            "¿Qué es la resiliencia?",
+            "¿Qué aprendemos del dolor?",
+            "¿Por qué nos cuesta cambiar?",
+            "¿Qué papel tiene la empatía en la sociedad?",
+            "¿Cómo definirías la libertad?",
+            "¿Qué hace que una vida tenga sentido?",
+            "¿Cuál es el mayor aprendizaje que deja el tiempo?",
+            "¿Cómo sabes cuándo rendirte y cuándo insistir?",
+            "¿Qué significa ser valiente?",
+            "¿Qué importancia tiene el perdón hacia uno mismo?",
+            "¿Qué hace especial a un recuerdo?",
+            "¿Cómo influye la gratitud en la felicidad?",
+            "¿Qué es más difícil: aceptar o comprender?",
+            "¿Las personas encuentran o construyen su propósito?",
+            "¿Qué legado te gustaría dejar?",
+            "¿Qué significa confiar en ti mismo?",
+            "¿Cómo cambia una persona tras superar una gran dificultad?",
+            "¿Qué lugar ocupa la paciencia en la vida?",
+            "¿Qué relación existe entre la felicidad y la simplicidad?",
+            "¿Qué significa realmente escuchar a alguien?",
+            "¿Cómo afecta la comparación con los demás?",
+            "¿Qué importancia tienen los pequeños gestos?",
+            "¿Qué hace que una decisión sea correcta?",
+            "¿Qué es más importante: el camino o la meta?",
+            "¿Cómo quieres ser recordado?",
+            "¿Qué pregunta crees que aún no te has hecho y podría cambiar tu vida?"
+        ]
+    };
+
+Con esto termina el objeto baseDePreguntas.
+
+En la Parte 2B irá el resto del script:
+
+let preguntasActuales = [];
+let indiceActual = 0;
+iniciarApartado()
+mostrarPregunta()
+siguientePregunta()
+Evento de Enter
+regresarAlMenu()
+Cierre de </script>.
+2B
+    // =========================
+    // VARIABLES
+    // =========================
+    let preguntasActuales = [];
+    let indiceActual = 0;
+
+    // =========================
+    // INICIAR APARTADO
+    // =========================
+    function iniciarApartado(categoria) {
+
+        preguntasActuales = baseDePreguntas[categoria];
+        indiceActual = 0;
+
+        if (!preguntasActuales || preguntasActuales.length === 0) return;
+
+        document.getElementById('titulo-apartado').innerText =
+            categoria === "introspeccion"
+                ? "Introspección"
+                : "Preguntas Reflexivas";
+
+        document.getElementById("titulo-principal").style.display = "none";
+        document.getElementById("subtitulo-principal").style.display = "none";
+
+        document.getElementById("menu-apartados").style.display = "none";
+        document.getElementById("bloque-juego").style.display = "block";
+
+        mostrarPregunta();
+    }
+
+    // =========================
+    // MOSTRAR PREGUNTA
+    // =========================
+    function mostrarPregunta() {
+
+        if (indiceActual < preguntasActuales.length) {
+
+            document.getElementById("pregunta-actual").innerText =
+                preguntasActuales[indiceActual];
+
+            const inputCampo = document.getElementById("respuesta-user");
+
+            inputCampo.value = "";
+            inputCampo.style.display = "block";
+            inputCampo.focus();
+
+            document.querySelector(".btn-siguiente").style.display =
+                "inline-block";
+
+        } else {
+
+            document.getElementById("pregunta-actual").innerText =
+                "🎉 Has completado todas las preguntas de este bloque.\n\nGracias por dedicar este tiempo a conocerte mejor.";
+
+            document.getElementById("respuesta-user").style.display = "none";
+            document.querySelector(".btn-siguiente").style.display = "none";
+        }
+    }
+
+    // =========================
+    // SIGUIENTE PREGUNTA
+    // =========================
+    function siguientePregunta() {
+
+        // Puedes guardar la respuesta aquí si lo deseas
+        const respuesta =
+            document.getElementById("respuesta-user").value.trim();
+
+        // console.log(respuesta);
+
+        indiceActual++;
+        mostrarPregunta();
+    }
+
+    // =========================
+    // ENTER = SIGUIENTE
+    // =========================
+    document.getElementById("respuesta-user").addEventListener("keypress", function (e) {
+
+        if (e.key === "Enter") {
+            e.preventDefault();
+            siguientePregunta();
         }
 
-        // Renderiza la pregunta en pantalla
-        function mostrarPregunta() {
-            if (indiceActual < preguntasActuales.length) {
-                document.getElementById('pregunta-actual').innerText = preguntasActuales[indiceActual];
-                const inputCampo = document.getElementById('respuesta-user');
-                inputCampo.value = '';
-                inputCampo.style.display = 'block';
-                inputCampo.focus();
-                document.querySelector('.btn-siguiente').style.display = 'inline-block';
-            } else {
-                // Mensaje al finalizar todas las preguntas
-                document.getElementById('pregunta-actual').innerText = "Has completado todas las preguntas de este bloque. Gracias por tu tiempo de reflexión.";
-                document.getElementById('respuesta-user').style.display = 'none';
-                document.querySelector('.btn-siguiente').style.display = 'none';
-            }
-        }
+    });
 
-        // Valida y pasa a la siguiente pregunta
-        function siguientePregunta() {
-            const respuesta = document.getElementById('respuesta-user').value.trim();
-            
-            // Avanza de todos modos opcionalmente, o puedes exigir texto
-            indiceActual++;
-            mostrarPregunta();
-        }
+    // =========================
+    // VOLVER AL MENÚ
+    // =========================
+    function regresarAlMenu() {
 
-        // Permite avanzar también pulsando la tecla Enter en el teclado móvil o pc
-        document.getElementById('respuesta-user').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                siguientePregunta();
-            }
-        });
+        document.getElementById("titulo-principal").style.display = "block";
+        document.getElementById("subtitulo-principal").style.display = "block";
 
-        // Regresa al menú inicial de selección
-        function regresarAlMenu() {
-            document.getElementById('titulo-principal').style.display = 'block';
-            document.getElementById('subtitulo-principal').style.display = 'block';
-            document.getElementById('menu-apartados').style.display = 'flex';
-            document.getElementById('bloque-juego').style.display = 'none';
-        }
-    </script>
+        document.getElementById("menu-apartados").style.display = "flex";
+        document.getElementById("bloque-juego").style.display = "none";
+
+        indiceActual = 0;
+        preguntasActuales = [];
+
+        document.getElementById("respuesta-user").value = "";
+        document.getElementById("respuesta-user").style.display = "block";
+        document.querySelector(".btn-siguiente").style.display = "inline-block";
+    }
+</script>
 
 </body>
 </html>
