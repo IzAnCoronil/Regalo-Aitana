@@ -231,7 +231,7 @@
             transform: scale(1.05);
         }
 
-        /* VENTANA MODAL (Historial visual) */
+        /* VENTANA MODAL (Ancho optimizado para la tabla) */
         .modal-respuestas {
             display: none;
             position: fixed;
@@ -252,7 +252,7 @@
             background: #1e293b;
             border: 1px solid rgba(255, 255, 255, 0.15);
             width: 100%;
-            max-width: 550px;
+            max-width: 650px;
             max-height: 80vh;
             border-radius: 20px;
             padding: 24px;
@@ -277,25 +277,42 @@
             padding-right: 5px;
         }
 
-        .item-respuesta {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid #3b82f6;
+        /* 📊 ESTILOS DE LA TABLA DE RESPUESTAS */
+        .tabla-respuestas {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9em;
+        }
+
+        .tabla-respuestas th, .tabla-respuestas td {
             padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            vertical-align: top;
+            word-break: break-word;
         }
 
-        .item-respuesta p {
-            margin: 4px 0;
-            font-size: 0.95em;
-        }
-
-        .item-pregunta-txt {
+        .tabla-respuestas th {
+            background-color: rgba(30, 58, 138, 0.4);
+            color: #60a5fa;
             font-weight: 600;
-            color: #cbd5e1;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        .item-respuesta-txt {
+        .tabla-respuestas tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .col-pregunta {
+            width: 50%;
+            color: #cbd5e1;
+            font-weight: 500;
+        }
+
+        .col-respuesta {
+            width: 50%;
             color: #f8fafc;
             font-style: italic;
         }
@@ -339,6 +356,10 @@
             .modal-contenido {
                 max-height: 85vh;
                 padding: 18px;
+            }
+            .tabla-respuestas th, .tabla-respuestas td {
+                padding: 8px;
+                font-size: 0.85em;
             }
         }
     </style>
@@ -397,9 +418,9 @@
 
     <script>
     // ====================================================================
-    // ⚠️ CONFIGURACIÓN: CAMBIA ESTE ENLACE POR TU URL DE GOOGLE APPS SCRIPT
+    // ✅ CONFIGURACIÓN AUTOMÁTICA CON TU ENLACE DE IMPLEMENTACIÓN
     // ====================================================================
-    const GOOGLE_SCRIPT_URL = "AQUÍ_PEGA_TU_URL_DE_APPS_SCRIPT";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybllqY9u6CklwfOy3sglJB-aKdr-pOB0MJrqus00BAso12M6eRxC2lXOjvbxrQB0RO/exec";
 
     const baseDePreguntas = {
         introspeccion: [
@@ -524,7 +545,6 @@
     let indiceActual = 0;
     let historialRespuestas = [];
 
-    // Al cargar la página, se recupera el historial guardado en localStorage
     window.onload = function() {
         if (localStorage.getItem("historial_juego")) {
             historialRespuestas = JSON.parse(localStorage.getItem("historial_juego"));
@@ -577,16 +597,13 @@
         const preguntaTexto = preguntasActuales[indiceActual];
         const respuestaFinal = respuestaTexto !== "" ? respuestaTexto : "(Sin respuesta escrita)";
 
-        // 1. Guardar localmente y persistir en el navegador (Evita pérdidas si se cierra la web)
         historialRespuestas.push({ pregunta: preguntaTexto, respuesta: respuestaFinal });
         localStorage.setItem("historial_juego", JSON.stringify(historialRespuestas));
         actualizarContenidoModal();
 
-        // 2. Imprimir registro en la consola del desarrollador
-        console.log(`[RESPUESTA REGISTRADA]\nPregunta: ${preguntaTexto}\nRespuesta: ${respuestaFinal}\n-------------------------`);
+        console.log(`[RESPUESTA REGISTRADA]\nPregunta: ${preguntaTexto}\nRespuesta: ${respuestaFinal}`);
 
-        // 3. 🚀 Envío de datos por internet a la API de tu Google Sheets
-        if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "AQUÍ_PEGA_TU_URL_DE_APPS_SCRIPT") {
+        if (GOOGLE_SCRIPT_URL) {
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
@@ -599,7 +616,6 @@
         mostrarPregunta();
     }
 
-    // Permite que al pulsar 'Enter' en el teclado se envíe la respuesta directamente
     document.getElementById("respuesta-user").addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -625,13 +641,33 @@
             contenedor.innerHTML = '<p style="color: #cbd5e1; font-size: 0.95em;">Aún no has respondido ninguna pregunta.</p>';
             return;
         }
-        contenedor.innerHTML = "";
+        
+        let tablaHTML = `
+            <table class="tabla-respuestas">
+                <thead>
+                    <tr>
+                        <th>Pregunta</th>
+                        <th>Tu Respuesta</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        
         historialRespuestas.forEach((item) => {
-            const div = document.createElement("div");
-            div.className = "item-respuesta";
-            div.innerHTML = `<p class="item-pregunta-txt">${item.pregunta}</p><p class="item-respuesta-txt">R: ${item.respuesta}</p>`;
-            contenedor.appendChild(div);
+            tablaHTML += `
+                <tr>
+                    <td class="col-pregunta">${item.pregunta}</td>
+                    <td class="col-secondary-content col-respuesta">${item.respuesta}</td>
+                </tr>
+            `;
         });
+        
+        tablaHTML += `
+                </tbody>
+            </table>
+        `;
+        
+        contenedor.innerHTML = tablaHTML;
     }
 </script>
 </body>
