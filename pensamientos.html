@@ -24,27 +24,21 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV */
+        /* NAV - Centrado y con color complementario (Naranja cálido) */
         nav {
-            background: #4da3ff;
+            background: #f97316; /* Color complementario */
             padding: 14px 20px;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center; /* Centrado de los enlaces */
+            flex-wrap: wrap; /* Permite que se adapte si hay muchas opciones */
             gap: 28px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             z-index: 1000;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
             box-sizing: border-box;
-        }
-
-        nav::-webkit-scrollbar {
-            display: none;
         }
 
         nav a {
@@ -59,14 +53,14 @@
         }
 
         nav a:hover {
-            color: #e8f4ff;
+            color: #ffedd5; /* Tono crema suave al pasar el cursor */
             transform: scale(1.05);
         }
 
         /* HEADER */
         header {
             text-align: center;
-            padding: 120px 24px 10px;
+            padding: 140px 24px 10px; /* Un poco más de padding arriba por el nav dinámico */
         }
 
         header h1 {
@@ -114,8 +108,8 @@
         }
 
         .btn-apartado:hover, .btn-apartado:active {
-            background: rgba(77, 163, 255, 0.2);
-            border-color: #4da3ff;
+            background: rgba(249, 115, 22, 0.2); /* Sutil toque naranja al hover */
+            border-color: #f97316;
             transform: translateY(-2px);
         }
 
@@ -134,7 +128,7 @@
 
         .bloque-juego h2 {
             font-size: 1.4em;
-            color: #4da3ff;
+            color: #f97316; /* Color complementario para destacar títulos internos */
             margin-top: 0;
             margin-bottom: 25px;
         }
@@ -164,11 +158,11 @@
         }
 
         .campo-respuesta:focus {
-            border-color: #4da3ff;
+            border-color: #f97316;
         }
 
         .btn-siguiente {
-            background: #4da3ff;
+            background: #f97316;
             color: white;
             border: none;
             padding: 12px 30px;
@@ -181,7 +175,7 @@
         }
 
         .btn-siguiente:hover {
-            background: #3b8ee6;
+            background: #ea580c;
         }
 
         .btn-volver {
@@ -205,6 +199,13 @@
 
         /* Ajustes de pantalla */
         @media (max-width: 480px) {
+            nav {
+                justify-content: flex-start;
+                overflow-x: auto;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+            }
+            nav::-webkit-scrollbar { display: none; }
             header { padding-top: 105px; }
             header h1 { font-size: 2em; }
             .bloque-juego { padding: 24px 18px; }
@@ -432,7 +433,6 @@
     // =========================
     function siguientePregunta() {
         const respuesta = document.getElementById("respuesta-user").value.trim();
-        // Aquí puedes procesar o guardar la variable 'respuesta' si lo necesitas en el futuro
 
         indiceActual++;
         mostrarPregunta();
