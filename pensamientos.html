@@ -24,27 +24,21 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* NAV */
+        /* NAV - Centrado y adaptado para móviles */
         nav {
-            background: #4da3ff;
+            background: #f97316;
             padding: 14px 20px;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
             gap: 28px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             z-index: 1000;
-            overflow-x: auto;
-            white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
             box-sizing: border-box;
-        }
-
-        nav::-webkit-scrollbar {
-            display: none;
         }
 
         nav a {
@@ -59,14 +53,14 @@
         }
 
         nav a:hover {
-            color: #e8f4ff;
+            color: #ffedd5;
             transform: scale(1.05);
         }
 
         /* HEADER */
         header {
             text-align: center;
-            padding: 120px 24px 10px;
+            padding: 140px 24px 10px;
         }
 
         header h1 {
@@ -91,7 +85,7 @@
             box-sizing: border-box;
         }
 
-        /* MENÚ DE SELECCIÓN (BOTONES PRINCIPALES) */
+        /* MENÚ DE SELECCIÓN */
         .menu-apartados {
             display: flex;
             flex-direction: column;
@@ -114,12 +108,12 @@
         }
 
         .btn-apartado:hover, .btn-apartado:active {
-            background: rgba(77, 163, 255, 0.2);
-            border-color: #4da3ff;
+            background: rgba(249, 115, 22, 0.2);
+            border-color: #f97316;
             transform: translateY(-2px);
         }
 
-        /* CONTENEDOR DE JUEGO / PREGUNTAS */
+        /* CONTENEDOR DE JUEGO */
         .bloque-juego {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -134,9 +128,17 @@
 
         .bloque-juego h2 {
             font-size: 1.4em;
-            color: #4da3ff;
+            color: #f97316;
             margin-top: 0;
-            margin-bottom: 25px;
+            margin-bottom: 5px;
+        }
+
+        /* CONTADOR DE PREGUNTAS */
+        .contador-preguntas {
+            font-size: 0.9em;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            font-weight: 400;
         }
 
         .pregunta-texto {
@@ -147,7 +149,7 @@
             min-height: 60px;
         }
 
-        /* INPUT Y BOTONES INTERNOS */
+        /* INPUT Y BOTONES */
         .campo-respuesta {
             width: 100%;
             background: rgba(15, 23, 42, 0.4);
@@ -164,11 +166,11 @@
         }
 
         .campo-respuesta:focus {
-            border-color: #4da3ff;
+            border-color: #f97316;
         }
 
         .btn-siguiente {
-            background: #4da3ff;
+            background: #f97316;
             color: white;
             border: none;
             padding: 12px 30px;
@@ -181,7 +183,7 @@
         }
 
         .btn-siguiente:hover {
-            background: #3b8ee6;
+            background: #ea580c;
         }
 
         .btn-volver {
@@ -203,12 +205,139 @@
             color: white;
         }
 
-        /* Ajustes de pantalla */
+        /* BOTÓN FLOTANTE DE RESPUESTAS */
+        .btn-flotante-respuestas {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn-flotante-respuestas:hover {
+            background: #ea580c;
+            transform: scale(1.05);
+        }
+
+        /* VENTANA MODAL (Historial visual) */
+        .modal-respuestas {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .modal-contenido {
+            background: #1e293b;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 100%;
+            max-width: 550px;
+            max-height: 80vh;
+            border-radius: 20px;
+            padding: 24px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .modal-contenido h3 {
+            margin-top: 0;
+            color: #f97316;
+            font-size: 1.3em;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .lista-respuestas-scroll {
+            overflow-y: auto;
+            flex-grow: 1;
+            margin-bottom: 15px;
+            padding-right: 5px;
+        }
+
+        .item-respuesta {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #f97316;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .item-respuesta p {
+            margin: 4px 0;
+            font-size: 0.95em;
+        }
+
+        .item-pregunta-txt {
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .item-respuesta-txt {
+            color: #f8fafc;
+            font-style: italic;
+        }
+
+        .btn-cerrar-modal {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn-cerrar-modal:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Ajustes adaptativos Móvil */
         @media (max-width: 480px) {
+            nav {
+                justify-content: flex-start;
+                overflow-x: auto;
+                white-space: nowrap;
+                flex-wrap: nowrap;
+                padding: 12px 15px;
+            }
+            nav::-webkit-scrollbar { display: none; }
             header { padding-top: 105px; }
-            header h1 { font-size: 2em; }
+            header h1 { font-size: 1.9em; }
             .bloque-juego { padding: 24px 18px; }
             .pregunta-texto { font-size: 1.05em; }
+            .btn-flotante-respuestas {
+                bottom: 15px;
+                right: 15px;
+                padding: 10px 16px;
+                font-size: 0.85em;
+            }
+            .modal-contenido {
+                max-height: 85vh;
+                padding: 18px;
+            }
         }
     </style>
 </head>
@@ -240,6 +369,7 @@
 
         <div id="bloque-juego" class="bloque-juego">
             <h2 id="titulo-apartado">Categoría</h2>
+            <div id="contador-preguntas" class="contador-preguntas">Pregunta 0 de 0</div>
             <p id="pregunta-actual" class="pregunta-texto">Cargando pregunta...</p>
             
             <input type="text" id="respuesta-user" class="campo-respuesta" placeholder="Escribe tu respuesta aquí..." autocomplete="off">
@@ -251,9 +381,21 @@
 
     </section>
 
+    <button class="btn-flotante-respuestas" onclick="abrirModalRespuestas()">Respuestas</button>
+
+    <div id="modal-respuestas" class="modal-respuestas">
+        <div class="modal-contenido">
+            <h3>Respuestas Registradas</h3>
+            <div id="lista-respuestas-scroll" class="lista-respuestas-scroll">
+                <p style="color: #cbd5e1; font-size: 0.95em;" id="sin-respuestas">Aún no has respondido ninguna pregunta en esta sesión.</p>
+            </div>
+            <button class="btn-cerrar-modal" onclick="cerrarModalRespuestas()">Cerrar</button>
+        </div>
+    </div>
+
     <script>
     // =========================
-    // BASE DE PREGUNTAS
+    // BASE DE PREGUNTAS (Femenino)
     // =========================
     const baseDePreguntas = {
         introspeccion: [
@@ -299,7 +441,7 @@
             "¿Qué aspecto de tu vida necesita equilibrio?",
             "¿Qué te hace sentir auténtica?",
             "¿Qué decisión llevas tiempo posponiendo?",
-            "¿Qué te gustaría que los demás entendieran de ti?",
+            "¿Qué te gustaría que las demás entendieran de ti?",
             "¿Qué te hace sentir orgullosa de quién eres?",
             "¿Qué costumbre te ayuda a sentirte mejor?",
             "¿Qué has descubierto sobre ti este último año?",
@@ -315,7 +457,7 @@
             "¿Cómo expresas tus emociones cuando te cuesta ponerlas en palabras? (TEA)",
             "¿Qué intereses especiales te hacen sentir plenamente tú misma? (TEA)",
             "¿Qué estrategias utilizas cuando sientes sobrecarga sensorial? (TEA)",
-            "¿Qué desearías que los demás comprendieran sobre tu forma de comunicarte? (TEA)",
+            "¿Qué desearías que las demás comprendieran sobre tu forma de comunicarte? (TEA)",
             "¿Cómo identificas cuándo necesitas tiempo para ti? (TEA)",
             "¿Qué fortalezas crees que aporta tu manera única de percibir el mundo? (TEA)"
         ],
@@ -336,7 +478,7 @@
             "¿Se puede perdonar sin olvidar?",
             "¿Qué papel tiene el fracaso en el crecimiento personal?",
             "¿Somos la misma persona que hace diez años?",
-            "¿Qué significa ser auténtico?",
+            "¿Qué significa ser auténtica?",
             "¿Es mejor arrepentirse de hacer algo o de no hacerlo?",
             "¿Cómo afecta el pasado al presente?",
             "¿Qué importancia tiene el silencio?",
@@ -354,7 +496,7 @@
             "¿Cuál es el mayor aprendizaje que deja el tiempo?",
             "¿Cómo sabes cuándo rendirte y cuándo insistir?",
             "¿Qué significa ser valiente?",
-            "¿Qué importancia tiene el perdón hacia uno misma?",
+            "¿Qué importancia tiene el perdón hacia una misma?",
             "¿Qué hace especial a un recuerdo?",
             "¿Cómo influye la gratitud en la felicidad?",
             "¿Qué es más difícil: aceptar o comprender?",
@@ -365,7 +507,7 @@
             "¿Qué lugar ocupa la paciencia en la vida?",
             "¿Qué relación existe entre la felicidad y la simplicidad?",
             "¿Qué significa realmente escuchar a alguien?",
-            "¿Cómo afecta la comparación con los demás?",
+            "¿Cómo afecta la comparación con las demás?",
             "¿Qué importancia tienen los pequeños gestos?",
             "¿Qué hace que una decisión sea correcta?",
             "¿Qué es más importante: el camino o la meta?",
@@ -375,10 +517,11 @@
     };
 
     // =========================
-    // VARIABLES
+    // VARIABLES Y REGISTROS
     // =========================
     let preguntasActuales = [];
     let indiceActual = 0;
+    let historialRespuestas = [];
 
     // =========================
     // INICIAR APARTADO
@@ -407,7 +550,12 @@
     // MOSTRAR PREGUNTA
     // =========================
     function mostrarPregunta() {
+        const txtContador = document.getElementById("contador-preguntas");
+
         if (indiceActual < preguntasActuales.length) {
+            txtContador.style.display = "block";
+            txtContador.innerText = `Pregunta ${indiceActual + 1} de ${preguntasActuales.length}`;
+
             document.getElementById("pregunta-actual").innerText =
                 preguntasActuales[indiceActual];
 
@@ -419,6 +567,7 @@
 
             document.querySelector(".btn-siguiente").style.display = "inline-block";
         } else {
+            txtContador.style.display = "none";
             document.getElementById("pregunta-actual").innerText =
                 "🎉 Has completado todas las preguntas de este bloque.\n\nGracias por dedicar este tiempo a conocerte mejor.";
 
@@ -428,11 +577,24 @@
     }
 
     // =========================
-    // SIGUIENTE PREGUNTA
+    // SIGUIENTE PREGUNTA (Ambos lados)
     // =========================
     function siguientePregunta() {
-        const respuesta = document.getElementById("respuesta-user").value.trim();
-        // Aquí puedes procesar o guardar la variable 'respuesta' si lo necesitas en el futuro
+        const inputCampo = document.getElementById("respuesta-user");
+        const respuestaTexto = inputCampo.value.trim();
+        const preguntaTexto = preguntasActuales[indiceActual];
+
+        const respuestaFinal = respuestaTexto !== "" ? respuestaTexto : "(Sin respuesta escrita)";
+
+        // 1. Guardar en el historial de la ventana modal interna
+        historialRespuestas.push({
+            pregunta: preguntaTexto,
+            respuesta: respuestaFinal
+        });
+        actualizarContenidoModal();
+
+        // 2. Enviar simultáneamente al log/terminal de comandos
+        console.log(`[RESPUESTA REGISTRADA]\nPregunta: ${preguntaTexto}\nRespuesta: ${respuestaFinal}\n-------------------------`);
 
         indiceActual++;
         mostrarPregunta();
@@ -464,6 +626,44 @@
         document.getElementById("respuesta-user").value = "";
         document.getElementById("respuesta-user").style.display = "block";
         document.querySelector(".btn-siguiente").style.display = "inline-block";
+    }
+
+    // =========================
+    // CONTROL DE VENTANA MODAL
+    // =========================
+    function abrirModalRespuestas() {
+        document.getElementById("modal-respuestas").style.display = "flex";
+    }
+
+    function cerrarModalRespuestas() {
+        document.getElementById("modal-respuestas").style.display = "none";
+    }
+
+    function actualizarContenidoModal() {
+        const contenedor = document.getElementById("lista-respuestas-scroll");
+        
+        if (historialRespuestas.length === 0) {
+            contenedor.innerHTML = '<p style="color: #cbd5e1; font-size: 0.95em;" id="sin-respuestas">Aún no has respondido ninguna pregunta en esta sesión.</p>';
+            return;
+        }
+
+        contenedor.innerHTML = "";
+        historialRespuestas.forEach((item) => {
+            const div = document.createElement("div");
+            div.className = "item-respuesta";
+            
+            const pPregunta = document.createElement("p");
+            pPregunta.className = "item-pregunta-txt";
+            pPregunta.innerText = item.pregunta;
+
+            const pRespuesta = document.createElement("p");
+            pRespuesta.className = "item-respuesta-txt";
+            pRespuesta.innerText = `R: ${item.respuesta}`;
+
+            div.appendChild(pPregunta);
+            div.appendChild(pRespuesta);
+            contenedor.appendChild(div);
+        });
     }
 </script>
 
