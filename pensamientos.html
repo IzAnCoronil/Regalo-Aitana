@@ -14,7 +14,6 @@
         }
 
         body {
-            /* Cambio a una paleta de azul más suave y relajante */
             background: linear-gradient(135deg, #1e293b, #334155);
             color: #f8fafc;
             margin: 0;
@@ -130,7 +129,7 @@
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.15);
             text-align: center;
-            display: none; /* Oculto al inicio */
+            display: none;
         }
 
         .bloque-juego h2 {
@@ -252,7 +251,7 @@
 
     </section>
 
-   <script>
+    <script>
     // =========================
     // BASE DE PREGUNTAS
     // =========================
@@ -288,10 +287,6 @@
             "¿Qué cualidad admiras en los demás?",
             "¿Qué te motiva a levantarte cada mañana?",
             "¿Qué límites necesitas establecer?",
-
-➡️ En el siguiente mensaje te enviaré la Parte 1B, que continúa desde aquí con las otras 30 preguntas de introspección (incluyendo las 10 relacionadas con el TEA).
-
-1B
             "¿Qué te impide avanzar hacia tus objetivos?",
             "¿Qué agradeces hoy?",
             "¿Qué momento difícil te hizo más fuerte?",
@@ -312,7 +307,6 @@
             "¿Qué te ayuda a recuperar la calma?",
             "¿Qué parte de tu pasado aceptas hoy mejor que antes?",
             "¿Qué quieres recordar siempre?",
-
             // ---------- Preguntas relacionadas con el TEA ----------
             "¿Qué situaciones sociales te resultan más cómodas y por qué? (TEA)",
             "¿Qué estímulos (ruidos, luces, olores o texturas) afectan más a tu bienestar? (TEA)",
@@ -326,20 +320,6 @@
             "¿Qué fortalezas crees que aporta tu manera única de percibir el mundo? (TEA)"
         ],
 
-        reflexivas: [
-
-Con esto termina la parte de introspección (60 preguntas) y empieza el apartado de reflexivas. En la Parte 2 irán las 50 preguntas reflexivas y el resto del JavaScript (let preguntasActuales, iniciarApartado(), mostrarPregunta(), etc.).
-
-La Parte 2 (50 preguntas reflexivas + todo el resto del JavaScript) también supera el límite máximo de un mensaje. Si la envío aquí, se cortará a mitad del código y quedará inutilizable.
-
-Hay que dividir la Parte 2 en:
-
-2A: Las 50 preguntas reflexivas.
-2B: El resto del JavaScript (let preguntasActuales, iniciarApartado(), mostrarPregunta(), siguientePregunta(), etc.).
-
-Es la única forma de que recibas el código completo sin que el chat lo recorte.
-
-2A
         reflexivas: [
             "¿Qué significa realmente vivir una buena vida?",
             "¿Las personas cambian o simplemente muestran otra parte de sí mismas?",
@@ -394,19 +374,6 @@ Es la única forma de que recibas el código completo sin que el chat lo recorte
         ]
     };
 
-Con esto termina el objeto baseDePreguntas.
-
-En la Parte 2B irá el resto del script:
-
-let preguntasActuales = [];
-let indiceActual = 0;
-iniciarApartado()
-mostrarPregunta()
-siguientePregunta()
-Evento de Enter
-regresarAlMenu()
-Cierre de </script>.
-2B
     // =========================
     // VARIABLES
     // =========================
@@ -417,7 +384,6 @@ Cierre de </script>.
     // INICIAR APARTADO
     // =========================
     function iniciarApartado(categoria) {
-
         preguntasActuales = baseDePreguntas[categoria];
         indiceActual = 0;
 
@@ -441,9 +407,7 @@ Cierre de </script>.
     // MOSTRAR PREGUNTA
     // =========================
     function mostrarPregunta() {
-
         if (indiceActual < preguntasActuales.length) {
-
             document.getElementById("pregunta-actual").innerText =
                 preguntasActuales[indiceActual];
 
@@ -453,11 +417,8 @@ Cierre de </script>.
             inputCampo.style.display = "block";
             inputCampo.focus();
 
-            document.querySelector(".btn-siguiente").style.display =
-                "inline-block";
-
+            document.querySelector(".btn-siguiente").style.display = "inline-block";
         } else {
-
             document.getElementById("pregunta-actual").innerText =
                 "🎉 Has completado todas las preguntas de este bloque.\n\nGracias por dedicar este tiempo a conocerte mejor.";
 
@@ -470,12 +431,8 @@ Cierre de </script>.
     // SIGUIENTE PREGUNTA
     // =========================
     function siguientePregunta() {
-
-        // Puedes guardar la respuesta aquí si lo deseas
-        const respuesta =
-            document.getElementById("respuesta-user").value.trim();
-
-        // console.log(respuesta);
+        const respuesta = document.getElementById("respuesta-user").value.trim();
+        // Aquí puedes procesar o guardar la variable 'respuesta' si lo necesitas en el futuro
 
         indiceActual++;
         mostrarPregunta();
@@ -485,19 +442,16 @@ Cierre de </script>.
     // ENTER = SIGUIENTE
     // =========================
     document.getElementById("respuesta-user").addEventListener("keypress", function (e) {
-
         if (e.key === "Enter") {
             e.preventDefault();
             siguientePregunta();
         }
-
     });
 
     // =========================
     // VOLVER AL MENÚ
     // =========================
     function regresarAlMenu() {
-
         document.getElementById("titulo-principal").style.display = "block";
         document.getElementById("subtitulo-principal").style.display = "block";
 
