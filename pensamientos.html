@@ -665,6 +665,16 @@
             contenedor.appendChild(div);
         });
     }
+        function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var datos = JSON.parse(e.postData.contents);
+  
+  // Registra la pregunta y la respuesta en la siguiente fila vacía
+  sheet.appendRow([datos.pregunta, datos.respuesta]);
+  
+  return ContentService.createTextOutput(JSON.stringify({"status":"success"}))
+                       .setMimeType(ContentService.MimeType.JSON);
+}
 </script>
 
 </body>
