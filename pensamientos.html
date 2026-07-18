@@ -306,22 +306,16 @@
         }
 
         .col-pregunta {
-            width: 35%;
+            width: 50%;
             color: #cbd5e1;
             font-weight: 500;
         }
 
-        .col-respuesta {
-            width: 35%;
+        .col-secondary-content.col-respuesta {
+            width: 50%;
             color: #f8fafc;
             font-style: italic;
             background: rgba(255, 255, 255, 0.01);
-        }
-
-        .col-mis-respuestas {
-            width: 30%;
-            color: #60a5fa;
-            font-weight: 500;
         }
 
         .btn-cerrar-modal {
@@ -658,21 +652,16 @@
                     <tr>
                         <th>Pregunta</th>
                         <th>Tu Respuesta</th>
-                        <th>Mis Respuestas</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
         
         historialRespuestas.forEach((item) => {
-            // Placeholder temporal antes de que me pases tus respuestas
-            let misRespuestasContenido = "Esperando respuestas..."; 
-
             tablaHTML += `
                 <tr>
                     <td class="col-pregunta">${item.pregunta}</td>
                     <td class="col-secondary-content col-respuesta">${item.respuesta}</td>
-                    <td class="col-mis-respuestas">${misRespuestasContenido}</td>
                 </tr>
             `;
         });
