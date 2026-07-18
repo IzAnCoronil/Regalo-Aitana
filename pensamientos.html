@@ -231,7 +231,7 @@
             transform: scale(1.05);
         }
 
-        /* VENTANA MODAL (Ancho optimizado para la tabla) */
+        /* VENTANA MODAL (Ancho optimizado para la tabla de 3 columnas) */
         .modal-respuestas {
             display: none;
             position: fixed;
@@ -252,7 +252,7 @@
             background: #1e293b;
             border: 1px solid rgba(255, 255, 255, 0.15);
             width: 100%;
-            max-width: 650px;
+            max-width: 750px; /* Ampliado un poco para dar espacio a la tercera columna */
             max-height: 80vh;
             border-radius: 20px;
             padding: 24px;
@@ -306,15 +306,22 @@
         }
 
         .col-pregunta {
-            width: 50%;
+            width: 35%;
             color: #cbd5e1;
             font-weight: 500;
         }
 
         .col-respuesta {
-            width: 50%;
+            width: 35%;
             color: #f8fafc;
             font-style: italic;
+        }
+
+        /* Nueva clase para tu tercera columna */
+        .col-mis-respuestas {
+            width: 30%;
+            color: #3b82f6;
+            font-weight: 500;
         }
 
         .btn-cerrar-modal {
@@ -440,7 +447,7 @@
             "¿Cuándo fue la última vez que te sorprendiste a ti misma?",
             "¿Qué pequeño logro te hace sentir orgullosa?",
             "¿Qué sueño has dejado aparcado?",
-            "¿Qué actividad te hace perder la noción del tiempo?",
+            "¿Qué activity te hace perder la noción del tiempo?",
             "¿Qué necesitas para sentirte segura?",
             "¿Qué situación te genera más estrés?",
             "¿Qué haces bien pero pocas veces reconoces?",
@@ -507,7 +514,7 @@
             "¿Es mejor arrepentirse de hacer algo o de no hacerlo?",
             "Si puedieras revivivir un momento de tu vida,¿Cual elegirias?",
             "¿Qué decisión tomaste creyendo que era pequeña y terminó cambiando toda tu vida?",
-            "Si pudieras descubrir lo que una sola persona piensa de ti, ¿A quién elegirías?,
+            "Si pudieras descubrir lo que una sola persona piensa de ti, ¿A quién elegirías?",
             "¿Cómo afecta el pasado al presente?",
             "¿Qué importancia tiene el silencio?",
             "¿Qué es la confianza?",
@@ -528,7 +535,7 @@
             "¿Qué hace especial a un recuerdo?",
             "¿Cómo influye la gratitud en la felicidad?",
             "¿Qué es más difícil: aceptar o comprender?",
-            "¿Las personas encuentran o construyen su propósito?",
+            "Las personas encuentran o construyen su propósito?",
             "¿Qué legado te gustaría dejar?",
             "¿Qué significa confiar en ti misma?",
             "¿Cómo cambia una persona tras superar una gran dificultad?",
@@ -651,16 +658,21 @@
                     <tr>
                         <th>Pregunta</th>
                         <th>Tu Respuesta</th>
+                        <th>Mis Respuestas</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
         
         historialRespuestas.forEach((item) => {
+            // Aquí puedes dejar el espacio vacío en la tercera columna para llenarlo más adelante
+            let misRespuestasContenido = "Esperando respuestas..."; 
+
             tablaHTML += `
                 <tr>
                     <td class="col-pregunta">${item.pregunta}</td>
                     <td class="col-secondary-content col-respuesta">${item.respuesta}</td>
+                    <td class="col-mis-respuestas">${misRespuestasContenido}</td>
                 </tr>
             `;
         });
