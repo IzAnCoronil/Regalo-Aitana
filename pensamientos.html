@@ -389,6 +389,8 @@
         <div id="menu-apartados" class="menu-apartados">
             <button class="btn-apartado" onclick="iniciarApartado('introspeccion')">Introspección</button>
             <button class="btn-apartado" onclick="iniciarApartado('reflexivas')">Preguntas Reflexivas</button>
+            <button class="btn-apartado" onclick="iniciarApartado('palabras')">Palabras con Significado</button>
+            
         </div>
 
         <div id="bloque-juego" class="bloque-juego">
@@ -673,6 +675,114 @@
         
         contenedor.innerHTML = tablaHTML;
     }
+
+        function iniciarApartado(categoria) {
+    preguntasActuales = baseDePreguntas[categoria];
+    indiceActual = 0;
+    if (!preguntasActuales || preguntasActuales.length === 0) return;
+
+    let titulo = "Categoría";
+    if (categoria === "introspeccion") titulo = "Introspección";
+    else if (categoria === "reflexivas") titulo = "Preguntas Reflexivas";
+    else if (categoria === "palabras") titulo = "Palabras con Significado";
+
+    document.getElementById('titulo-apartado').innerText = titulo;
+
+    document.getElementById("titulo-principal").style.display = "none";
+    document.getElementById("subtitulo-principal").style.display = "none";
+    document.getElementById("menu-apartados").style.display = "none";
+    document.getElementById("bloque-juego").style.display = "block";
+
+    mostrarPregunta();
+}    
+palabras: [
+            "Metanoia (Griego)\nEl proceso de transformación de la mente, el corazón, la forma de pensar o el modo de vida de una persona.",
+            "Eunoia (Griego)\nPensamiento bienintencionado; la mente hermosa y llena de buena voluntad hacia los demás.",
+            "Kintsugi (Japonés)\nEl arte de reparar la cerámica rota con oro, celebrando la belleza de las cicatrices y la historia de las imperfecciones.",
+            "Meraki (Griego)\nHacer algo con el alma, creatividad o amor; dejar una huella de ti misma en lo que haces.",
+            "Ikigai (Japonés)\nLa razón de ser; el propósito de vida que te motiva a levantarte cada mañana.",
+            "Natsukashii (Japonés)\nNostalgia bonita y gratificante por el pasado, recordando un momento feliz sin tristeza.",
+            "Sisu (Finlandés)\nDeterminación extraordinaria, coraje y resiliencia ante adversidades aparentemente insuperables.",
+            "Resfeber (Sueco)\nEl cosquilleo de emoción, nervios y expectación justo antes de empezar un viaje o una nueva aventura.",
+            "Ubuntu (Zulu/Xhosa)\n'Yo soy porque nosotros somos'; la creencia en un vínculo universal que conecta a toda la humanidad.",
+            "Hiraeth (Galés)\nUna profunda añoranza por un hogar, un lugar o un momento al que no se puede regresar.",
+            "Fernweh (Alemán)\nSentimiento de añoranza por lugares lejanos que aún no has visitado; el deseo profundo de viajar y explorar.",
+            "Eleutheria (Griego)\nLa verdadera libertad interior y capacidad de autodeterminación.",
+            "Goya (Urdu)\nLa suspensión de la incredulidad que ocurre al escuchar una historia tan cautivadora que se siente real.",
+            "Sehnsucht (Alemán)\nUn anhelo intenso e indefinible por algo en la vida que no se puede nombrar.",
+            "Serein (Francés)\nLa lluvia fina que cae de un cielo despejado al atardecer; la calma tras la tormenta.",
+            // ------------------ NUEVAS PALABRAS (70) ------------------
+            "Ataraxia (Griego)\nLa tranquilidad absoluta del alma; un estado de imperturbabilidad libre de miedos y turbaciones.",
+            "Eudaimonia (Griego)\nEl florecimiento completo del alma; un estado supremo de plenitud moral, autorrealización y felicidad verdadera.",
+            "Areté (Griego)\nLa búsqueda continua de la excelencia personal, la virtud y la expresión de tu máximo potencial.",
+            "Kairos (Griego)\nEl momento perfecto y oportuno donde el tiempo se detiene y ocurre algo de profundo significado supremo.",
+            "Satori (Japonés)\nEl instante sagrado de iluminación o despertar espiritual repentino en el budismo zen.",
+            "Wabi-Sabi (Japonés)\nLa filosofía de encontrar paz y belleza en la imperfección, la sencillez y la caducidad de las cosas.",
+            "Yūgen (Japonés)\nLa conciencia profunda y evocadora del universo que despierta emociones demasiado poéticas para ser explicadas.",
+            "Ahimsa (Sánscrito)\nEl principio espiritual de la no-violencia absoluta, donde el pensamiento y la acción emanan del amor puro.",
+            "Sukha (Sánscrito)\nUna felicidad interior profunda, duradera y serena que no depende de las circunstancias externas.",
+            "Mudita (Sánscrito)\nEl gozo puro y desinteresado que nace únicamente al presenciar la felicidad y los logros de los demás.",
+            "Ananda (Sánscrito)\nUn estado de dicha o gozo supremo donde el alma se siente en perfecta armonía con el cosmos.",
+            "Prāna (Sánscrito)\nLa fuerza vital universal y energía espiritual invisible que fluye y sostiene a todo ser vivo.",
+            "Santosha (Sánscrito)\nEl arte del contento absoluto; aceptar y agradecer el momento presente tal y como es.",
+            "Komorebi (Japonés)\nLa luz del sol que se filtra a través de las hojas de los árboles, recordando la magia de las pequeñas cosas.",
+            "Shinrin-yoku (Japonés)\n'Baño de bosque'; sumergirse en la naturaleza para sanar el espíritu y reconectar con la tierra.",
+            "Mono no aware (Japonés)\nLa dulce y melancólica empatía por la transitoriedad y brevedad de todas las cosas bellas.",
+            "Komorebi-bi (Japonés)\nEl patrón de sombras y luces proyectado en el suelo por el sol entre las ramas.",
+            "Dharma (Sánscrito)\nEl propósito cósmico, la conducta justa y el camino verdadero de cada persona en el universo.",
+            "Kalyana-mitta (Pali)\nUna amistad espiritual pura que te inspira, te guía y eleva la luz de tu alma.",
+            "Metta (Pali)\nAmor incondicional, bondad amorosa y benevolencia ilimitada hacia todos los seres vivos.",
+            "Tikkun Olam (Hebreo)\nEl concepto místico de que los seres humanos están en el mundo para sanar y reparar el universo.",
+            "Numinous (Latín)\nUna experiencia espiritual sobrecogedora al sentir una presencia sublime que infunde asombro y reverencia.",
+            "Sisu (Finlandés)\nUna fuerza espiritual e interior extraordinaria; la determinación estoica ante adversidades colosales.",
+            "Orenda (Iroqués)\nLa fuerza de voluntad espiritual del alma humana para cambiar el destino y transformar el entorno.",
+            "Anam Cara (Irlandés/Celta)\n'Amigo del alma'; una conexión espiritual profunda entre dos seres que trasciende el tiempo.",
+            "Awen (Galés/Celta)\nEl soplo de inspiración divina que fluye en los artistas, poetas y mentes creadoras.",
+            "Cwtch (Galés)\nUn abrazo afectuoso que crea un refugio seguro donde no existe ningún peligro.",
+            "Hygge (Danés)\nLa sensación de calidez, paz, refugio y confort cotidiano en las cosas más sencillas.",
+            "Lagom (Sueco)\n'Ni demasiado, ni muy poco; lo justo'; la armonía espiritual de vivir en perfecto equilibrio.",
+            "Fika (Sueco)\nUn momento de pausa sagrada en el día para compartir con alma y presencia una bebida y conversación.",
+            "Sollershoto (Alemán)\nEl rayo de luz solar que rompe las nubes oscuras tras una tormenta prolongada.",
+            "Waldeinsamkeit (Alemán)\nLa sensación reconfortante de estar a solas en el bosque y conectarse con la naturaleza.",
+            "Vorfreude (Alemán)\nLa alegría gozosa e intensa que se siente al anticipar la llegada de algo maravilloso.",
+            "Heimweh (Alemán)\nEl anhelo espiritual de regresar al lugar o estado interior donde perteneces de verdad.",
+            "L'appel du vide (Francés)\n'El llamado del vacío'; la fascinación momentánea ante lo desconocido o el abismo de la vida.",
+            "Épanouissement (Francés)\nEl florecimiento completo de la propia personalidad y el bienestar integral de la mente.",
+            "Retrouvailles (Francés)\nLa inmensa alegría de reencontrarse con alguien amado tras una larga separación.",
+            "Dépaysement (Francés)\nEl cambio de perspectiva o sensación de renovación que surge al estar en un entorno totalmente nuevo.",
+            "Brio (Italiano)\nUna chispa vibrante de vida, vigor, entusiasmo espiritual y energía pura.",
+            "Azzurro (Italiano)\nEl color del cielo ilimitado que invita a la serenidad y la contemplación profunda.",
+            "Sprezzatura (Italiano)\nLa gracia natural con la que se realiza lo difícil sin mostrar esfuerzo ni artificio.",
+            "Mooring (Holandés)\nEl estado de tranquilidad y arraigo donde te sientes firmemente conectada a tu centro.",
+            "Gezellig (Holandés)\nUn ambiente acogedor, cálido y lleno de complicidad donde reina la buena vibra.",
+            "Sobremesa (Español)\nEl tiempo precioso que se pasa compartiendo charla, unión y alma tras una comida.",
+            "Querencia (Español)\nEl lugar donde una persona se siente segura, fuerte y saca lo mejor de su ser interior.",
+            "Serendipia (Español)\nUn hallazgo valioso, afortunado e inesperado que ocurre mientras se buscaba otra cosa.",
+            "Ataraxia (Español)\nImperturbabilidad del ánimo, serenidad frente a las vicisitudes del destino.",
+            "Inmarcesible (Español)\nAquello que no puede marchitarse ni perder la belleza de su esencia verdadera.",
+            "Nefelibata (Español)\n'Caminante de las nubes'; una persona soñadora que vive libre en su propio mundo interior.",
+            "Limerencia (Español)\nEl estado mental involuntario de atracción profunda y devoción romántica genuina.",
+            "Compasión (Español)\nEl impulso del corazón que percibe el sufrimiento ajeno y busca activamente aliviarlo.",
+            "Resiliencia (Español)\nLa capacidad del espíritu para sobreponerse, fortalecerse y florecer tras las dificultades.",
+            "Saudade (Portugués)\nUna melancolía amorosa y profunda por la ausencia de algo o alguien amado con el corazón.",
+            "Cafuné (Portugués)\nEl acto de pasar suavemente los dedos por el cabello de alguien amado para transmitir calma.",
+            "Aura (Latín/Griego)\nEl brillo o atmósfera sutil e invisible que emana de la presencia de cada ser humano.",
+            "Aethel (Anglosajón)\nLa nobleza inherente del espíritu y la dignidad inviolable del alma.",
+            "Elysium (Griego/Mitología)\nEl lugar mitológico de paz absoluta y descanso reservado para las almas virtuosas.",
+            "Astraea (Griego/Mitología)\nLa diosa de la inocencia y la pureza; la fe en el retorno de una era de justicia y luz.",
+            "Amrita (Sánscrito/Mitología)\nEl néctar místico de la inmortalidad y la sanación espiritual en la tradición védica.",
+            "Moksha (Sánscrito)\nLa liberación espiritual definitiva del ciclo de ataduras y el retorno a la fuente divina.",
+            "Tapas (Sánscrito)\nEl fuego espiritual interior y la disciplina sagrada que purifica y transforma el alma.",
+            "Sadhana (Sánscrito)\nLa práctica diaria y consciente orientada al cultivo de la paz y el crecimiento espiritual.",
+            "Satsang (Sánscrito)\nLa reunión o compañía de personas que buscan juntas la verdad, la sabiduría y la luz.",
+            "Gnosis (Griego)\nEl conocimiento espiritual intuitivo y directo de los misterios del alma y del universo.",
+            "Sophia (Griego)\nLa sabiduría sagrada y divina que guía la mente hacia la comprensión de la existencia.",
+            "Philos (Griego)\nEl amor profundo, fraternal y sincero que une a las almas en respeto y lealtad.",
+            "Agapé (Griego)\nEl amor incondicional, altruista y supremo que entrega todo sin esperar nada a cambio.",
+            "Charis (Griego)\nLa gracia divina, el encanto interior y la bondad natural que emana del corazón.",
+            "Harmonia (Griego/Mitología)\nLa concordia y el equilibrio de las fuerzas opuestas para crear unidad y belleza.",
+            "Promethean (Griego/Mitología)\nEl espíritu audaz e inspirador que busca traer luz, conocimiento y progreso a los demás."
+        ]
 </script>
 </body>
 </html>
